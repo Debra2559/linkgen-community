@@ -1,0 +1,47 @@
+<view class="page">
+  <!-- owner 状态筛选 -->
+  <view class="tabs" wx:if="{{isOwner}}">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="key"
+      class="tab {{activeTab === item.key ? 'on' : ''}}"
+      data-key="{{item.key}}"
+      bindtap="onSwitchTab"
+    >
+      {{item.label}}
+      <view wx:if="{{item.key === 'pending' && pendingTotal > 0}}" class="tab-badge">{{pendingTotal}}</view>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty">加载中…</view>
+
+  <block wx:else>
+    <view wx:if="{{list.length === 0}}" class="empty">
+      <view class="empty-emoji">🍽️</view>
+      <view class="empty-text">{{isOwner ? '还没有人点单，去喊大家吃饭吧' : '还没点过餐，去挑点爱吃的'}}</view>
+    </view>
+
+    <view wx:for="{{list}}" wx:key="_id" class="order-card card" data-id="{{item._id}}" bindtap="goDetail">
+      <view class="order-head">
+        <view class="order-who">
+          <text class="who-name">{{item.name}}</text>
+          <text class="order-time">{{item.timeText}}</text>
+        </view>
+        <view class="status-tag {{item.status === 'pending' ? 'tag-status-pending' : 'tag-status-done'}}">
+          {{item.status === 'pending' ? '待处理' : '已完成'}}
+        </view>
+      </view>
+      <view class="order-summary">{{item.summary}}</view>
+      <view class="order-foot">
+        <text class="order-total">共 {{item.totalCount}} 份 · <text class="price-text">¥{{item.totalPriceText}}</text></text>
+        <button
+          wx:if="{{isOwner && item.status === 'pending'}}"
+          class="done-btn"
+          catchtap="onMarkDone"
+          data-id="{{item._id}}"
+          hover-class="btn-hover"
+        >做好了</button>
+      </view>
+    </view>
+  </block>
+</view>

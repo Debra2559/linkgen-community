@@ -1,0 +1,122 @@
+/* pages/order-detail/order-detail.wxss */
+.page {
+  min-height: 100vh;
+  padding: 24rpx;
+}
+.loading {
+  padding: 120rpx 0;
+  text-align: center;
+  color: var(--text-sub);
+}
+
+/* 状态横幅 */
+.status-banner {
+  display: flex;
+  align-items: center;
+  border-radius: 20rpx;
+  padding: 36rpx 28rpx;
+  margin-bottom: 24rpx;
+}
+.status-banner.pending {
+  background: linear-gradient(135deg, #ff8c42, #ff6b35);
+}
+.status-banner.done {
+  background: linear-gradient(135deg, #4cc36a, #3aa657);
+}
+.status-emoji {
+  font-size: 64rpx;
+  margin-right: 24rpx;
+}
+.status-main {
+  color: #fff;
+  font-size: 34rpx;
+  font-weight: 700;
+}
+.status-sub {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 24rpx;
+  margin-top: 8rpx;
+}
+
+.block {
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+}
+.block-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  margin-bottom: 20rpx;
+}
+.row {
+  display: flex;
+  padding: 12rpx 0;
+}
+.row-label {
+  width: 140rpx;
+  color: var(--text-sub);
+  font-size: 26rpx;
+  flex-shrink: 0;
+}
+.row-value {
+  flex: 1;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+.row-value.remark {
+  font-weight: 400;
+  color: #6f6660;
+}
+
+.dish-row {
+  display: flex;
+  align-items: center;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid var(--line);
+}
+.dish-emoji {
+  font-size: 40rpx;
+  margin-right: 16rpx;
+}
+.dish-name {
+  flex: 1;
+  font-size: 28rpx;
+}
+.dish-count {
+  color: var(--text-sub);
+  font-size: 26rpx;
+  margin-right: 24rpx;
+}
+.total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24rpx;
+  font-size: 28rpx;
+}
+.total-price {
+  font-size: 36rpx;
+}
+
+/* owner 操作 */
+.owner-actions {
+  margin-top: 12rpx;
+}
+.action-btn {
+  width: 100%;
+  border-radius: 999rpx;
+  padding: 24rpx 0;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+.action-btn.primary {
+  background: var(--brand);
+  color: #fff;
+}
+.action-btn.plain {
+  background: #fff;
+  color: var(--brand);
+  border: 2rpx solid var(--brand);
+}
+.btn-hover {
+  opacity: 0.8;
+}

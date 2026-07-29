@@ -1,0 +1,63 @@
+<view class="page">
+  <!-- 谁点的 -->
+  <view class="card block">
+    <view class="block-title">谁点的？</view>
+    <view class="quick-names">
+      <view
+        wx:for="{{quickNames}}"
+        wx:key="*this"
+        class="quick-name {{name === item ? 'on' : ''}}"
+        data-name="{{item}}"
+        bindtap="onPickName"
+      >{{item}}</view>
+    </view>
+    <input
+      class="name-input"
+      placeholder="或者输入你的称呼"
+      maxlength="12"
+      value="{{name}}"
+      bindinput="onInputName"
+    />
+  </view>
+
+  <!-- 菜品清单 -->
+  <view class="card block">
+    <view class="block-title">点的菜（共 {{totalCount}} 份）</view>
+    <view wx:for="{{cartList}}" wx:key="_id" class="dish-row">
+      <text class="dish-emoji">{{item.dish.emoji || '🍽️'}}</text>
+      <text class="dish-name">{{item.dish.name}}</text>
+      <text class="dish-count">×{{item.count}}</text>
+      <text class="dish-price price-text">¥{{item.dish.price}}</text>
+    </view>
+    <view class="total-row">
+      <text>合计</text>
+      <text class="price-text total-price">¥{{totalPriceText}}</text>
+    </view>
+  </view>
+
+  <!-- 备注 -->
+  <view class="card block">
+    <view class="block-title">跟厨房说两句</view>
+    <textarea
+      class="remark-input"
+      placeholder="少辣 / 多放葱 / 宝宝那份不要盐…"
+      maxlength="100"
+      value="{{remark}}"
+      bindinput="onInputRemark"
+      auto-height
+    />
+  </view>
+
+  <!-- 提交栏 -->
+  <view class="submit-bar">
+    <view class="submit-total">
+      <text class="submit-label">合计</text>
+      <text class="price-text submit-price">¥{{totalPriceText}}</text>
+    </view>
+    <button
+      class="submit-btn {{submitting ? 'disabled' : ''}}"
+      bindtap="submitOrder"
+      hover-class="btn-hover"
+    >{{submitting ? '提交中…' : '提交订单'}}</button>
+  </view>
+</view>

@@ -1,0 +1,108 @@
+<view class="page">
+  <!-- 顶部：店名 + 订单入口 -->
+  <view class="header">
+    <view class="header-title">
+      <text class="shop-emoji">🍚</text>
+      <text class="shop-name">家里饭桌</text>
+    </view>
+    <button class="order-entry" bindtap="goOrders" hover-class="btn-hover">
+      📋 我的订单
+    </button>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading">菜单加载中…</view>
+
+  <block wx:else>
+    <view class="body">
+      <!-- 左侧分类 -->
+      <scroll-view scroll-y class="sidebar" enhanced show-scrollbar="{{false}}">
+        <view
+          wx:for="{{sections}}"
+          wx:key="_id"
+          class="cat-item {{activeCategory === item._id ? 'on' : ''}}"
+          data-id="{{item._id}}"
+          bindtap="onTapCategory"
+        >
+          {{item.name}}
+        </view>
+      </scroll-view>
+
+      <!-- 右侧菜品 -->
+      <scroll-view
+        scroll-y
+        class="dish-scroll"
+        scroll-into-view="{{scrollIntoId}}"
+        scroll-with-animation
+        bindscroll="onDishScroll"
+        enhanced
+        show-scrollbar="{{false}}"
+      >
+        <view
+          wx:for="{{sections}}"
+          wx:key="_id"
+          id="sec-{{item._id}}"
+          class="dish-section"
+        >
+          <view class="sec-title">{{item.name}}</view>
+          <view wx:for="{{item.dishes}}" wx:for-item="dish" wx:key="_id" class="dish-card card">
+            <view class="dish-emoji">{{dish.emoji || '🍽️'}}</view>
+            <view class="dish-info">
+              <view class="dish-name">
+                {{dish.name}}
+                <text wx:if="{{dish.soldOut}}" class="soldout">已售罄</text>
+              </view>
+              <view class="dish-desc">{{dish.desc}}</view>
+              <view class="dish-bottom">
+                <text class="price-text">¥{{dish.price}}</text>
+                <view class="stepper" wx:if="{{!dish.soldOut}}">
+                  <view
+                    wx:if="{{cartMap[dish._id]}}"
+                    class="step-btn minus"
+                    catchtap="onMinus"
+                    data-id="{{dish._id}}"
+                  >−</view>
+                  <text wx:if="{{cartMap[dish._id]}}" class="step-count">{{cartMap[dish._id]}}</text>
+                  <view class="step-btn plus" catchtap="onPlus" data-id="{{dish._id}}">＋</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="bottom-space"></view>
+      </scroll-view>
+    </view>
+
+    <!-- 底部购物车栏 -->
+    <view class="cart-bar" wx:if="{{cartCount > 0}}">
+      <view class="cart-left" bindtap="toggleCartPanel">
+        <view class="cart-icon-wrap">
+          <text class="cart-icon">🛒</text>
+          <view class="badge">{{cartCount}}</view>
+        </view>
+        <text class="cart-total">¥{{totalPriceText}}</text>
+      </view>
+      <button class="checkout-btn" bindtap="goCart" hover-class="btn-hover">去下单</button>
+    </view>
+
+    <!-- 购物车弹层 -->
+    <view class="mask" wx:if="{{showCartPanel}}" bindtap="toggleCartPanel"></view>
+    <view class="cart-panel {{showCartPanel ? 'show' : ''}}">
+      <view class="panel-header">
+        <text class="panel-title">已选菜品</text>
+        <text class="panel-clear" bindtap="clearCart">清空</text>
+      </view>
+      <scroll-view scroll-y class="panel-list">
+        <view wx:for="{{cartList}}" wx:for-item="cartItem" wx:key="_id" class="panel-item">
+          <text class="panel-emoji">{{cartItem.dish.emoji || '🍽️'}}</text>
+          <text class="panel-name">{{cartItem.dish.name}}</text>
+          <text class="panel-price price-text">¥{{cartItem.dish.price}}</text>
+          <view class="stepper">
+            <view class="step-btn minus" catchtap="onMinus" data-id="{{cartItem.dish._id}}">−</view>
+            <text class="step-count">{{cartItem.count}}</text>
+            <view class="step-btn plus" catchtap="onPlus" data-id="{{cartItem.dish._id}}">＋</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </block>
+</view>

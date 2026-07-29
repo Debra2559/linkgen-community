@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/menu/menu",
+    "pages/cart/cart",
+    "pages/orders/orders",
+    "pages/order-detail/order-detail"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#fff7f0",
+    "navigationBarTitleText": "家里饭桌",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f4f2",
+    "backgroundTextStyle": "dark"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

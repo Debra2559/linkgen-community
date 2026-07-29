@@ -1,0 +1,51 @@
+/* app.wxss - 全局样式：暖橙家庭风 */
+page {
+  --brand: #ff6b35;
+  --brand-light: #fff1e8;
+  --bg: #f7f4f2;
+  --card: #ffffff;
+  --text-main: #2b2320;
+  --text-sub: #9a8f8a;
+  --line: #f0e9e4;
+
+  background: var(--bg);
+  color: var(--text-main);
+  font-size: 28rpx;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+view, text, scroll-view, button, input, textarea {
+  box-sizing: border-box;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  line-height: 1.5;
+  font-size: inherit;
+}
+button::after {
+  border: none;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(43, 35, 32, 0.04);
+}
+
+.price-text {
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.tag-status-pending {
+  color: #e8930c;
+  background: #fdf3e0;
+}
+.tag-status-done {
+  color: #3aa657;
+  background: #e7f6ec;
+}
