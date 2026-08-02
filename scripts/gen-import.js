@@ -28,6 +28,8 @@ SEED.forEach((c, i) => {
         desc: d.desc,
         emoji: d.emoji,
         categoryId: catId,
+        supplyType: d.supplyType || c.supplyType || 'stock',
+        fitnessRecommended: !!d.fitnessRecommended,
         soldOut: false,
         sort: d.price,
       })
