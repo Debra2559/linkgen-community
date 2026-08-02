@@ -1,5 +1,6 @@
 // pages/cart/cart.js - 下单确认页
 const { call, fen2yuanText } = require('../../utils/cloud');
+const { requestOrderDoneSubscription } = require('../../utils/subscribe');
 
 const CART_KEY = 'family_cart';
 const NAME_KEY = 'family_user_name';
@@ -73,8 +74,10 @@ Page({
     }
 
     this.setData({ submitting: true });
-    wx.showLoading({ title: '提交中…', mask: true });
     try {
+      // 必须在用户点击提交的事件链内请求订阅，云函数无法替用户申请订阅权限。
+      const subscription = await requestOrderDoneSubscription();
+      wx.showLoading({ title: '提交中…', mask: true });
       const items = this.data.cartList.map((c) => ({
         dishId: c.dish._id,
         name: c.dish.name,
@@ -84,6 +87,8 @@ Page({
         items,
         name: this.data.name,
         remark: this.data.remark,
+        notifySubscribed: subscription.accepted,
+        notifyTemplateId: subscription.templateId,
       });
 
       // 下单成功：清空购物车、记住称呼
@@ -98,7 +103,11 @@ Page({
     } catch (e) {
       wx.hideLoading();
       this.setData({ submitting: false });
-      wx.showToast({ title: e.message, icon: 'none' });
+      wx.showModal({
+        title: '下单失败',
+        content: e.message || '请稍后重试',
+        showCancel: false,
+      });
     }
   },
 });

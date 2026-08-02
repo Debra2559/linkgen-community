@@ -1,6 +1,12 @@
 // pages/orders/orders.js - 订单列表：成员看自己，owner 看全部 + 状态筛选
 const { call, fen2yuanText, formatTime } = require('../../utils/cloud');
 
+const maskOpenid = (openid) => {
+  if (!openid) return '';
+  if (openid.length <= 10) return openid;
+  return `${openid.slice(0, 6)}...${openid.slice(-4)}`;
+};
+
 Page({
   data: {
     isOwner: false,
@@ -13,6 +19,7 @@ Page({
     list: [],
     loading: true,
     pendingTotal: 0,
+    errorMessage: '',
   },
 
   onLoad() {
@@ -30,15 +37,17 @@ Page({
 
   async loadOrders() {
     try {
-      const { list, isOwner, pendingTotal } = await call('listOrders', {
+      const { list = [], isOwner, pendingTotal } = await call('listOrders', {
         status: this.data.activeTab,
       });
       this.setData({
         isOwner,
         pendingTotal,
         loading: false,
+        errorMessage: '',
         list: list.map((o) => ({
           ...o,
+          openidText: isOwner ? maskOpenid(o._openid) : '',
           totalPriceText: fen2yuanText(o.totalPrice),
           timeText: formatTime(o.createTime),
           summary: o.items
@@ -48,8 +57,12 @@ Page({
         })),
       });
     } catch (e) {
-      this.setData({ loading: false });
-      wx.showToast({ title: e.message, icon: 'none' });
+      this.setData({ loading: false, errorMessage: e.message || '订单加载失败' });
+      wx.showModal({
+        title: '订单加载失败',
+        content: e.message || '请稍后重试',
+        showCancel: false,
+      });
     }
   },
 
@@ -68,11 +81,23 @@ Page({
       success: async (res) => {
         if (!res.confirm) return;
         try {
-          await call('updateOrderStatus', { orderId: id, status: 'done' });
-          wx.showToast({ title: '已完成', icon: 'success' });
+          const result = await call('updateOrderStatus', { orderId: id, status: 'done' });
+          if (result.notificationSent) {
+            wx.showToast({ title: '已完成，已通知', icon: 'success' });
+          } else {
+            wx.showModal({
+              title: '订单已完成',
+              content: result.notificationError || '通知未发出，请检查订阅设置',
+              showCancel: false,
+            });
+          }
           this.loadOrders();
         } catch (err) {
-          wx.showToast({ title: err.message, icon: 'none' });
+          wx.showModal({
+            title: '更新失败',
+            content: err.message || '请稍后重试',
+            showCancel: false,
+          });
         }
       },
     });
@@ -81,5 +106,9 @@ Page({
   goDetail(e) {
     const id = e.currentTarget.dataset.id;
     wx.navigateTo({ url: `/pages/order-detail/order-detail?id=${id}` });
+  },
+
+  goMenuAdmin() {
+    wx.navigateTo({ url: '/pages/admin-menu/admin-menu' });
   },
 });

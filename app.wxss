@@ -1,17 +1,26 @@
-/* app.wxss - 全局样式：暖橙家庭风 */
+/* app.wxss - 花园水彩主题：清透绿、纸张白、花瓣粉 */
 page {
-  --brand: #ff6b35;
-  --brand-light: #fff1e8;
-  --bg: #f7f4f2;
-  --card: #ffffff;
-  --text-main: #2b2320;
-  --text-sub: #9a8f8a;
-  --line: #f0e9e4;
+  --brand: #3f7c68;
+  --brand-deep: #245548;
+  --brand-grad: #3f7c68;
+  --brand-light: #e7f2eb;
+  --bg: #f4f6ef;
+  --card: #fffefa;
+  --text-main: #20352f;
+  --text-sub: #788b83;
+  --line: #dce8df;
+  --blush: #e99786;
+  --sky: #dcebf0;
+  --paper: rgba(255, 254, 250, 0.88);
+  --shadow-card: 0 12rpx 34rpx rgba(42, 79, 65, 0.1);
+  --shadow-brand: 0 10rpx 22rpx rgba(47, 103, 83, 0.24);
+  --font-display: 'Kaiti SC', 'STKaiti', 'Hiragino Mincho ProN', 'Songti SC', serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans CJK SC', sans-serif;
 
   background: var(--bg);
   color: var(--text-main);
   font-size: 28rpx;
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: var(--font-ui);
 }
 
 view, text, scroll-view, button, input, textarea {
@@ -32,13 +41,13 @@ button::after {
 
 .card {
   background: var(--card);
-  border-radius: 20rpx;
-  box-shadow: 0 4rpx 16rpx rgba(43, 35, 32, 0.04);
+  border-radius: 18rpx;
+  box-shadow: var(--shadow-card);
 }
 
 .price-text {
   color: var(--brand);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .tag-status-pending {
@@ -46,6 +55,6 @@ button::after {
   background: #fdf3e0;
 }
 .tag-status-done {
-  color: #3aa657;
-  background: #e7f6ec;
+  color: #39745b;
+  background: #e5f1e8;
 }

@@ -12,3 +12,6 @@ $RECYCLE.BIN/
 
 # Node.js
 node_modules/
+
+# 本机任务完成提醒脚本，不属于小程序业务代码
+codex-task-chime/

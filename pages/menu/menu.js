@@ -1,13 +1,21 @@
 // pages/menu/menu.js - 点餐首页：分类联动 + 购物车
 const { call, fen2yuanText } = require('../../utils/cloud');
+const { resolveDishImages } = require('../../utils/menu-images');
+const { MENU_FILTERS, getSupplyTypeLabel, normalizeSupplyType } = require('../../utils/supply-types');
 
 const CART_KEY = 'family_cart';
 
 Page({
   data: {
     loading: true,
+    menuError: '',
     sections: [], // [{ _id, name, dishes: [] }]
+    categories: [],
+    allDishes: [],
+    supplyFilters: MENU_FILTERS,
+    supplyFilter: '',
     activeCategory: '',
+    heroCollapsed: false,
     scrollIntoId: '',
     cartMap: {}, // { dishId: count }
     dishMap: {}, // { dishId: dish } 快速查找
@@ -34,33 +42,61 @@ Page({
 
   async loadMenu() {
     try {
-      const { categories, dishes } = await call('menuList');
+      const { categories = [], dishes = [] } = await call('menuList');
+      const dishesWithImages = resolveDishImages(dishes).map((dish) => ({
+        ...dish,
+        supplyType: normalizeSupplyType(dish.supplyType),
+        supplyTypeLabel: getSupplyTypeLabel(dish.supplyType),
+        fitnessRecommended: !!dish.fitnessRecommended,
+      }));
       // 缓存菜单快照，下单确认页用它还原购物车中的菜品信息
-      wx.setStorageSync('family_menu_cache', { dishes });
+      wx.setStorageSync('family_menu_cache', { categories, dishes: dishesWithImages });
       const dishMap = {};
-      dishes.forEach((d) => (dishMap[d._id] = d));
-      const sections = categories
-        .map((c) => ({
-          _id: c._id,
-          name: c.name,
-          dishes: dishes.filter((d) => d.categoryId === c._id),
-        }))
-        .filter((s) => s.dishes.length > 0);
+      dishesWithImages.forEach((d) => (dishMap[d._id] = d));
 
-      this.setData(
-        {
-          loading: false,
-          sections,
-          dishMap,
-          activeCategory: sections.length ? sections[0]._id : '',
-        },
-        () => this.measureSections()
-      );
+      this.setData({
+        loading: false,
+        menuError: '',
+        categories,
+        allDishes: dishesWithImages,
+        dishMap,
+      }, () => this.applyMenuFilter());
       this.syncCartFromStorage();
     } catch (e) {
-      this.setData({ loading: false });
+      this.setData({ loading: false, menuError: e.message || '菜单加载失败' });
       wx.showToast({ title: e.message, icon: 'none' });
     }
+  },
+
+  applyMenuFilter() {
+    const { categories, allDishes, supplyFilter } = this.data;
+    const visibleCategories = categories.filter((category) => category.enabled !== false);
+    const visibleCategoryIds = new Set(visibleCategories.map((category) => category._id));
+    const visibleDishes = allDishes.filter((dish) => visibleCategoryIds.has(dish.categoryId));
+    const filteredDishes = supplyFilter === 'fitness'
+      ? visibleDishes.filter((dish) => dish.fitnessRecommended)
+      : supplyFilter
+        ? visibleDishes.filter((dish) => dish.supplyType === supplyFilter)
+        : visibleDishes;
+    const sections = visibleCategories
+      .map((category) => ({
+        _id: category._id,
+        name: category.name,
+        dishes: filteredDishes.filter((dish) => dish.categoryId === category._id),
+      }))
+      .filter((section) => section.dishes.length > 0);
+    this.setData({
+      sections,
+      activeCategory: sections.length ? sections[0]._id : '',
+      scrollIntoId: '',
+      heroCollapsed: false,
+    }, () => this.measureSections());
+  },
+
+  onSupplyFilter(e) {
+    const supplyFilter = e.currentTarget.dataset.key || '';
+    if (supplyFilter === this.data.supplyFilter) return;
+    this.setData({ supplyFilter }, () => this.applyMenuFilter());
   },
 
   // 测量各分类区块的 offsetTop，用于右侧滚动时高亮左侧分类
@@ -92,6 +128,10 @@ Page({
     this._scrollTimer = setTimeout(() => {
       this._scrollTimer = null;
       const top = e.detail.scrollTop;
+      const heroCollapsed = top > 42;
+      if (heroCollapsed !== this.data.heroCollapsed) {
+        this.setData({ heroCollapsed });
+      }
       const tops = this._sectionTops || [];
       let current = this.data.sections.length ? this.data.sections[0]._id : '';
       for (const s of tops) {
@@ -101,6 +141,12 @@ Page({
         this.setData({ activeCategory: current });
       }
     }, 120);
+  },
+
+  onDishTap(e) {
+    const id = e.currentTarget.dataset.id;
+    if (!id) return;
+    wx.navigateTo({ url: `/pages/dish-detail/dish-detail?id=${id}` });
   },
 
   // ---------- 购物车 ----------

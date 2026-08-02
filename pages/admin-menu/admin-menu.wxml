@@ -1,0 +1,191 @@
+<view class="page">
+  <view class="admin-head">
+    <view class="admin-head-copy">
+      <text class="admin-kicker">OWNER WORKSPACE</text>
+      <text class="admin-title">{{activeTab === 'dishes' ? '菜品管理' : '分类管理'}}</text>
+    </view>
+    <view class="head-actions">
+      <button wx:if="{{activeTab === 'categories'}}" class="add-btn" bindtap="openAddCategory">＋ 新分类</button>
+      <button wx:else class="add-btn" bindtap="openAddDish">＋ 新菜品</button>
+    </view>
+  </view>
+
+  <view class="admin-tabs">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="key"
+      class="admin-tab {{activeTab === item.key ? 'on' : ''}}"
+      data-key="{{item.key}}"
+      bindtap="onSwitchTab"
+    >{{item.label}}</view>
+  </view>
+
+  <block wx:if="{{activeTab === 'dishes'}}">
+    <scroll-view scroll-x class="category-tabs" enhanced show-scrollbar="{{false}}">
+      <view
+        class="category-tab {{activeCategoryId === '' ? 'on' : ''}}"
+        data-id=""
+        bindtap="onPickCategory"
+      >全部 <text class="category-count">{{dishes.length}}</text></view>
+      <view
+        wx:for="{{categories}}"
+        wx:key="_id"
+        class="category-tab {{activeCategoryId === item._id ? 'on' : ''}}"
+        data-id="{{item._id}}"
+        bindtap="onPickCategory"
+      >{{item.name}}</view>
+    </scroll-view>
+
+    <scroll-view scroll-x class="supply-tabs" enhanced show-scrollbar="{{false}}">
+      <view
+        wx:for="{{supplyFilters}}"
+        wx:key="key"
+        class="supply-tab {{supplyFilter === item.key ? 'on' : ''}}"
+        data-key="{{item.key}}"
+        bindtap="onPickSupplyFilter"
+      >{{item.label}}</view>
+    </scroll-view>
+
+    <view class="dish-sort-hint">{{activeCategoryId && !supplyFilter ? '按住菜品左侧 ↕ 拖动排序' : '选择具体分类后可拖动菜品顺序'}}</view>
+
+    <view wx:if="{{!loading && visibleDishes.length}}" class="batch-toolbar card">
+      <view class="batch-summary">
+        <text class="batch-title">当前批次 {{visibleDishes.length}} 道</text>
+        <text class="batch-hint">按分类和采购方式筛选</text>
+      </view>
+      <view class="batch-actions">
+        <button class="batch-btn publish" data-action="publish" bindtap="batchSetAvailability">一键上架</button>
+        <button class="batch-btn unpublish" data-action="unpublish" bindtap="batchSetAvailability">一键下架</button>
+      </view>
+    </view>
+
+    <view wx:if="{{loading}}" class="state">正在读取菜品…</view>
+    <view wx:elif="{{visibleDishes.length === 0}}" class="state">当前筛选没有菜品</view>
+    <scroll-view wx:else scroll-y class="dish-list">
+      <view wx:for="{{visibleDishes}}" wx:key="_id" class="dish-card card {{draggingDishId === item._id ? 'dragging' : ''}}" style="transform: translateY({{item.dragOffset || 0}}rpx)">
+        <image class="dish-image" src="{{item.image}}" mode="aspectFill" />
+        <view class="dish-main">
+          <view class="dish-name-line">
+            <text
+              wx:if="{{activeCategoryId && !supplyFilter}}"
+              class="dish-drag-handle"
+              data-id="{{item._id}}"
+              catchtouchstart="onDishTouchStart"
+              catchtouchmove="onDishTouchMove"
+              catchtouchend="onDishTouchEnd"
+            >↕</text>
+            <text wx:else class="dish-drag-handle disabled">·</text>
+            <text class="dish-name">{{item.name}}</text>
+            <text wx:if="{{item.soldOut}}" class="sold-tag">已下架</text>
+          </view>
+          <text class="supply-tag {{item.supplyType}}">{{item.supplyTypeLabel}}</text>
+          <text wx:if="{{item.fitnessRecommended}}" class="fitness-tag">健身推荐</text>
+          <text class="dish-desc">{{item.desc || '未填写描述'}}</text>
+          <text class="dish-meta">¥{{item.price}}</text>
+          <view class="dish-actions">
+            <button class="action-btn" data-id="{{item._id}}" bindtap="openEdit">编辑</button>
+            <button class="action-btn" data-id="{{item._id}}" bindtap="toggleSoldOut">{{item.soldOut ? '上架' : '下架'}}</button>
+            <button class="action-btn danger" data-id="{{item._id}}" bindtap="removeDish">删除</button>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </block>
+
+  <block wx:else>
+    <view class="category-guide">
+      <view>
+        <text class="category-guide-title">菜单分类</text>
+        <text class="category-guide-caption">按住拖动调整顺序；下架后，用户端不会显示该分类。</text>
+      </view>
+      <text class="category-guide-count">{{categories.length}} 个分类</text>
+    </view>
+
+    <view wx:if="{{loading}}" class="state">正在读取分类…</view>
+    <view wx:elif="{{categories.length === 0}}" class="state">还没有分类，先新增一个</view>
+    <view wx:else class="category-list">
+      <view
+        wx:for="{{categories}}"
+        wx:for-index="index"
+        wx:key="_id"
+        class="category-row {{draggingCategoryId === item._id ? 'dragging' : ''}}"
+        style="transform: translateY({{item.dragOffset || 0}}rpx)"
+      >
+        <view class="category-row-main">
+          <text
+            class="drag-handle"
+            data-id="{{item._id}}"
+            catchtouchstart="onCategoryTouchStart"
+            catchtouchmove="onCategoryTouchMove"
+            catchtouchend="onCategoryTouchEnd"
+          >↕</text>
+          <view class="category-copy">
+            <view class="category-name-line">
+              <text class="category-name">{{item.name}}</text>
+              <text class="category-status {{item.enabled ? 'enabled' : 'disabled'}}">{{item.enabled ? '已上架' : '已下架'}}</text>
+            </view>
+            <text class="category-meta">排序 {{index + 1}} · {{categoryDishCounts[item._id] || 0}} 道菜</text>
+          </view>
+        </view>
+        <view class="category-actions" catchtouchstart="stopTouch" catchtouchmove="stopTouch" catchtouchend="stopTouch">
+          <button class="category-action {{item.enabled ? 'unpublish' : 'publish'}}" data-id="{{item._id}}" bindtap="toggleCategory">{{item.enabled ? '下架' : '上架'}}</button>
+          <button class="category-action" data-id="{{item._id}}" bindtap="openEditCategory">编辑</button>
+          <button class="category-action danger" data-id="{{item._id}}" bindtap="removeCategory">删除</button>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <view wx:if="{{editing}}" class="modal-mask" catchtap="closeEditor">
+    <view class="editor-card" catchtap="noop">
+      <view class="editor-head">
+        <text class="editor-title">{{form.dishId ? '编辑菜品' : '新增菜品'}}</text>
+        <text class="editor-close" bindtap="closeEditor">×</text>
+      </view>
+      <input class="form-input" data-field="name" value="{{form.name}}" placeholder="菜品名称" bindinput="onInput" />
+      <input class="form-input" data-field="price" value="{{form.price}}" type="digit" placeholder="内部价格，例如 28" bindinput="onInput" />
+      <input class="form-input" data-field="emoji" value="{{form.emoji}}" maxlength="4" placeholder="表情备用图标" bindinput="onInput" />
+      <textarea class="form-textarea" data-field="desc" value="{{form.desc}}" maxlength="60" placeholder="菜品描述" bindinput="onInput" />
+      <view class="image-editor">
+        <view class="image-preview-wrap">
+          <image wx:if="{{form.image}}" class="image-preview" src="{{form.image}}" mode="aspectFill" />
+          <view wx:else class="image-placeholder">未设置图片</view>
+        </view>
+        <view class="image-actions">
+          <button class="image-btn" bindtap="chooseDishImage">{{uploadingImage ? '上传中…' : '上传图片'}}</button>
+          <button wx:if="{{form.image}}" class="image-btn ghost" bindtap="clearDishImage">移除图片</button>
+        </view>
+      </view>
+      <picker mode="selector" range="{{categories}}" range-key="name" value="{{categoryIndex}}" bindchange="onCategoryChange">
+        <view class="form-picker">分类：{{categories[categoryIndex].name || '请选择分类'}} <text>⌄</text></view>
+      </picker>
+      <picker mode="selector" range="{{supplyTypes}}" range-key="label" value="{{supplyTypeIndex}}" bindchange="onSupplyTypeChange">
+        <view class="form-picker">采购方式：{{supplyTypes[supplyTypeIndex].label}} <text>⌄</text></view>
+      </picker>
+      <view class="sold-row fitness-row">
+        <view>
+          <text>加入健身推荐</text>
+          <text class="form-hint">可与原菜品分类同时存在</text>
+        </view>
+        <switch color="#3f7c68" checked="{{form.fitnessRecommended}}" bindchange="onFitnessRecommendedChange" />
+      </view>
+      <view class="sold-row">
+        <text>当前售罄</text>
+        <switch color="#c65332" checked="{{form.soldOut}}" bindchange="onSoldOutChange" />
+      </view>
+      <button class="save-btn" bindtap="saveDish">{{saving ? '保存中…' : '保存菜品'}}</button>
+    </view>
+  </view>
+
+  <view wx:if="{{editingCategory}}" class="modal-mask" catchtap="closeCategoryEditor">
+    <view class="editor-card category-editor" catchtap="noop">
+      <view class="editor-head">
+        <text class="editor-title">{{categoryForm.categoryId ? '编辑分类' : '新增分类'}}</text>
+        <text class="editor-close" bindtap="closeCategoryEditor">×</text>
+      </view>
+      <input class="form-input" data-field="name" value="{{categoryForm.name}}" placeholder="分类名称，例如：特色热菜" bindinput="onCategoryInput" />
+      <text class="category-modal-hint">保存后可在分类管理页按住拖动排序，并单独控制上架状态。</text>
+      <button class="save-btn" bindtap="saveCategory">{{saving ? '保存中…' : '保存分类'}}</button>
+    </view>
+  </view>
+</view>

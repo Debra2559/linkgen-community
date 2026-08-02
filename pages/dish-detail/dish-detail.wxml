@@ -1,0 +1,48 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="state">正在打开这道菜…</view>
+
+  <view wx:elif="{{dish}}" class="detail">
+    <view class="hero-photo-wrap">
+      <image class="hero-photo" src="{{dish.image}}" mode="aspectFill" />
+      <view class="hero-photo-wash"></view>
+      <view class="hero-photo-label">HOME TABLE</view>
+      <view wx:if="{{dish.soldOut}}" class="soldout-label">暂时下架</view>
+    </view>
+
+    <view class="detail-content">
+      <view class="detail-heading">
+        <view class="heading-copy">
+          <text wx:if="{{categoryName}}" class="category-name">{{categoryName}}</text>
+          <text class="dish-name">{{dish.name}}</text>
+        </view>
+        <view class="detail-count" wx:if="{{count > 0}}">
+          <text class="count-number">{{count}}</text>
+          <text class="count-label">已选</text>
+        </view>
+      </view>
+
+      <view class="rule"></view>
+      <text class="detail-desc">{{dish.desc || '今晚，给喜欢的人添一道热乎乎的菜。'}}</text>
+
+      <view class="detail-note">
+        <text class="note-mark">✦</text>
+        <text>现点现做，和大家一起慢慢吃</text>
+      </view>
+    </view>
+
+    <view class="detail-actions">
+      <view class="stepper" wx:if="{{!dish.soldOut}}">
+        <view class="step-btn minus {{count === 0 ? 'disabled' : ''}}" bindtap="onMinus">−</view>
+        <text class="step-count">{{count}}</text>
+        <view class="step-btn plus" bindtap="onPlus">＋</view>
+      </view>
+      <view wx:else class="soldout-tip">这道菜暂时不能点</view>
+      <button class="cart-btn {{dish.soldOut ? 'disabled' : (count === 0 ? 'muted' : '')}}" bindtap="goCart">{{dish.soldOut ? '暂时下架' : (count ? '去购物车' : '加入菜单')}}</button>
+    </view>
+  </view>
+
+  <view wx:else class="state error-state">
+    <text>{{errorMessage}}</text>
+    <button class="back-btn" bindtap="goBack">返回菜单</button>
+  </view>
+</view>

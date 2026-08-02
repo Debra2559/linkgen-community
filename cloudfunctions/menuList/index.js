@@ -3,6 +3,8 @@
 const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
+// 版本标记：部署后在小程序端返回里应看到 version: 'v2-0731'，用于确认云端跑的是最新代码
+const VERSION = 'v2-0731';
 
 const SEED = [
   {
@@ -100,24 +102,54 @@ const SEED = [
 async function seedIfEmpty() {
   const categories = db.collection('categories');
   const dishes = db.collection('dishes');
-  const { total } = await categories.count();
-  if (total > 0) return;
+  try {
+    const [categoryRes, dishRes] = await Promise.all([
+      categories.limit(100).get(),
+      dishes.limit(100).get(),
+    ]);
+    const existingCategories = categoryRes.data || [];
+    const existingDishes = dishRes.data || [];
+    const categoryByName = new Map(existingCategories.map((c) => [c.name, c]));
 
-  for (const c of SEED) {
-    const res = await categories.add({ data: { name: c.name, sort: c.sort } });
-    for (const d of c.dishes) {
-      await dishes.add({
-        data: {
-          name: d.name,
-          price: d.price,
-          desc: d.desc,
-          emoji: d.emoji,
-          categoryId: res._id,
-          soldOut: false,
-          sort: d.price,
-        },
-      });
+    // 分类已经存在但菜品未导入时，按已有分类补齐菜品，避免首页得到空数组。
+    for (let index = 0; index < SEED.length; index += 1) {
+      const seedCategory = SEED[index];
+      let category = categoryByName.get(seedCategory.name);
+      if (!category) {
+        const res = await categories.add({
+          data: {
+            _id: `cat_${String(index + 1).padStart(3, '0')}`,
+            name: seedCategory.name,
+            sort: seedCategory.sort,
+            enabled: true,
+          },
+        });
+        category = { _id: res._id, name: seedCategory.name, sort: seedCategory.sort };
+        categoryByName.set(category.name, category);
+      }
+
+      const hasDishes = existingDishes.some((dish) => dish.categoryId === category._id);
+      if (hasDishes) continue;
+
+      for (const dish of seedCategory.dishes) {
+        await dishes.add({
+          data: {
+            name: dish.name,
+            price: dish.price,
+            desc: dish.desc,
+            emoji: dish.emoji,
+            categoryId: category._id,
+            supplyType: dish.supplyType || 'stock',
+            fitnessRecommended: !!dish.fitnessRecommended,
+            soldOut: false,
+            sort: dish.price,
+          },
+        });
+      }
     }
+  } catch (e) {
+    console.error('[menuList] categories 集合不存在或查询失败', e);
+    throw new Error('请先创建 categories 和 dishes 集合');
   }
 }
 
@@ -125,12 +157,13 @@ exports.main = async () => {
   try {
     await seedIfEmpty();
     const catRes = await db.collection('categories').orderBy('sort', 'asc').get();
-    const dishRes = await db.collection('dishes').limit(100).get();
+    const dishRes = await db.collection('dishes').orderBy('sort', 'asc').limit(100).get();
     return {
       code: 0,
+      version: VERSION,
       data: { categories: catRes.data, dishes: dishRes.data },
     };
   } catch (e) {
-    return { code: -1, message: '菜单加载失败：' + e.message };
+    return { code: -1, version: VERSION, message: '菜单加载失败：' + e.message };
   }
 };

@@ -8,13 +8,13 @@ const call = (name, data = {}) => {
       success: (res) => {
         const r = res.result || {};
         if (r.code === 0) {
-          resolve(r.data);
-        } else {
-          reject(new Error(r.message || '请求失败'));
+          resolve(r.data || {});
+          return;
         }
+        reject(new Error(r.message || r.errMsg || r.error || `[${name}] 云函数返回格式异常，请重新上传并部署`));
       },
       fail: (err) => {
-        reject(new Error(err.errMsg || '网络异常，请稍后重试'));
+        reject(new Error(`[${name}] ${err.errMsg || '网络异常，请稍后重试'}`));
       },
     });
   });

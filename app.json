@@ -1,17 +1,21 @@
 {
   "pages": [
+    "pages/auth/auth",
     "pages/menu/menu",
     "pages/cart/cart",
     "pages/orders/orders",
-    "pages/order-detail/order-detail"
+    "pages/order-detail/order-detail",
+    "pages/dish-detail/dish-detail",
+    "pages/admin-menu/admin-menu"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#fff7f0",
+    "navigationBarBackgroundColor": "#245548",
     "navigationBarTitleText": "家里饭桌",
-    "navigationBarTextStyle": "black",
-    "backgroundColor": "#f7f4f2",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f4f6ef",
     "backgroundTextStyle": "dark"
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
 }

@@ -3,28 +3,29 @@
 const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
-const _ = db.command;
+// 版本标记：部署后在小程序端返回里应看到 version: 'v2-0731'，用于确认云端跑的是最新代码
+const VERSION = 'v2-0731';
 
 exports.main = async (event) => {
-  const { OPENID } = cloud.getWXContext();
-  const { status = '', page = 1, pageSize = 20 } = event;
-
-  const admin = await db
-    .collection('admins')
-    .doc(OPENID)
-    .get()
-    .catch(() => null);
-  const isOwner = !!admin;
-
-  const where = {};
-  if (!isOwner) {
-    where._openid = OPENID;
-  }
-  if (status && ['pending', 'done'].includes(status)) {
-    where.status = status;
-  }
-
   try {
+    const { OPENID } = cloud.getWXContext();
+    const { status = '', page = 1, pageSize = 20 } = event || {};
+
+    const admin = await db
+      .collection('admins')
+      .doc(OPENID)
+      .get()
+      .catch(() => null);
+    const isOwner = !!admin;
+
+    const where = {};
+    if (!isOwner) {
+      where._openid = OPENID;
+    }
+    if (status && ['pending', 'done'].includes(status)) {
+      where.status = status;
+    }
+
     const res = await db
       .collection('orders')
       .where(where)
@@ -45,9 +46,11 @@ exports.main = async (event) => {
 
     return {
       code: 0,
-      data: { list: res.data, isOwner, pendingTotal },
+      version: VERSION,
+      data: { list: res.data, isOwner, pendingTotal, viewerOpenid: OPENID },
     };
   } catch (e) {
-    return { code: -1, message: '订单加载失败：' + e.message };
+    console.error('[listOrders] 执行失败', e);
+    return { code: -1, version: VERSION, message: '订单加载失败：' + e.message };
   }
 };

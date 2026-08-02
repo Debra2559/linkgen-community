@@ -24,14 +24,9 @@
   <view class="card block">
     <view class="block-title">点的菜（共 {{totalCount}} 份）</view>
     <view wx:for="{{cartList}}" wx:key="_id" class="dish-row">
-      <text class="dish-emoji">{{item.dish.emoji || '🍽️'}}</text>
+      <image class="dish-photo" src="{{item.dish.image}}" mode="aspectFill" />
       <text class="dish-name">{{item.dish.name}}</text>
       <text class="dish-count">×{{item.count}}</text>
-      <text class="dish-price price-text">¥{{item.dish.price}}</text>
-    </view>
-    <view class="total-row">
-      <text>合计</text>
-      <text class="price-text total-price">¥{{totalPriceText}}</text>
     </view>
   </view>
 
@@ -50,10 +45,7 @@
 
   <!-- 提交栏 -->
   <view class="submit-bar">
-    <view class="submit-total">
-      <text class="submit-label">合计</text>
-      <text class="price-text submit-price">¥{{totalPriceText}}</text>
-    </view>
+    <text class="submit-hint">允许通知后，菜做好时微信会提醒你</text>
     <button
       class="submit-btn {{submitting ? 'disabled' : ''}}"
       bindtap="submitOrder"
