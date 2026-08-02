@@ -77,6 +77,22 @@ Page({
     try {
       // 必须在用户点击提交的事件链内请求订阅，云函数无法替用户申请订阅权限。
       const subscription = await requestOrderDoneSubscription();
+      if (!subscription.accepted) {
+        const shouldContinue = await new Promise((resolve) => {
+          wx.showModal({
+            title: '微信通知未开启',
+            content: `${subscription.error || '请允许订单进度提醒'}\n继续下单后，菜做好时不会收到微信通知。`,
+            cancelText: '返回',
+            confirmText: '仍然下单',
+            success: (result) => resolve(!!result.confirm),
+            fail: () => resolve(false),
+          });
+        });
+        if (!shouldContinue) {
+          this.setData({ submitting: false });
+          return;
+        }
+      }
       wx.showLoading({ title: '提交中…', mask: true });
       const items = this.data.cartList.map((c) => ({
         dishId: c.dish._id,
@@ -88,6 +104,8 @@ Page({
         name: this.data.name,
         remark: this.data.remark,
         notifySubscribed: subscription.accepted,
+        notifyStatus: subscription.status || '',
+        notifyError: subscription.error || '',
         notifyTemplateId: subscription.templateId,
       });
 

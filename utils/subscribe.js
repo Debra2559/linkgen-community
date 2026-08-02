@@ -3,7 +3,12 @@ const ORDER_DONE_TEMPLATE_ID = 'ntENoI8OqYpq03k_tK0WapkdV6qBZABp-JZw0Q5rCvk';
 
 function requestOrderDoneSubscription() {
   if (!ORDER_DONE_TEMPLATE_ID || typeof wx.requestSubscribeMessage !== 'function') {
-    return Promise.resolve({ accepted: false, templateId: ORDER_DONE_TEMPLATE_ID });
+    return Promise.resolve({
+      accepted: false,
+      status: 'unsupported',
+      error: '当前微信环境不支持订阅消息，请使用真机测试',
+      templateId: ORDER_DONE_TEMPLATE_ID,
+    });
   }
 
   return new Promise((resolve) => {
@@ -13,6 +18,9 @@ function requestOrderDoneSubscription() {
         resolve({
           accepted: result[ORDER_DONE_TEMPLATE_ID] === 'accept',
           status: result[ORDER_DONE_TEMPLATE_ID] || 'unknown',
+          error: result[ORDER_DONE_TEMPLATE_ID] === 'accept'
+            ? ''
+            : '你没有允许“订单进度提醒”，菜做好后无法发送通知',
           templateId: ORDER_DONE_TEMPLATE_ID,
         });
       },

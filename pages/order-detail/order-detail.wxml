@@ -11,6 +11,14 @@
       </view>
     </view>
 
+    <view
+      wx:if="{{order.status === 'done' && order.notificationState && order.notificationState !== 'sent'}}"
+      class="notification-warning"
+    >
+      <text class="notification-warning-title">微信通知未发送</text>
+      <text class="notification-warning-copy">{{order.notificationError || '请重新下单并允许订阅消息'}}</text>
+    </view>
+
     <!-- 下单人 -->
     <view class="card block">
       <view class="row">

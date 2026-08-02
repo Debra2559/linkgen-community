@@ -2,8 +2,8 @@
 const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
-// 版本标记：部署后在小程序端返回里应看到 version: 'v2-0731'，用于确认云端跑的是最新代码
-const VERSION = 'v2-0731';
+// 版本标记：部署后用于确认云端已经更新到通知诊断版本。
+const VERSION = 'v3-0802';
 
 exports.main = async (event) => {
   try {
@@ -36,8 +36,19 @@ exports.main = async (event) => {
     });
 
     let notificationSent = false;
+    let notificationState = status === 'done' ? 'skipped' : '';
     let notificationError = '';
-    if (status === 'done' && order.notifySubscribed && order.notifyTemplateId && order._openid) {
+    let notificationCode = '';
+    if (status === 'done' && !order.notifySubscribed) {
+      notificationState = 'not_subscribed';
+      notificationError = order.notifyError || '下单时没有允许订阅通知，请重新下单并在弹窗中选择允许';
+    } else if (status === 'done' && !order.notifyTemplateId) {
+      notificationState = 'missing_template';
+      notificationError = '订单没有保存订阅模板 ID，请重新部署小程序后重新下单';
+    } else if (status === 'done' && !order._openid) {
+      notificationState = 'missing_user';
+      notificationError = '订单缺少微信用户标识，无法发送通知';
+    } else if (status === 'done') {
       const summary = (order.items || [])
         .map((item) => `${item.name}×${item.count}`)
         .join('、')
@@ -54,26 +65,58 @@ exports.main = async (event) => {
           },
         });
         notificationSent = true;
+        notificationState = 'sent';
       } catch (notifyError) {
         // 通知失败不回滚订单状态，避免用户已取餐但订单仍显示待处理。
         console.error('[updateOrderStatus] 订阅消息发送失败', notifyError);
-        notificationError = notifyError.errMsg || notifyError.message || '订阅消息发送失败';
+        notificationState = 'send_failed';
+        notificationCode = String(notifyError.errCode || notifyError.errcode || notifyError.code || '');
+        notificationError = formatNotificationError(notifyError);
       }
     }
 
-    if (status === 'done' && !order.notifySubscribed) {
-      notificationError = '下单时没有允许订阅通知';
+    if (status === 'done') {
+      await db.collection('orders').doc(orderId).update({
+        data: {
+          notificationSent,
+          notificationState,
+          notificationError,
+          notificationCode,
+          notificationTime: notificationSent ? db.serverDate() : null,
+        },
+      });
     }
     return {
       code: 0,
       version: VERSION,
-      data: { ok: true, notificationSent, notificationError },
+      data: {
+        ok: true,
+        notificationSent,
+        notificationState,
+        notificationCode,
+        notificationError,
+      },
     };
   } catch (e) {
     console.error('[updateOrderStatus] 执行失败', e);
     return { code: -1, version: VERSION, message: '操作失败：' + e.message };
   }
 };
+
+function formatNotificationError(error) {
+  const code = String(error && (error.errCode || error.errcode || error.code) || '');
+  const raw = error && (error.errMsg || error.message) || '订阅消息发送失败';
+  const known = {
+    '43101': '用户未接受订阅，或该模板的订阅额度已用尽',
+    '41030': '模板 ID 不存在，或未在当前小程序中配置',
+    '40037': '模板 ID 无效，请核对订阅消息模板 ID',
+    '47003': '模板字段与公众平台配置不匹配，请核对 phrase1、time2、thing3',
+    '45009': '订阅消息接口调用频率受限，请稍后重试',
+    '41028': '下单用户的微信身份无效，请重新登录下单',
+  }[code];
+  if (known) return `${known}（错误码 ${code}）`;
+  return code ? `${raw}（错误码 ${code}）` : raw;
+}
 
 function formatDate(date) {
   const pad = (value) => String(value).padStart(2, '0');

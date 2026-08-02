@@ -8,7 +8,15 @@ const VERSION = 'v2-0731';
 exports.main = async (event) => {
   try {
     const { OPENID } = cloud.getWXContext();
-    const { items, remark = '', name = '', notifySubscribed = false, notifyTemplateId = '' } = event;
+    const {
+      items,
+      remark = '',
+      name = '',
+      notifySubscribed = false,
+      notifyStatus = '',
+      notifyError = '',
+      notifyTemplateId = '',
+    } = event;
 
     if (!Array.isArray(items) || items.length === 0) {
       return { code: -1, version: VERSION, message: '还没有选择菜品哦' };
@@ -74,6 +82,8 @@ exports.main = async (event) => {
         totalPrice: Math.round(totalPrice * 100) / 100,
         remark: remark.trim().slice(0, 100),
         notifySubscribed: !!notifySubscribed,
+        notifyStatus: String(notifyStatus || '').slice(0, 32),
+        notifyError: String(notifyError || '').slice(0, 160),
         notifyTemplateId: String(notifyTemplateId || '').slice(0, 128),
         status: 'pending', // pending=待处理 done=已完成
         createTime: db.serverDate(),
