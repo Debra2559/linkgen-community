@@ -308,6 +308,7 @@
   border-radius: 8rpx;
   font-size: 25rpx;
   line-height: 1;
+  user-select: none;
 }
 .dish-drag-handle.disabled {
   color: #b8c5bd;
@@ -581,6 +582,65 @@
   font-weight: 700;
 }
 
+.create-menu-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  margin-bottom: 22rpx;
+  padding: 18rpx 20rpx;
+  background: #fff8f1;
+  border: 1rpx solid #efd9ca;
+  border-radius: 14rpx;
+}
+.create-menu-copy {
+  min-width: 0;
+  flex: 1 1 auto;
+  margin-right: 16rpx;
+}
+.create-menu-title,
+.create-menu-caption {
+  display: block;
+}
+.create-menu-title {
+  color: var(--brand-deep);
+  font-size: 25rpx;
+  font-weight: 700;
+}
+.create-menu-caption {
+  margin-top: 5rpx;
+  overflow: hidden;
+  color: var(--text-sub);
+  font-size: 19rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.create-menu-actions {
+  display: flex;
+  flex: 0 0 auto;
+}
+.create-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 104rpx;
+  margin-left: 8rpx;
+  padding: 11rpx 14rpx;
+  border-radius: 9rpx;
+  font-size: 21rpx;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.create-menu-btn.primary {
+  color: #fff;
+  background: var(--brand);
+}
+.create-menu-btn.secondary {
+  color: var(--brand-deep);
+  background: #e8f1e9;
+}
+
 /* 分类管理 */
 .category-guide {
   display: flex;
@@ -642,6 +702,7 @@
   background: #edf5ee;
   border-radius: 10rpx;
   font-size: 30rpx;
+  user-select: none;
 }
 .category-copy {
   min-width: 0;

@@ -13,7 +13,7 @@ Page({
     visibleDishes: [],
     activeTab: 'dishes',
     tabs: [
-      { key: 'dishes', label: '菜品管理' },
+      { key: 'dishes', label: '菜单管理' },
       { key: 'categories', label: '分类管理' },
     ],
     draggingCategoryId: '',
@@ -24,6 +24,7 @@ Page({
     supplyFilter: '',
     editing: false,
     editingCategory: false,
+    pendingCreateDish: false,
     categoryIndex: 0,
     supplyTypeIndex: 0,
     categoryForm: {
@@ -111,10 +112,21 @@ Page({
     this.setData({ activeTab, editing: false, editingCategory: false });
   },
 
+  openCreateMenu() {
+    wx.showActionSheet({
+      itemList: ['新建分类（菜单分组）', '新建菜品（菜单内容）'],
+      success: (result) => {
+        if (result.tapIndex === 0) this.openAddCategory();
+        if (result.tapIndex === 1) this.openAddDish();
+      },
+    });
+  },
+
   openAddDish() {
     const categoryId = this.data.activeCategoryId || (this.data.categories[0] && this.data.categories[0]._id) || '';
     if (!categoryId) {
-      wx.showToast({ title: '请先创建菜品分类', icon: 'none' });
+      this.setData({ pendingCreateDish: true });
+      this.openAddCategory();
       return;
     }
     this.setData({
@@ -251,7 +263,7 @@ Page({
 
   closeCategoryEditor() {
     if (this.data.saving) return;
-    this.setData({ editingCategory: false });
+    this.setData({ editingCategory: false, pendingCreateDish: false });
   },
 
   async saveCategory() {
@@ -263,9 +275,14 @@ Page({
     this.setData({ saving: true });
     try {
       await call('manageMenu', { action: 'upsertCategory', ...categoryForm });
+      const shouldCreateDish = this.data.pendingCreateDish;
       this.setData({ saving: false, editingCategory: false });
       wx.showToast({ title: '分类已保存', icon: 'success' });
-      this.loadMenu();
+      await this.loadMenu();
+      if (shouldCreateDish) {
+        this.setData({ pendingCreateDish: false });
+        this.openAddDish();
+      }
     } catch (e) {
       this.setData({ saving: false });
       wx.showModal({ title: '保存分类失败', content: e.message || '请稍后重试', showCancel: false });
@@ -288,7 +305,7 @@ Page({
   onCategoryTouchStart(e) {
     const id = e.currentTarget.dataset.id;
     const index = this.data.categories.findIndex((category) => category._id === id);
-    const pageY = e.touches && e.touches[0] ? e.touches[0].pageY : 0;
+    const pageY = this.getTouchY(e);
     if (index < 0 || !pageY) return;
     this._categoryDrag = {
       id,
@@ -304,11 +321,13 @@ Page({
     const drag = this._categoryDrag;
     const touch = e.touches && e.touches[0];
     if (!drag || !touch) return;
+    const currentY = this.getTouchY(e);
+    if (!currentY) return;
     const windowWidth = wx.getSystemInfoSync().windowWidth || 375;
     const rowHeight = Math.max(76, windowWidth * 160 / 750);
-    const offset = Math.round((touch.pageY - drag.startY) / rowHeight);
+    const offset = Math.round((currentY - drag.startY) / rowHeight);
     const targetIndex = Math.max(0, Math.min(this.data.categories.length - 1, drag.startIndex + offset));
-    const offsetRpx = Math.round((touch.pageY - drag.startY) * 750 / windowWidth);
+    const offsetRpx = Math.round((currentY - drag.startY) * 750 / windowWidth);
     if (targetIndex === drag.lastIndex) {
       const categories = this.data.categories.map((category) => (
         category._id === drag.id ? { ...category, dragOffset: offsetRpx } : category
@@ -344,7 +363,7 @@ Page({
     if (!this.data.activeCategoryId || this.data.supplyFilter) return;
     const id = e.currentTarget.dataset.id;
     const index = this.data.visibleDishes.findIndex((dish) => dish._id === id);
-    const pageY = e.touches && e.touches[0] ? e.touches[0].pageY : 0;
+    const pageY = this.getTouchY(e);
     if (index < 0 || !pageY) return;
     this._dishDrag = {
       id,
@@ -360,11 +379,13 @@ Page({
     const drag = this._dishDrag;
     const touch = e.touches && e.touches[0];
     if (!drag || !touch) return;
+    const currentY = this.getTouchY(e);
+    if (!currentY) return;
     const windowWidth = wx.getSystemInfoSync().windowWidth || 375;
-    const rowHeight = Math.max(120, windowWidth * 190 / 750);
-    const offset = Math.round((touch.pageY - drag.startY) / rowHeight);
+    const rowHeight = Math.max(204, windowWidth * 210 / 750);
+    const offset = Math.round((currentY - drag.startY) / rowHeight);
     const targetIndex = Math.max(0, Math.min(this.data.visibleDishes.length - 1, drag.startIndex + offset));
-    const offsetRpx = Math.round((touch.pageY - drag.startY) * 750 / windowWidth);
+    const offsetRpx = Math.round((currentY - drag.startY) * 750 / windowWidth);
     if (targetIndex === drag.lastIndex) {
       const visibleDishes = this.data.visibleDishes.map((dish) => (
         dish._id === drag.id ? { ...dish, dragOffset: offsetRpx } : { ...dish, dragOffset: 0 }
@@ -377,7 +398,6 @@ Page({
     visibleDishes.splice(targetIndex, 0, { ...moved, dragOffset: 0 });
     visibleDishes.forEach((dish) => { dish.dragOffset = 0; });
     drag.lastIndex = targetIndex;
-    drag.startY = touch.pageY;
     drag.moved = true;
     const movedById = {};
     visibleDishes.forEach((dish, index) => {
@@ -403,6 +423,12 @@ Page({
   },
 
   stopTouch() {},
+
+  getTouchY(e) {
+    const touch = e && e.touches && e.touches[0];
+    if (!touch) return 0;
+    return Number(touch.pageY || touch.clientY || 0);
+  },
 
   removeCategory(e) {
     const categoryId = e.currentTarget.dataset.id;

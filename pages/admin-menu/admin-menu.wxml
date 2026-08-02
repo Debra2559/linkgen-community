@@ -2,11 +2,10 @@
   <view class="admin-head">
     <view class="admin-head-copy">
       <text class="admin-kicker">OWNER WORKSPACE</text>
-      <text class="admin-title">{{activeTab === 'dishes' ? '菜品管理' : '分类管理'}}</text>
+      <text class="admin-title">{{activeTab === 'dishes' ? '菜单管理' : '分类管理'}}</text>
     </view>
     <view class="head-actions">
-      <button wx:if="{{activeTab === 'categories'}}" class="add-btn" bindtap="openAddCategory">＋ 新分类</button>
-      <button wx:else class="add-btn" bindtap="openAddDish">＋ 新菜品</button>
+      <button class="add-btn" bindtap="openCreateMenu">＋ 新建菜单</button>
     </view>
   </view>
 
@@ -18,6 +17,17 @@
       data-key="{{item.key}}"
       bindtap="onSwitchTab"
     >{{item.label}}</view>
+  </view>
+
+  <view class="create-menu-bar">
+    <view class="create-menu-copy">
+      <text class="create-menu-title">菜单内容</text>
+      <text class="create-menu-caption">分类决定菜单结构，菜品属于具体分类</text>
+    </view>
+    <view class="create-menu-actions">
+      <button class="create-menu-btn secondary" bindtap="openAddCategory">＋ 分类</button>
+      <button class="create-menu-btn primary" bindtap="openAddDish">＋ 菜品</button>
+    </view>
   </view>
 
   <block wx:if="{{activeTab === 'dishes'}}">
@@ -46,7 +56,7 @@
       >{{item.label}}</view>
     </scroll-view>
 
-    <view class="dish-sort-hint">{{activeCategoryId && !supplyFilter ? '按住菜品左侧 ↕ 拖动排序' : '选择具体分类后可拖动菜品顺序'}}</view>
+    <view class="dish-sort-hint">{{activeCategoryId && !supplyFilter ? '按住左侧手柄拖动菜品，松手后自动保存' : '选择具体分类并清除筛选后可拖动菜品顺序'}}</view>
 
     <view wx:if="{{!loading && visibleDishes.length}}" class="batch-toolbar card">
       <view class="batch-summary">
@@ -61,20 +71,26 @@
 
     <view wx:if="{{loading}}" class="state">正在读取菜品…</view>
     <view wx:elif="{{visibleDishes.length === 0}}" class="state">当前筛选没有菜品</view>
-    <scroll-view wx:else scroll-y class="dish-list">
-      <view wx:for="{{visibleDishes}}" wx:key="_id" class="dish-card card {{draggingDishId === item._id ? 'dragging' : ''}}" style="transform: translateY({{item.dragOffset || 0}}rpx)">
+    <scroll-view wx:else scroll-y="{{!draggingDishId}}" class="dish-list">
+      <view
+        wx:for="{{visibleDishes}}"
+        wx:key="_id"
+        class="dish-card card {{draggingDishId === item._id ? 'dragging' : ''}}"
+        style="transform: translateY({{item.dragOffset || 0}}rpx)"
+      >
         <image class="dish-image" src="{{item.image}}" mode="aspectFill" />
         <view class="dish-main">
           <view class="dish-name-line">
-            <text
+            <view
               wx:if="{{activeCategoryId && !supplyFilter}}"
               class="dish-drag-handle"
               data-id="{{item._id}}"
               catchtouchstart="onDishTouchStart"
               catchtouchmove="onDishTouchMove"
               catchtouchend="onDishTouchEnd"
-            >↕</text>
-            <text wx:else class="dish-drag-handle disabled">·</text>
+              catchtouchcancel="onDishTouchEnd"
+            >↕</view>
+            <view wx:else class="dish-drag-handle disabled">·</view>
             <text class="dish-name">{{item.name}}</text>
             <text wx:if="{{item.soldOut}}" class="sold-tag">已下架</text>
           </view>
@@ -82,7 +98,7 @@
           <text wx:if="{{item.fitnessRecommended}}" class="fitness-tag">健身推荐</text>
           <text class="dish-desc">{{item.desc || '未填写描述'}}</text>
           <text class="dish-meta">¥{{item.price}}</text>
-          <view class="dish-actions">
+          <view class="dish-actions" catchtouchstart="stopTouch" catchtouchmove="stopTouch" catchtouchend="stopTouch">
             <button class="action-btn" data-id="{{item._id}}" bindtap="openEdit">编辑</button>
             <button class="action-btn" data-id="{{item._id}}" bindtap="toggleSoldOut">{{item.soldOut ? '上架' : '下架'}}</button>
             <button class="action-btn danger" data-id="{{item._id}}" bindtap="removeDish">删除</button>
@@ -111,14 +127,22 @@
         class="category-row {{draggingCategoryId === item._id ? 'dragging' : ''}}"
         style="transform: translateY({{item.dragOffset || 0}}rpx)"
       >
-        <view class="category-row-main">
-          <text
+        <view
+          class="category-row-main"
+          data-id="{{item._id}}"
+          catchtouchstart="onCategoryTouchStart"
+          catchtouchmove="onCategoryTouchMove"
+          catchtouchend="onCategoryTouchEnd"
+          catchtouchcancel="onCategoryTouchEnd"
+        >
+          <view
             class="drag-handle"
             data-id="{{item._id}}"
             catchtouchstart="onCategoryTouchStart"
             catchtouchmove="onCategoryTouchMove"
             catchtouchend="onCategoryTouchEnd"
-          >↕</text>
+            catchtouchcancel="onCategoryTouchEnd"
+          >↕</view>
           <view class="category-copy">
             <view class="category-name-line">
               <text class="category-name">{{item.name}}</text>
