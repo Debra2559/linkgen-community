@@ -2,14 +2,15 @@
 const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
-const VERSION = 'v2-0731';
+const VERSION = 'v3-0802';
 const SUPPLY_TYPES = ['stock', 'purchase', 'retail'];
+const MENU_TYPES = ['home', 'sukiyaki', 'chongqing'];
 
 async function getOwner(openid) {
   return db.collection('admins').doc(openid).get().catch(() => null);
 }
 
-function cleanDish(event) {
+async function cleanDish(event) {
   const name = String(event.name || '').trim().slice(0, 24);
   const desc = String(event.desc || '').trim().slice(0, 60);
   const price = Number(event.price);
@@ -17,11 +18,15 @@ function cleanDish(event) {
   if (!event.categoryId) throw new Error('请选择分类');
   if (!Number.isFinite(price) || price < 0) throw new Error('价格必须是有效数字');
   const supplyType = SUPPLY_TYPES.includes(event.supplyType) ? event.supplyType : 'stock';
+  const category = await db.collection('categories').doc(event.categoryId).get().catch(() => null);
   return {
     name,
     desc,
     price: Math.round(price * 100) / 100,
     categoryId: event.categoryId,
+    menuType: MENU_TYPES.includes(event.menuType)
+      ? event.menuType
+      : (category && category.data && MENU_TYPES.includes(category.data.menuType) ? category.data.menuType : 'home'),
     image: String(event.image || '').trim().slice(0, 500),
     emoji: String(event.emoji || '✦').slice(0, 4),
     supplyType,
@@ -37,6 +42,7 @@ function cleanCategory(event) {
   return {
     name,
     sort: Number(event.sort) || 99,
+    menuType: MENU_TYPES.includes(event.menuType) ? event.menuType : 'home',
     enabled: event.enabled !== false,
   };
 }
@@ -62,7 +68,7 @@ exports.main = async (event = {}) => {
     }
 
     if (action === 'upsert') {
-      const data = cleanDish(event);
+      const data = await cleanDish(event);
       if (event.dishId) {
         await db.collection('dishes').doc(event.dishId).update({ data });
       } else {

@@ -30,6 +30,16 @@
   <view wx:if="{{loading}}" class="loading"><text class="loading-mark">◌</text> 正在准备菜单…</view>
 
   <block wx:else>
+    <scroll-view wx:if="{{allDishes.length}}" scroll-x class="menu-type-filters" enhanced show-scrollbar="{{false}}">
+      <view
+        wx:for="{{menuTypes}}"
+        wx:key="key"
+        class="menu-type-filter {{menuType === item.key ? 'on' : ''}}"
+        data-key="{{item.key}}"
+        bindtap="onMenuType"
+      >{{item.label}}</view>
+    </scroll-view>
+
     <scroll-view wx:if="{{allDishes.length}}" scroll-x class="supply-filters" enhanced show-scrollbar="{{false}}">
       <view
         wx:for="{{supplyFilters}}"
@@ -76,7 +86,8 @@
           </view>
           <view wx:for="{{item.dishes}}" wx:for-item="dish" wx:key="_id" class="dish-card card" bindtap="onDishTap" data-id="{{dish._id}}">
             <view class="dish-photo-wrap">
-              <image class="dish-photo" src="{{dish.image}}" mode="aspectFill" lazy-load />
+              <image wx:if="{{dish.image}}" class="dish-photo" src="{{dish.image}}" mode="aspectFill" lazy-load />
+              <view wx:else class="dish-photo-fallback">{{dish.emoji || '锅'}}</view>
               <view class="dish-photo-label" wx:if="{{dish.soldOut}}">售罄</view>
             </view>
             <view class="dish-info">
@@ -132,7 +143,8 @@
       </view>
       <scroll-view scroll-y class="panel-list">
         <view wx:for="{{cartList}}" wx:for-item="cartItem" wx:key="_id" class="panel-item">
-          <image class="panel-photo" src="{{cartItem.dish.image}}" mode="aspectFill" />
+          <image wx:if="{{cartItem.dish.image}}" class="panel-photo" src="{{cartItem.dish.image}}" mode="aspectFill" />
+          <view wx:else class="panel-photo-fallback">{{cartItem.dish.emoji || '锅'}}</view>
           <text class="panel-name">{{cartItem.dish.name}}</text>
           <view class="stepper">
             <view class="step-btn minus" catchtap="onMinus" data-id="{{cartItem.dish._id}}">−</view>

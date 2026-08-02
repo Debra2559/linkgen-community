@@ -3,7 +3,8 @@
 
   <view wx:elif="{{dish}}" class="detail">
     <view class="hero-photo-wrap">
-      <image class="hero-photo" src="{{dish.image}}" mode="aspectFill" />
+      <image wx:if="{{dish.image}}" class="hero-photo" src="{{dish.image}}" mode="aspectFill" />
+      <view wx:else class="hero-photo-fallback">{{dish.emoji || '锅'}}</view>
       <view class="hero-photo-wash"></view>
       <view class="hero-photo-label">HOME TABLE</view>
       <view wx:if="{{dish.soldOut}}" class="soldout-label">暂时下架</view>

@@ -31,11 +31,20 @@
   background: #dce8df;
 }
 .hero-photo,
+.hero-photo-fallback,
 .hero-photo-wash {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+}
+.hero-photo-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand-deep);
+  background: #e7f0e8;
+  font-size: 160rpx;
 }
 .hero-photo-wash {
   background: linear-gradient(to top, rgba(25, 67, 53, 0.48), rgba(25, 67, 53, 0.04) 56%);

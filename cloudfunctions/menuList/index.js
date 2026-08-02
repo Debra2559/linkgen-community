@@ -105,6 +105,119 @@ const SEED = [
       { name: '酸梅汤', price: 6, desc: '酸甜解暑，老北京味道', emoji: '🫖' },
     ],
   },
+  {
+    name: '锅物 · 肉类',
+    sort: 1,
+    menuType: 'sukiyaki',
+    supplyType: 'purchase',
+    dishes: [
+      { name: '雪花牛肉', price: 38, desc: '薄切入锅，裹满寿喜汁', emoji: '🥩', fitnessRecommended: true },
+      { name: '牛肩肉片', price: 32, desc: '肉香扎实，适合涮煮', emoji: '🍖', fitnessRecommended: true },
+      { name: '猪五花', price: 24, desc: '肥瘦相间，甜口锅底很搭', emoji: '🥓' },
+      { name: '鸡腿肉片', price: 22, desc: '嫩滑不柴，吸满汤汁', emoji: '🍗', fitnessRecommended: true },
+    ],
+  },
+  {
+    name: '锅物 · 蔬菜',
+    sort: 2,
+    menuType: 'sukiyaki',
+    supplyType: 'stock',
+    dishes: [
+      { name: '娃娃菜', price: 8, desc: '清甜脆嫩，适合久煮', emoji: '🥬', fitnessRecommended: true },
+      { name: '茼蒿', price: 9, desc: '带一点清香，涮后柔软', emoji: '🌿', fitnessRecommended: true },
+      { name: '香菇拼盘', price: 12, desc: '菌香饱满，汤底更鲜', emoji: '🍄', fitnessRecommended: true },
+      { name: '金针菇', price: 8, desc: '细嫩爽滑，锅物必点', emoji: '🪴', fitnessRecommended: true },
+    ],
+  },
+  {
+    name: '锅物 · 豆制品',
+    sort: 3,
+    menuType: 'sukiyaki',
+    supplyType: 'purchase',
+    dishes: [
+      { name: '北豆腐', price: 10, desc: '吸汁饱满，口感扎实', emoji: '⬜', fitnessRecommended: true },
+      { name: '油豆皮', price: 12, desc: '柔韧吸汁，越煮越香', emoji: '🟨' },
+      { name: '魔芋结', price: 10, desc: '轻盈爽口，锅里很有存在感', emoji: '➰', fitnessRecommended: true },
+    ],
+  },
+  {
+    name: '锅物 · 海鲜',
+    sort: 4,
+    menuType: 'sukiyaki',
+    supplyType: 'purchase',
+    dishes: [
+      { name: '鲜虾', price: 28, desc: '鲜甜弹牙，寿喜汁提味', emoji: '🦐', fitnessRecommended: true },
+      { name: '巴沙鱼片', price: 22, desc: '细嫩少刺，涮煮方便', emoji: '🐟', fitnessRecommended: true },
+      { name: '蟹柳', price: 16, desc: '微甜弹嫩，孩子也喜欢', emoji: '🦀' },
+    ],
+  },
+  {
+    name: '锅物 · 主食',
+    sort: 5,
+    menuType: 'sukiyaki',
+    supplyType: 'retail',
+    dishes: [
+      { name: '乌冬面', price: 12, desc: '吸满汤汁，收尾刚好', emoji: '🍜' },
+      { name: '可生食鸡蛋', price: 8, desc: '蘸肉片吃，口感更顺滑', emoji: '🥚', fitnessRecommended: true },
+    ],
+  },
+  {
+    name: '火锅 · 肉类',
+    sort: 1,
+    menuType: 'chongqing',
+    supplyType: 'purchase',
+    dishes: [
+      { name: '精品肥牛', price: 36, desc: '油香丰盈，红汤里涮到刚好', emoji: '🥩' },
+      { name: '羊肉卷', price: 30, desc: '鲜香细嫩，麻辣锅底很搭', emoji: '🍖' },
+      { name: '毛肚', price: 32, desc: '七上八下，脆爽有嚼劲', emoji: '🫀' },
+      { name: '鸭肠', price: 24, desc: '脆嫩弹口，涮久也不失味', emoji: '〰️' },
+    ],
+  },
+  {
+    name: '火锅 · 蔬菜',
+    sort: 2,
+    menuType: 'chongqing',
+    supplyType: 'stock',
+    dishes: [
+      { name: '土豆片', price: 8, desc: '软糯吸汁，红汤里的安心牌', emoji: '🥔' },
+      { name: '莴笋片', price: 10, desc: '清脆解辣，麻辣锅必备', emoji: '🥒', fitnessRecommended: true },
+      { name: '藕片', price: 10, desc: '脆爽清甜，久煮不散', emoji: '⭕', fitnessRecommended: true },
+      { name: '海带结', price: 9, desc: '鲜味清爽，吸汤不抢味', emoji: '🌊', fitnessRecommended: true },
+    ],
+  },
+  {
+    name: '火锅 · 丸滑',
+    sort: 3,
+    menuType: 'chongqing',
+    supplyType: 'purchase',
+    dishes: [
+      { name: '手打牛肉丸', price: 18, desc: '弹牙多汁，一口一个', emoji: '⚪' },
+      { name: '鱼豆腐', price: 14, desc: '柔软吸汁，孩子友好', emoji: '🔶' },
+      { name: '虾滑', price: 22, desc: '鲜甜细腻，现挤入锅', emoji: '🦐', fitnessRecommended: true },
+      { name: '午餐肉', price: 16, desc: '咸香绵软，重庆火锅老搭档', emoji: '🟥' },
+    ],
+  },
+  {
+    name: '火锅 · 豆制品',
+    sort: 4,
+    menuType: 'chongqing',
+    supplyType: 'purchase',
+    dishes: [
+      { name: '豆皮', price: 10, desc: '薄韧吸辣，涮后更香', emoji: '🟨', fitnessRecommended: true },
+      { name: '腐竹', price: 12, desc: '泡发柔软，红汤越煮越入味', emoji: '📜' },
+      { name: '宽粉', price: 12, desc: '滑溜带劲，吸足牛油香', emoji: '〰️' },
+    ],
+  },
+  {
+    name: '火锅 · 主食',
+    sort: 5,
+    menuType: 'chongqing',
+    supplyType: 'retail',
+    dishes: [
+      { name: '红糖糍粑', price: 14, desc: '外脆内糯，辣后收尾', emoji: '🟫' },
+      { name: '火锅粉', price: 12, desc: '爽滑入味，最后一勺汤底', emoji: '🍜' },
+    ],
+  },
 ];
 
 function getSeedDish(category, dish) {
@@ -114,6 +227,7 @@ function getSeedDish(category, dish) {
 function getSeedMetadata(category, dish) {
   const seedDish = getSeedDish(category, dish);
   return {
+    menuType: category.menuType || 'home',
     supplyType: seedDish.supplyType || category.supplyType || 'stock',
     fitnessRecommended: !!seedDish.fitnessRecommended,
   };
@@ -122,6 +236,7 @@ function getSeedMetadata(category, dish) {
 function getDishMetadata(category, dish) {
   const seedMetadata = getSeedMetadata(category, dish);
   return {
+    menuType: dish.menuType || seedMetadata.menuType,
     supplyType: dish.supplyType || seedMetadata.supplyType,
     fitnessRecommended: typeof dish.fitnessRecommended === 'boolean'
       ? dish.fitnessRecommended
@@ -139,6 +254,7 @@ async function backfillDishMetadata(existingDishes, existingCategories) {
     if (!seedCategory) return;
     const metadata = getSeedMetadata(seedCategory, dish);
     const data = {};
+    if (!dish.menuType) data.menuType = metadata.menuType;
     if (!dish.supplyType || (dish.supplyType === 'stock' && metadata.supplyType !== 'stock')) {
       data.supplyType = metadata.supplyType;
     }
@@ -146,6 +262,14 @@ async function backfillDishMetadata(existingDishes, existingCategories) {
       data.fitnessRecommended = metadata.fitnessRecommended;
     }
     if (Object.keys(data).length) await dishes.doc(dish._id).update({ data });
+  }));
+}
+
+async function backfillCategoryMetadata(existingCategories) {
+  const categories = db.collection('categories');
+  await Promise.all(existingCategories.map(async (category) => {
+    if (category.menuType) return;
+    await categories.doc(category._id).update({ data: { menuType: 'home' } });
   }));
 }
 
@@ -171,6 +295,7 @@ async function seedIfEmpty() {
             _id: `cat_${String(index + 1).padStart(3, '0')}`,
             name: seedCategory.name,
             sort: seedCategory.sort,
+            menuType: seedCategory.menuType || 'home',
             enabled: true,
           },
         });
@@ -189,6 +314,7 @@ async function seedIfEmpty() {
             desc: dish.desc,
             emoji: dish.emoji,
             categoryId: category._id,
+            menuType: seedCategory.menuType || 'home',
             ...getDishMetadata(seedCategory, dish),
             soldOut: false,
             sort: dish.price,
@@ -196,6 +322,7 @@ async function seedIfEmpty() {
         });
       }
     }
+    await backfillCategoryMetadata(existingCategories);
     await backfillDishMetadata(existingDishes, existingCategories);
   } catch (e) {
     console.error('[menuList] categories 集合不存在或查询失败', e);

@@ -19,7 +19,7 @@ const dishLines = [];
 
 SEED.forEach((c, i) => {
   const catId = 'cat_' + String(i + 1).padStart(3, '0');
-  catLines.push(JSON.stringify({ _id: catId, name: c.name, sort: c.sort }));
+  catLines.push(JSON.stringify({ _id: catId, name: c.name, sort: c.sort, menuType: c.menuType || 'home' }));
   c.dishes.forEach((d) => {
     dishLines.push(
       JSON.stringify({
@@ -28,6 +28,7 @@ SEED.forEach((c, i) => {
         desc: d.desc,
         emoji: d.emoji,
         categoryId: catId,
+        menuType: d.menuType || c.menuType || 'home',
         supplyType: d.supplyType || c.supplyType || 'stock',
         fitnessRecommended: !!d.fitnessRecommended,
         soldOut: false,

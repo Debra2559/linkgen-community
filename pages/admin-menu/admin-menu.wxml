@@ -78,7 +78,8 @@
         class="dish-card card {{draggingDishId === item._id ? 'dragging' : ''}}"
         style="transform: translateY({{item.dragOffset || 0}}rpx)"
       >
-        <image class="dish-image" src="{{item.image}}" mode="aspectFill" />
+        <image wx:if="{{item.image}}" class="dish-image" src="{{item.image}}" mode="aspectFill" />
+        <view wx:else class="dish-image-fallback">{{item.emoji || '锅'}}</view>
         <view class="dish-main">
           <view class="dish-name-line">
             <view
@@ -148,7 +149,7 @@
               <text class="category-name">{{item.name}}</text>
               <text class="category-status {{item.enabled ? 'enabled' : 'disabled'}}">{{item.enabled ? '已上架' : '已下架'}}</text>
             </view>
-            <text class="category-meta">排序 {{index + 1}} · {{categoryDishCounts[item._id] || 0}} 道菜</text>
+            <text class="category-meta">{{item.menuTypeLabel}} · 排序 {{index + 1}} · {{categoryDishCounts[item._id] || 0}} 道菜</text>
           </view>
         </view>
         <view class="category-actions" catchtouchstart="stopTouch" catchtouchmove="stopTouch" catchtouchend="stopTouch">
@@ -208,6 +209,9 @@
         <text class="editor-close" bindtap="closeCategoryEditor">×</text>
       </view>
       <input class="form-input" data-field="name" value="{{categoryForm.name}}" placeholder="分类名称，例如：特色热菜" bindinput="onCategoryInput" />
+      <picker mode="selector" range="{{menuTypes}}" range-key="label" value="{{menuTypeIndex}}" bindchange="onMenuTypeChange">
+        <view class="form-picker">菜单场景：{{menuTypes[menuTypeIndex].label}} <text>⌄</text></view>
+      </picker>
       <text class="category-modal-hint">保存后可在分类管理页按住拖动排序，并单独控制上架状态。</text>
       <button class="save-btn" bindtap="saveCategory">{{saving ? '保存中…' : '保存分类'}}</button>
     </view>

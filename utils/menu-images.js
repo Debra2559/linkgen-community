@@ -51,10 +51,10 @@ function resolveDishImages(dishes = []) {
   let nextIndex = 0;
   return dishes.map((dish) => {
     const namedImage = DISH_IMAGES[dish.name];
-    const image = dish.image || namedImage || (() => {
+    const image = dish.image || namedImage || (dish.menuType && dish.menuType !== 'home' ? '' : (() => {
       while (used.has(DISH_IMAGE_LIST[nextIndex]) && nextIndex < DISH_IMAGE_LIST.length) nextIndex += 1;
       return DISH_IMAGE_LIST[Math.min(nextIndex++, DISH_IMAGE_LIST.length - 1)];
-    })();
+    })());
     used.add(image);
     return { ...dish, image };
   });

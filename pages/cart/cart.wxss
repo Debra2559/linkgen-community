@@ -59,6 +59,19 @@
   background: #eee5dc;
   flex-shrink: 0;
 }
+.dish-photo-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76rpx;
+  height: 76rpx;
+  margin-right: 16rpx;
+  color: var(--brand-deep);
+  background: #e7f0e8;
+  border-radius: 14rpx;
+  flex-shrink: 0;
+  font-size: 34rpx;
+}
 .dish-name {
   flex: 1;
   font-size: 28rpx;

@@ -2,6 +2,7 @@
 const { call, fen2yuanText } = require('../../utils/cloud');
 const { resolveDishImages } = require('../../utils/menu-images');
 const { MENU_FILTERS, getSupplyTypeLabel, normalizeSupplyType } = require('../../utils/supply-types');
+const { MENU_TYPES, normalizeMenuType } = require('../../utils/menu-types');
 
 const CART_KEY = 'family_cart';
 
@@ -12,6 +13,8 @@ Page({
     sections: [], // [{ _id, name, dishes: [] }]
     categories: [],
     allDishes: [],
+    menuTypes: MENU_TYPES,
+    menuType: 'home',
     supplyFilters: MENU_FILTERS,
     supplyFilter: '',
     activeCategory: '',
@@ -43,6 +46,10 @@ Page({
   async loadMenu() {
     try {
       const { categories = [], dishes = [] } = await call('menuList');
+      const normalizedCategories = categories.map((category) => ({
+        ...category,
+        menuType: normalizeMenuType(category.menuType),
+      }));
       const dishesWithImages = resolveDishImages(dishes).map((dish) => ({
         ...dish,
         supplyType: normalizeSupplyType(dish.supplyType),
@@ -50,14 +57,14 @@ Page({
         fitnessRecommended: !!dish.fitnessRecommended,
       }));
       // 缓存菜单快照，下单确认页用它还原购物车中的菜品信息
-      wx.setStorageSync('family_menu_cache', { categories, dishes: dishesWithImages });
+      wx.setStorageSync('family_menu_cache', { categories: normalizedCategories, dishes: dishesWithImages });
       const dishMap = {};
       dishesWithImages.forEach((d) => (dishMap[d._id] = d));
 
       this.setData({
         loading: false,
         menuError: '',
-        categories,
+        categories: normalizedCategories,
         allDishes: dishesWithImages,
         dishMap,
       }, () => this.applyMenuFilter());
@@ -69,8 +76,10 @@ Page({
   },
 
   applyMenuFilter() {
-    const { categories, allDishes, supplyFilter } = this.data;
-    const visibleCategories = categories.filter((category) => category.enabled !== false);
+    const { categories, allDishes, menuType, supplyFilter } = this.data;
+    const visibleCategories = categories.filter((category) => (
+      category.enabled !== false && normalizeMenuType(category.menuType) === menuType
+    ));
     const visibleCategoryIds = new Set(visibleCategories.map((category) => category._id));
     const visibleDishes = allDishes.filter((dish) => visibleCategoryIds.has(dish.categoryId));
     const filteredDishes = supplyFilter === 'fitness'
@@ -97,6 +106,12 @@ Page({
     const supplyFilter = e.currentTarget.dataset.key || '';
     if (supplyFilter === this.data.supplyFilter) return;
     this.setData({ supplyFilter }, () => this.applyMenuFilter());
+  },
+
+  onMenuType(e) {
+    const menuType = normalizeMenuType(e.currentTarget.dataset.key);
+    if (menuType === this.data.menuType) return;
+    this.setData({ menuType, supplyFilter: '' }, () => this.applyMenuFilter());
   },
 
   // 测量各分类区块的 offsetTop，用于右侧滚动时高亮左侧分类

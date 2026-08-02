@@ -1,6 +1,7 @@
 const { call } = require('../../utils/cloud');
 const { resolveDishImages } = require('../../utils/menu-images');
 const { SUPPLY_TYPES, MENU_FILTERS, getMenuFilterLabel, getSupplyTypeLabel, normalizeSupplyType } = require('../../utils/supply-types');
+const { MENU_TYPES, getMenuTypeLabel, normalizeMenuType } = require('../../utils/menu-types');
 
 Page({
   data: {
@@ -27,10 +28,13 @@ Page({
     pendingCreateDish: false,
     categoryIndex: 0,
     supplyTypeIndex: 0,
+    menuTypeIndex: 0,
+    menuTypes: MENU_TYPES,
     categoryForm: {
       categoryId: '',
       name: '',
       sort: 99,
+      menuType: 'home',
       enabled: true,
     },
     form: {
@@ -65,6 +69,8 @@ Page({
       }));
       const normalizedCategories = categories.map((category) => ({
         ...category,
+        menuType: normalizeMenuType(category.menuType),
+        menuTypeLabel: getMenuTypeLabel(category.menuType),
         enabled: category.enabled !== false,
         dragOffset: 0,
       }));
@@ -239,7 +245,8 @@ Page({
   openAddCategory() {
     this.setData({
       editingCategory: true,
-      categoryForm: { categoryId: '', name: '', sort: this.data.categories.length + 1, enabled: true },
+      menuTypeIndex: 0,
+      categoryForm: { categoryId: '', name: '', sort: this.data.categories.length + 1, menuType: 'home', enabled: true },
     });
   },
 
@@ -252,13 +259,23 @@ Page({
         categoryId: category._id,
         name: category.name,
         sort: category.sort || 99,
+        menuType: normalizeMenuType(category.menuType),
         enabled: category.enabled !== false,
       },
+      menuTypeIndex: Math.max(0, this.data.menuTypes.findIndex((item) => item.key === normalizeMenuType(category.menuType))),
     });
   },
 
   onCategoryInput(e) {
     this.setData({ [`categoryForm.${e.currentTarget.dataset.field}`]: e.detail.value });
+  },
+
+  onMenuTypeChange(e) {
+    const menuTypeIndex = Number(e.detail.value);
+    this.setData({
+      menuTypeIndex,
+      'categoryForm.menuType': this.data.menuTypes[menuTypeIndex].key,
+    });
   },
 
   closeCategoryEditor() {

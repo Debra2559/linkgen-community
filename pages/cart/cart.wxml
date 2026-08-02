@@ -24,7 +24,8 @@
   <view class="card block">
     <view class="block-title">点的菜（共 {{totalCount}} 份）</view>
     <view wx:for="{{cartList}}" wx:key="_id" class="dish-row">
-      <image class="dish-photo" src="{{item.dish.image}}" mode="aspectFill" />
+      <image wx:if="{{item.dish.image}}" class="dish-photo" src="{{item.dish.image}}" mode="aspectFill" />
+      <view wx:else class="dish-photo-fallback">{{item.dish.emoji || '锅'}}</view>
       <text class="dish-name">{{item.dish.name}}</text>
       <text class="dish-count">×{{item.count}}</text>
     </view>
