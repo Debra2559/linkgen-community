@@ -1,0 +1,23 @@
+<view class="page form-page post-form-page">
+  <view class="form-intro">
+    <view class="intro-row"><text class="eyebrow">START A CONVERSATION</text><text class="draft-status">公开发布</text></view>
+    <text class="form-title">把你的想法<br/><text class="coral-word">放到桌面上</text></text>
+    <text class="form-copy">一个好问题，可能会遇见十个新朋友。</text>
+  </view>
+
+  <view class="editor-sheet">
+    <view class="editor-heading"><text class="section-kicker">NEW DISCUSSION</text><text class="editor-count">{{title.length}} / 40</text></view>
+    <input class="title-input" placeholder="先写一个让人想点开的标题" maxlength="40" value="{{title}}" bindinput="onTitle" />
+    <view class="editor-divider"></view>
+    <textarea class="content-input" placeholder="分享你的背景、问题或正在思考的事..." maxlength="500" value="{{content}}" bindinput="onContent" />
+    <view class="editor-footer"><text>尽量具体，大家更容易接住你的话题</text><text>{{content.length}} / 500</text></view>
+  </view>
+
+  <view class="section-block tag-block">
+    <view class="block-heading"><view><text class="section-kicker">给讨论加个方向</text><text class="block-title">选择标签</text></view><text class="block-hint">{{selectedTags.length}} / 3</text></view>
+    <view class="choice-wrap"><view wx:for="{{tagOptions}}" wx:key="*this" class="choice {{selectedTags.indexOf(item) >= 0 ? 'chosen' : ''}}" data-tag="{{item}}" bindtap="toggleTag"><text class="choice-mark">#</text>{{item}}</view></view>
+  </view>
+
+  <view class="visibility-note"><text class="note-dot">·</text><text>发布后，社群成员都可以查看、评论和收藏这条讨论</text></view>
+  <button class="primary-button submit-button" bindtap="submit">发布讨论 <text class="button-arrow">↗</text></button>
+</view>
