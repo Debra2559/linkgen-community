@@ -1,0 +1,9 @@
+{
+  "desc": "LinkGen AI 社群小程序，不开放微信搜索收录",
+  "rules": [
+    {
+      "action": "disallow",
+      "page": "*"
+    }
+  ]
+}

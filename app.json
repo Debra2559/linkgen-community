@@ -1,0 +1,37 @@
+{
+  "pages": [
+    "pages/feed/feed",
+    "pages/events/events",
+    "pages/contacts/contacts",
+    "pages/profile/profile",
+    "pages/post-detail/post-detail",
+    "pages/event-detail/event-detail",
+    "pages/member-detail/member-detail",
+    "pages/create-post/create-post",
+    "pages/create-event/create-event",
+    "pages/edit-profile/edit-profile",
+    "pages/admin-review/admin-review"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#161310",
+    "navigationBarTitleText": "LinkGen",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#fffaf1",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#83918c",
+    "selectedColor": "#f36b4f",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/feed/feed", "text": "发现" },
+      { "pagePath": "pages/events/events", "text": "活动" },
+      { "pagePath": "pages/contacts/contacts", "text": "通讯录" },
+      { "pagePath": "pages/profile/profile", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
