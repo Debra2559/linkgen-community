@@ -1,0 +1,25 @@
+<view class="page events-page">
+  <view class="topbar"><view><text class="eyebrow">LINKGEN CALENDAR</text><text class="section-title page-title">活动</text></view></view>
+
+  <view class="view-tabs"><view class="view-tab {{activeView === 'community' ? 'active' : ''}}" data-view="community" bindtap="switchView">社区活动</view><view class="view-tab {{activeView === 'featured' ? 'active' : ''}}" data-view="featured" bindtap="switchView">精彩活动</view><view class="view-tab {{activeView === 'mine' ? 'active' : ''}}" data-view="mine" bindtap="switchView">我的活动</view></view>
+
+  <button wx:if="{{activeView === 'mine'}}" class="mine-create-button" bindtap="goCreate"><text class="create-plus">＋</text>创建活动</button>
+
+  <view class="filter-area"><view class="filter-row"><button class="filter-pill {{activeFilterKey === 'type' ? 'open' : ''}}" data-key="type" bindtap="toggleFilterMenu">{{filterLabels.type}} <text class="filter-chevron">⌄</text></button><button class="filter-pill {{activeFilterKey === 'location' ? 'open' : ''}}" data-key="location" bindtap="toggleFilterMenu">{{filterLabels.location}} <text class="filter-chevron">⌄</text></button><button class="filter-pill {{activeFilterKey === 'status' ? 'open' : ''}}" data-key="status" bindtap="toggleFilterMenu">{{filterLabels.status}} <text class="filter-chevron">⌄</text></button></view>
+    <view wx:if="{{filterMenuOpen}}" class="filter-menu card"><view wx:for="{{filterOptions}}" wx:key="key" class="filter-option {{item.key === filterValues[activeFilterKey] ? 'selected' : ''}}" data-value="{{item.key}}" bindtap="selectFilter"><text>{{item.label}}</text><text wx:if="{{item.key === filterValues[activeFilterKey]}}" class="filter-check">✓</text></view></view>
+  </view>
+
+  <view class="timeline-summary"><view><text class="summary-title">{{timelineTitle}}</text><text class="summary-caption">{{filteredEvents.length}} 场活动 · 按时间排序</text></view><text class="summary-range">{{timelineRange}}</text></view>
+  <view wx:if="{{timelineGroups.length}}" class="timeline">
+    <view wx:for="{{timelineGroups}}" wx:key="dateKey" class="timeline-group">
+      <view class="day-marker"><view class="day-dot"></view><text class="day-date">{{item.dateLabel}}</text><text class="day-week">{{item.weekLabel}}</text></view>
+      <view class="day-line"></view>
+      <view wx:for="{{item.events}}" wx:for-item="event" wx:for-index="eventIndex" wx:key="id" class="timeline-item" data-id="{{event.id}}" bindtap="openEvent">
+        <view class="timeline-time">{{event.timeShort}}</view>
+        <view class="timeline-card"><view class="timeline-copy"><view class="timeline-type-row"><text class="event-type">{{event.type}}</text><text class="event-status">{{event.status}}</text></view><text class="timeline-title">{{event.title}}</text><text class="timeline-description">{{event.description}}</text><text class="timeline-organizer">◉ 由 {{event.organizer}} 主办</text><text class="timeline-location">⌖ {{event.location}}</text><text class="timeline-capacity">♧ 预计 {{event.max}} 人</text></view><view class="event-cover" style="background: {{event.color}}"><text class="cover-label">{{event.coverLabel}}</text><text class="cover-mark">LINKGEN</text></view></view>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty timeline-empty">{{emptyTitle}}<br/><text class="muted">{{emptyCopy}}</text></view>
+
+</view>

@@ -1,0 +1,42 @@
+<view class="page form-page event-form-page">
+  <view class="form-intro">
+    <view class="intro-row"><text class="eyebrow">{{isOfficial ? 'PUBLISH FROM OFFICIAL' : 'ADD TO THE CALENDAR'}}</text><text class="draft-status">{{isOfficial ? '官方账号' : '社区提交'}}</text></view>
+    <text class="form-title">让更多人<br/><text class="coral-word">遇见好活动</text></text>
+    <text class="form-copy">{{isOfficial ? '官方发布后会直接出现在活动日历。' : '官方会在 1-2 个工作日内完成审核。'}}</text>
+  </view>
+
+    <view class="ai-suggest import-suggest">
+      <view class="ai-icon">↗</view>
+      <view class="ai-copy-wrap"><text class="ai-title">粘贴活动链接</text><text class="ai-copy">支持微信公众号、小红书，识别后自动生成活动草稿</text></view>
+      <view class="import-input-row"><input class="import-input" placeholder="粘贴链接" value="{{importUrl}}" bindinput="onImportUrl"/><button class="ai-button" bindtap="parseImport">{{importStatus === 'processing' ? '识别中' : '解析'}}</button></view>
+      <view wx:if="{{importStatus === 'ready'}}" class="import-result"><text class="import-result-source">✓ {{importMeta.sourceLabel}}</text><text class="import-result-note">{{importMeta.modeLabel}} · {{importMeta.confidenceLabel}}</text></view>
+    </view>
+
+  <view class="section-block">
+    <view class="block-heading"><text class="section-kicker">01 · 活动内容</text><text class="section-caption">先说清楚这是什么</text></view>
+    <view class="field-line featured-field"><text class="field-label">活动名称</text><input class="line-input title-line-input" placeholder="例如：AI 产品经理线下交流会" value="{{title}}" bindinput="onTitle" /></view>
+    <view class="field-line"><view class="field-label-row"><text class="field-label">活动简介</text><text class="field-count">{{description.length}} / 120</text></view><textarea class="line-textarea" placeholder="适合谁？会发生什么？" maxlength="120" value="{{description}}" bindinput="onDescription" /></view>
+  </view>
+
+  <view class="section-block type-block">
+    <view class="block-heading"><text class="section-kicker">02 · 活动形式</text><text class="section-caption">先选择见面方式</text></view>
+    <view class="type-grid"><view wx:for="{{types}}" wx:key="id" class="type-option {{typeIndex === index ? 'selected' : ''}}" data-index="{{index}}" bindtap="selectType"><view class="type-symbol">{{item.icon}}</view><view><text class="type-name">{{item.label}}</text><text class="type-note">{{item.note}}</text></view><text wx:if="{{typeIndex === index}}" class="type-check">✓</text></view></view>
+  </view>
+
+  <view class="section-block schedule-block">
+    <view class="block-heading"><text class="section-kicker">03 · 时间与人数</text><text class="section-caption">让参与者好安排</text></view>
+    <view class="detail-row"><view class="detail-icon">◷</view><view class="detail-main"><text class="detail-label">活动时间</text><input class="detail-input" placeholder="8月24日 20:00" value="{{time}}" bindinput="onTime" /></view></view>
+    <view class="detail-row"><view class="detail-icon">♧</view><view class="detail-main"><text class="detail-label">预计人数</text><view class="count-line"><text class="count-hint">报名上限</text><view class="count-stepper"><button bindtap="decreaseCount">−</button><input type="number" maxlength="4" value="{{expectedCount}}" bindinput="onExpectedCount"/><button bindtap="increaseCount">＋</button></view><text class="count-unit">人</text></view></view></view>
+  </view>
+
+  <view class="section-block venue-block">
+    <view class="block-heading"><view><text class="section-kicker">04 · {{isOffline ? '活动地点' : '线上会议室'}}</text><text class="block-title">{{isOffline ? '挑一个大家愿意去的地方' : '选一个大家熟悉的会议工具'}}</text></view><text class="section-caption">可自定义</text></view>
+    <view wx:if="{{isOffline}}" class="category-scroll"><view wx:for="{{venueCategories}}" wx:key="key" class="category-chip {{activeCategory === item.key ? 'selected' : ''}}" data-key="{{item.key}}" bindtap="selectCategory"><text>{{item.icon}}</text> {{item.label}}</view></view>
+    <view class="venue-grid"><view wx:for="{{venueOptions}}" wx:key="id" class="venue-option {{selectedVenueId === item.id ? 'selected' : ''}}" data-id="{{item.id}}" bindtap="selectVenue"><view class="venue-option-top"><text class="venue-name">{{item.name}}</text><text wx:if="{{selectedVenueId === item.id}}" class="venue-check">✓</text></view><text class="venue-city">{{item.city}}</text><text class="venue-detail">{{item.detail}}</text><text class="venue-source">{{item.source}}</text></view></view>
+    <view class="custom-location"><view class="custom-heading"><text class="field-label">自己填写</text><text class="field-count">推荐地点之外</text></view><input class="custom-input" placeholder="地点名称 / 会议链接" value="{{customLocation}}" bindinput="onCustomLocation" /></view>
+    <view wx:if="{{location}}" class="selected-location"><text class="selected-location-label">已选地点</text><text class="selected-location-value">{{location}}</text></view>
+  </view>
+
+  <view class="review-note"><view class="review-check">✓</view><view><text class="review-title">发布前会经过官方审核</text><text class="review-copy">审核通过后，活动会出现在 LinkGen 日历和时间轴里</text></view></view>
+  <button class="primary-button submit-button" bindtap="submit">{{isOfficial ? '直接发布' : '提交审核'}} <text class="button-arrow">↗</text></button>
+</view>

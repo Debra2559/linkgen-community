@@ -1,5 +1,5 @@
 {
-  "desc": "家庭内部使用，不开放微信搜索收录",
+  "desc": "LinkGen AI 社群小程序，不开放微信搜索收录",
   "rules": [
     {
       "action": "disallow",

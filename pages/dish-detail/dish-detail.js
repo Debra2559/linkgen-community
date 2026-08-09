@@ -1,6 +1,6 @@
 // pages/dish-detail/dish-detail.js - 菜品详情与购物车操作
 const { call } = require('../../utils/cloud');
-const { resolveDishImages } = require('../../utils/menu-images');
+const { DISH_IMAGE_VERSION, resolveDishImages } = require('../../utils/menu-images');
 
 const CART_KEY = 'family_cart';
 
@@ -28,15 +28,16 @@ Page({
 
   async loadDish() {
     const cached = wx.getStorageSync('family_menu_cache') || {};
-    let dish = (cached.dishes || []).find((item) => item._id === this.dishId);
-    let categories = cached.categories || [];
+    const isCurrentCache = cached.imageVersion === DISH_IMAGE_VERSION;
+    let dish = isCurrentCache ? (cached.dishes || []).find((item) => item._id === this.dishId) : null;
+    let categories = isCurrentCache ? (cached.categories || []) : [];
 
     if (!dish) {
       try {
         const result = await call('menuList');
         categories = result.categories || [];
         const dishes = resolveDishImages(result.dishes || []);
-        wx.setStorageSync('family_menu_cache', { categories, dishes });
+        wx.setStorageSync('family_menu_cache', { imageVersion: DISH_IMAGE_VERSION, categories, dishes });
         dish = dishes.find((item) => item._id === this.dishId);
       } catch (error) {
         this.setData({ loading: false, errorMessage: error.message || '菜品加载失败' });

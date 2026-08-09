@@ -1,141 +1,87 @@
-# 家里饭桌
+# LinkGen AI 社群小程序
 
-面向情侣、朋友和家庭聚餐的微信小程序点餐工具。用户按分类浏览菜品、按采购方式或健身推荐筛选、加入购物车并提交订单；Owner 在小程序内管理菜单、查看订单、调整菜品状态，并在菜品完成后发送微信订阅消息。
+面向 AI 从业者、独立开发者和创作者的微信小程序社区。当前版本使用本地数据，打开即可体验完整交互。
 
-## 功能
+## 已实现
 
-| 模块 | 功能 |
+| 模块 | 交互 |
 | --- | --- |
-| 用户端 | 微信授权登录、分类浏览、菜品详情、条件筛选、购物车、备注、订单列表和订单详情 |
-| 菜单场景 | 家常菜、寿喜锅、重庆火锅；锅物场景内按肉类、蔬菜、海鲜、丸滑、豆制品、主食分组 |
-| 菜品筛选 | 全部、现有食材、需要采买、直接购买、健身推荐 |
-| 菜品管理 | 新增、编辑、删除、上传或移除图片、采购方式、健身推荐、上架/下架 |
-| 分类管理 | 新增、编辑、删除、上架/下架、拖拽排序 |
-| 批量操作 | 按分类和采购方式筛选后，一键上架或下架当前批次菜品 |
-| 菜品排序 | 进入具体分类且未使用筛选条件时，拖动菜品左侧手柄排序 |
-| 订单管理 | Owner 查看全部订单、按状态筛选、标记“菜好了”或恢复待处理 |
-| 消息通知 | 下单时申请一次性订阅；Owner 标记完成后向下单人发送微信订阅消息 |
-| 价格策略 | 价格只用于服务端校验和内部管理，用户端不展示价格 |
+| 发现 | 帖子流、标签筛选、关键词搜索、点赞、评论、发帖 |
+| 活动 | 线上/线下筛选、活动详情、报名、链接导入草稿、Agent 候选审核 |
+| 运营 | 待审核队列、通过/驳回、官方直接发布活动 |
+| 通讯录 | 成员搜索、标签筛选、成员名片、交换微信申请提示 |
+| 我的 | 个人数据名片、社群统计、编辑昵称/身份/简介/目的/标签 |
 
-## 项目结构
-
-```text
-family-order/
-├── app.js / app.json / app.wxss       # 全局入口、云开发初始化、全局样式
-├── assets/
-│   ├── dishes/                        # 42 张不重复菜品图片及来源记录
-│   └── scenes/                        # 首页 Hero 和场景图片
-├── pages/
-│   ├── auth/                          # 微信授权入口
-│   ├── menu/                          # 用户端菜单、筛选、购物车入口
-│   ├── dish-detail/                   # 菜品详情
-│   ├── cart/                          # 确认订单
-│   ├── orders/                        # 订单列表和 Owner 操作
-│   ├── order-detail/                  # 订单详情
-│   └── admin-menu/                    # Owner 分类管理和菜品管理
-├── utils/
-│   ├── cloud.js                       # 云函数调用封装
-│   ├── menu-images.js                 # 菜品图片映射和兜底分配
-│   ├── supply-types.js                # 采购方式和筛选项
-│   ├── menu-types.js                   # 家常菜、寿喜锅、重庆火锅场景
-│   └── subscribe.js                   # 订阅消息模板配置与授权请求
-├── cloudfunctions/
-│   ├── login/                         # 微信身份识别和 Owner 判定
-│   ├── menuList/                      # 菜单读取和首次种子数据初始化
-│   ├── manageMenu/                    # 菜单增删改、状态切换、拖拽排序
-│   ├── createOrder/                   # 服务端校验并创建订单
-│   ├── listOrders/                    # 按权限读取订单
-│   └── updateOrderStatus/             # Owner 更新状态并发送通知
-├── db-import/                         # categories 和 dishes 的手动导入 JSON
-└── scripts/gen-import.js              # 根据种子菜单生成导入文件
-```
-
-## 开发环境
-
-- 微信开发者工具
-- 已注册的小程序 AppID
-- 已开通微信云开发环境
-- Node.js（仅运行 `scripts/gen-import.js` 时需要）
-
-## 部署
+## 运行
 
 1. 用微信开发者工具导入项目目录。
-2. 在项目设置中确认 `project.config.json` 的 `appid` 是你自己的小程序 AppID。
-3. 在 `app.js` 的 `CLOUD_ENV` 填入云开发环境 ID；留空可使用 `DYNAMIC_CURRENT_ENV`。
-4. 在云开发数据库创建集合：`admins`、`categories`、`dishes`、`orders`。
-5. 在 `cloudfunctions/` 下逐个右键选择“上传并部署：云端安装依赖”。当前共有 6 个云函数；菜单标签迁移需要重新部署 `menuList`。
-6. 首次运行时完成微信授权。`admins` 为空时，第一个成功登录的用户自动成为 Owner。
-7. 如果菜单未自动初始化，可在云开发控制台导入 18 个分类和 75 道菜品：
-   - `db-import/categories.json`
-   - `db-import/dishes.json`
+2. 确认 `project.config.json` 中的 AppID。
+3. 编译运行，默认进入“发现”页。
 
-数据库权限建议设为“仅创建者可读写”。业务读写全部经过云函数，云函数使用管理员权限；不要把数据库权限直接开放给客户端。
+数据写入本地 Storage，相关 key 与默认数据位于 `utils/linkgen-data.js`。这样可以先验证产品流程；接入云开发时，将该文件的读写函数替换为云函数调用即可，页面层不需要重写。
 
-## Owner 配置
+活动链接导入与 Agent 采集的生产接口边界见 `docs/linkgen-ingest-architecture.md`。当前页面中的链接解析和 Agent 搜索使用本地演示数据，真实公众号/小红书解析需要接入服务端。
 
-登录后进入“订单”页，点击“配置菜单”。
+## 页面结构
 
-- “分类管理”负责分类增删改、上下架和拖拽排序。
-- “菜单管理”负责菜品增删改、图片、采购方式、健身推荐和上下架。
-- 分类编辑时可选择菜单场景；用户端先选择家常菜、寿喜锅或重庆火锅，再选择具体分类。
-- 默认菜品已按“现有食材 / 需要采买 / 直接购买”分类，并标记健身推荐；Owner 可在菜品编辑页修改这些标签。
-- 页面顶部“新建菜单”可选择新建分类或新建菜品；无分类时新建菜品会先引导创建分类。
-- 菜品拖拽排序需要先选择具体分类，并清除采购方式筛选。
-- 菜品排序只在当前分类内生效，拖动左侧手柄后松手自动保存。
-- 新增锅物示例使用独立 emoji 占位，不复用家常菜照片；可在菜品编辑中上传对应的真实图片。
-- 分类下架后，用户端隐藏该分类及其菜品；下单接口会再次校验分类状态。
-- 删除分类前必须先移动或删除该分类下的菜品。
-- `admins` 集合中新增一条记录即可增加 Owner，记录 `_id` 填对应用户的 openid。
-
-## 订阅消息
-
-1. 微信公众平台 → 小程序 → 功能 → 订阅消息，添加订单状态类模板。
-2. 当前代码使用三个字段：`phrase1`（进度节点）、`time2`（完成时间）、`thing3`（温馨提示）。
-3. 将模板 ID 写入 `utils/subscribe.js` 的 `ORDER_DONE_TEMPLATE_ID`。
-4. 重新上传小程序，并重新部署 `createOrder`、`updateOrderStatus`。
-5. 用户提交订单时点击允许订阅；Owner 标记“菜好了”后，云函数向该订单提交人发送通知。
-
-通知受用户授权、模板配置、发送额度和微信审核状态影响。通知发送失败不会回滚订单状态，云函数返回值中的 `notificationSent` 和 `notificationError` 可用于排查。
-
-## 常见问题
-
-### 编译不报错但页面空白
-
-检查以下项目：
-
-- AppID 不是测试号或 `touristappid`。
-- 云开发已开通，`app.js` 的环境 ID 正确。
-- 6 个云函数均已部署，尤其是 `login` 和 `menuList`。
-- 已创建 `admins`、`categories`、`dishes`、`orders` 集合。
-- 开发者工具基础库版本满足云能力要求。
-
-### 下单或查看订单请求失败
-
-优先查看开发者工具控制台和云函数日志，确认云环境、函数部署版本和集合名称一致。云函数返回错误时，前端会显示具体提示。
-
-### 看不到通知
-
-确认用户下单时在订阅弹窗中选择“允许”，模板 ID 与公众平台模板一致，模板字段仍为 `phrase1`、`time2`、`thing3`，并重新部署 `createOrder`、`updateOrderStatus`。一次性订阅只能使用一次，测试时需要重新提交订单并再次授权。
-
-订单详情会保存通知状态。常见错误码：`43101` 表示用户未接受订阅或额度已用尽，`41030`/`40037` 表示模板 ID 错误，`47003` 表示模板字段或字段值不匹配。开发者工具模拟器不支持完整通知链路时，使用真机测试。
-
-## 数据和安全说明
-
-- 订单由云函数根据 `dishes` 集合重新读取菜品信息，前端提交的价格不作为可信数据。
-- 成员只能读取自己的订单，Owner 才能读取全部订单和修改订单状态。
-- `appid`、云环境 ID、订阅消息模板 ID 不是服务端密钥；不要把 `wx-server-sdk` 密钥、平台私钥或个人凭据提交到仓库。
-- `project.private.config.json` 仅保存开发者工具本地设置，不参与小程序运行逻辑。
-
-## 生成数据库导入文件
-
-修改 `cloudfunctions/menuList/index.js` 中的种子菜单后，在项目根目录执行：
-
-```bash
-node scripts/gen-import.js
+```text
+pages/feed              发现 / 帖子流
+pages/events            活动日历
+pages/contacts          通讯录
+pages/profile           我的 / 数据名片
+pages/post-detail       帖子详情与评论
+pages/event-detail      活动详情与报名
+pages/member-detail     成员名片
+pages/create-post       发起讨论
+pages/create-event      提交活动
+pages/edit-profile      编辑个人名片
+pages/admin-review      活动审核与官方发布
 ```
 
-脚本会更新 `db-import/categories.json` 和 `db-import/dishes.json`。
+## 接入云端时的状态建议
 
-## License
+`活动草稿 --(用户提交)--> 待审核 --(官方通过)--> 已发布 --(活动结束)--> 已结束`
 
-暂未设置开源许可证。公开仓库前，请根据使用范围补充 LICENSE。
+`帖子草稿 --(发布)--> 已发布 --(举报/审核)--> 隐藏`
+
+当前页面已保留 `official`、`status`、`joined` 等字段，可直接映射数据库 schema。
+
+公开运营主体与备案判断见 `docs/linkgen-compliance-research.md`。
+
+## 小程序截图
+
+以下截图来自 LinkGen 小程序当前设计稿，展示发现、帖子详情、活动日历、通讯录、成员名片和个人名片流程。
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/home.png" alt="发现首页" width="240"></td>
+    <td><img src="docs/screenshots/post-detail.png" alt="帖子详情" width="240"></td>
+    <td><img src="docs/screenshots/events-calendar.png" alt="活动日历" width="240"></td>
+  </tr>
+  <tr>
+    <td align="center">发现首页</td>
+    <td align="center">帖子详情</td>
+    <td align="center">活动日历</td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/contacts.jpg" alt="通讯录" width="240"></td>
+    <td><img src="docs/screenshots/member-detail.jpg" alt="成员名片" width="240"></td>
+    <td><img src="docs/screenshots/profile.jpg" alt="我的" width="240"></td>
+  </tr>
+  <tr>
+    <td align="center">通讯录</td>
+    <td align="center">成员名片</td>
+    <td align="center">我的</td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/edit-profile.jpg" alt="编辑名片" width="240"></td>
+  </tr>
+  <tr>
+    <td align="center">编辑名片</td>
+  </tr>
+</table>
+
+## 相关文档
+
+- [功能说明与页面截图](docs/linkgen-feature-overview.md)
+- [活动链接导入与 Agent 采集架构](docs/linkgen-ingest-architecture.md)

@@ -1,0 +1,2 @@
+const { getMembers } = require('../../utils/linkgen-data');
+Page({ data: { member: null }, onLoad(options) { this.setData({ member: getMembers().find((item) => item.id === options.id) }); }, connect() { wx.showModal({ title: '交换微信', content: '发送好友申请前，请确认你们已经在活动或讨论中认识。', confirmText: '发送申请', success: (res) => { if (res.confirm) wx.showToast({ title: '申请已发送', icon: 'success' }); } }); }, sendMessage() { wx.showToast({ title: '私信功能即将开放', icon: 'none' }); } });

@@ -35,7 +35,7 @@
 
     <view wx:if="{{!errorMessage && list.length === 0}}" class="empty">
       <view class="empty-emoji">✦</view>
-      <view class="empty-text">{{isOwner ? '还没有人点单，去喊大家吃饭吧' : '还没点过餐，去挑点爱吃的'}}</view>
+      <view class="empty-text">{{isOwner ? '还没有人点单，去喊大家吃饭吧' : '还没点过餐，去选几道菜吧'}}</view>
     </view>
 
     <view wx:for="{{list}}" wx:key="_id" class="order-card card" data-id="{{item._id}}" bindtap="goDetail">

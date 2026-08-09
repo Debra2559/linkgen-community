@@ -1,6 +1,6 @@
 // pages/menu/menu.js - 点餐首页：分类联动 + 购物车
 const { call, fen2yuanText } = require('../../utils/cloud');
-const { resolveDishImages } = require('../../utils/menu-images');
+const { DISH_IMAGE_VERSION, resolveDishImages } = require('../../utils/menu-images');
 const { MENU_FILTERS, getSupplyTypeLabel, normalizeSupplyType } = require('../../utils/supply-types');
 const { MENU_TYPES, normalizeMenuType } = require('../../utils/menu-types');
 
@@ -57,7 +57,11 @@ Page({
         fitnessRecommended: !!dish.fitnessRecommended,
       }));
       // 缓存菜单快照，下单确认页用它还原购物车中的菜品信息
-      wx.setStorageSync('family_menu_cache', { categories: normalizedCategories, dishes: dishesWithImages });
+      wx.setStorageSync('family_menu_cache', {
+        imageVersion: DISH_IMAGE_VERSION,
+        categories: normalizedCategories,
+        dishes: dishesWithImages,
+      });
       const dishMap = {};
       dishesWithImages.forEach((d) => (dishMap[d._id] = d));
 
@@ -226,7 +230,7 @@ Page({
 
   goCart() {
     if (this.data.cartCount === 0) {
-      wx.showToast({ title: '先挑几道爱吃的菜吧', icon: 'none' });
+      wx.showToast({ title: '先选几道菜吧', icon: 'none' });
       return;
     }
     wx.navigateTo({ url: '/pages/cart/cart' });

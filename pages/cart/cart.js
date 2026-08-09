@@ -1,5 +1,6 @@
 // pages/cart/cart.js - 下单确认页
 const { call, fen2yuanText } = require('../../utils/cloud');
+const { DISH_IMAGE_VERSION, resolveDishImages } = require('../../utils/menu-images');
 const { requestOrderDoneSubscription } = require('../../utils/subscribe');
 
 const CART_KEY = 'family_cart';
@@ -17,10 +18,26 @@ Page({
     submitting: false,
   },
 
-  onLoad() {
+  async onLoad() {
+    await this.ensureMenuCache();
     this.buildCart();
     const savedName = wx.getStorageSync(NAME_KEY) || '';
     this.setData({ name: savedName });
+  },
+
+  async ensureMenuCache() {
+    const cached = wx.getStorageSync('family_menu_cache') || {};
+    if (cached.imageVersion === DISH_IMAGE_VERSION) return;
+    try {
+      const result = await call('menuList');
+      wx.setStorageSync('family_menu_cache', {
+        imageVersion: DISH_IMAGE_VERSION,
+        categories: result.categories || [],
+        dishes: resolveDishImages(result.dishes || []),
+      });
+    } catch (error) {
+      wx.showToast({ title: error.message || '菜单加载失败', icon: 'none' });
+    }
   },
 
   buildCart() {

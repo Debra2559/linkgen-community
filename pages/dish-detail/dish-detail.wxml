@@ -23,7 +23,7 @@
       </view>
 
       <view class="rule"></view>
-      <text class="detail-desc">{{dish.desc || '今晚，给喜欢的人添一道热乎乎的菜。'}}</text>
+      <text class="detail-desc">{{dish.desc || '今晚，给家人朋友添一道热乎乎的菜。'}}</text>
 
       <view class="detail-note">
         <text class="note-mark">✦</text>

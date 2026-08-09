@@ -1,9 +1,9 @@
 {
-  "description": "家里饭桌 - 家庭点餐小程序",
+  "description": "LinkGen - AI 社群小程序",
   "miniprogramRoot": "./",
   "cloudfunctionRoot": "cloudfunctions/",
   "appid": "wx3cf9f61d12f83836",
-  "projectname": "family-order",
+  "projectname": "linkgen-community",
   "compileType": "miniprogram",
   "libVersion": "3.16.2",
   "setting": {
@@ -55,6 +55,54 @@
       {
         "value": "codex-task-chime",
         "type": "folder"
+      },
+      {
+        "value": "assets/dishes",
+        "type": "folder"
+      },
+      {
+        "value": "assets/scenes",
+        "type": "folder"
+      },
+      {
+        "value": "pages/auth",
+        "type": "folder"
+      },
+      {
+        "value": "pages/cart",
+        "type": "folder"
+      },
+      {
+        "value": "pages/dish-detail",
+        "type": "folder"
+      },
+      {
+        "value": "pages/menu",
+        "type": "folder"
+      },
+      {
+        "value": "pages/order-detail",
+        "type": "folder"
+      },
+      {
+        "value": "pages/orders",
+        "type": "folder"
+      },
+      {
+        "value": "pages/admin-menu",
+        "type": "folder"
+      },
+      {
+        "value": "utils/menu-images.js",
+        "type": "file"
+      },
+      {
+        "value": "utils/menu-types.js",
+        "type": "file"
+      },
+      {
+        "value": "utils/supply-types.js",
+        "type": "file"
       }
     ],
     "include": []
