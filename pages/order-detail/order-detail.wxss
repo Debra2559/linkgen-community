@@ -1,0 +1,148 @@
+/* pages/order-detail/order-detail.wxss */
+.page {
+  min-height: 100vh;
+  padding: 24rpx;
+}
+.loading {
+  padding: 120rpx 0;
+  text-align: center;
+  color: var(--text-sub);
+}
+
+/* 状态横幅 */
+.status-banner {
+  display: flex;
+  align-items: center;
+  border-radius: 20rpx;
+  padding: 36rpx 28rpx;
+  margin-bottom: 24rpx;
+}
+.status-banner.pending {
+  background: #d99478;
+}
+.status-banner.done {
+  background: #4c8a6d;
+}
+.status-emoji {
+  color: #fffefa;
+  font-size: 72rpx;
+  font-family: var(--font-display);
+  margin-right: 24rpx;
+}
+.status-main {
+  color: #fff;
+  font-size: 34rpx;
+  font-weight: 700;
+}
+.status-sub {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 24rpx;
+  margin-top: 8rpx;
+}
+.notification-warning {
+  padding: 20rpx 24rpx;
+  margin-bottom: 24rpx;
+  background: #fff5e9;
+  border: 1rpx solid #efd6b7;
+  border-radius: 14rpx;
+}
+.notification-warning-title,
+.notification-warning-copy {
+  display: block;
+}
+.notification-warning-title {
+  color: #9b6232;
+  font-size: 25rpx;
+  font-weight: 700;
+}
+.notification-warning-copy {
+  margin-top: 6rpx;
+  color: #8d7561;
+  font-size: 22rpx;
+  line-height: 1.5;
+}
+
+.block {
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+}
+.block-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  margin-bottom: 20rpx;
+}
+.row {
+  display: flex;
+  padding: 12rpx 0;
+}
+.row-label {
+  width: 140rpx;
+  color: var(--text-sub);
+  font-size: 26rpx;
+  flex-shrink: 0;
+}
+.row-value {
+  flex: 1;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+.row-value.remark {
+  font-weight: 400;
+  color: #6f6660;
+}
+
+.dish-row {
+  display: flex;
+  align-items: center;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid var(--line);
+}
+.dish-emoji {
+  color: var(--brand);
+  font-size: 34rpx;
+  font-family: var(--font-display);
+  margin-right: 16rpx;
+}
+.dish-name {
+  flex: 1;
+  font-size: 28rpx;
+}
+.dish-count {
+  color: var(--text-sub);
+  font-size: 26rpx;
+  margin-right: 24rpx;
+}
+.total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24rpx;
+  font-size: 28rpx;
+}
+.total-price {
+  font-size: 36rpx;
+}
+
+/* owner 操作 */
+.owner-actions {
+  margin-top: 12rpx;
+}
+.action-btn {
+  width: 100%;
+  border-radius: 999rpx;
+  padding: 24rpx 0;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+.action-btn.primary {
+  background: var(--brand);
+  color: #fff;
+}
+.action-btn.plain {
+  background: #fff;
+  color: var(--brand);
+  border: 2rpx solid var(--brand);
+}
+.btn-hover {
+  opacity: 0.8;
+}
