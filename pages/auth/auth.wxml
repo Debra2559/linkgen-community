@@ -1,0 +1,25 @@
+<view class="auth-page">
+  <image class="auth-scene" src="../../assets/scenes/couple-garden.jpg" mode="aspectFill" />
+  <view class="auth-scene-wash"></view>
+  <view class="auth-content">
+    <view class="auth-topline">HOME TABLE · 01</view>
+    <view class="auth-title-row">
+      <view class="auth-mark">✽</view>
+      <view>
+        <text class="auth-title">家里饭桌</text>
+        <text class="auth-subtitle">把家人朋友，叫到同一张桌前</text>
+      </view>
+    </view>
+
+    <view class="auth-card">
+      <view class="auth-card-kicker">A LITTLE DINNER STORY</view>
+      <view class="auth-card-title">今晚吃什么？</view>
+      <view class="auth-card-copy">登录后一起点菜、留言，菜好了会收到提醒。</view>
+      <button class="auth-btn {{loading ? 'disabled' : ''}}" bindtap="authorize">
+        <text>{{loading ? '正在登录…' : '微信授权进入'}}</text>
+        <text class="auth-btn-arrow">↗</text>
+      </button>
+      <view class="auth-note">仅用于识别下单成员</view>
+    </view>
+  </view>
+</view>
