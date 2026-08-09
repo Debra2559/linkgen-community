@@ -1,0 +1,36 @@
+<view class="page admin-page">
+  <view class="topbar">
+    <view><text class="eyebrow">LINKGEN OPERATIONS</text><text class="section-title page-title">运营管理</text></view>
+  </view>
+
+  <view class="admin-hero">
+    <view><text class="admin-kicker">PENDING REVIEW</text><text class="admin-number">{{pendingCount}}</text><text class="admin-note">个活动等待处理</text></view>
+    <text class="admin-symbol">✓</text>
+  </view>
+
+  <view class="agent-panel card">
+    <view class="agent-head">
+      <view><text class="agent-kicker">AGENT DISCOVERY</text><text class="agent-title">自动搜集公开活动</text><text class="agent-copy">按关键词搜索公众号和小红书，候选内容先进入审核队列</text></view>
+      <text class="agent-status {{agent.status === '搜索中' ? 'running' : ''}}">{{agent.status}}</text>
+    </view>
+    <view class="agent-sources"><text wx:for="{{agent.sources}}" wx:key="*this" class="agent-source">{{item}}</text></view>
+    <view class="agent-meta"><text>关键词：{{agent.keywords}}</text><text>频率：{{agent.schedule}}</text><text>上次运行：{{agent.lastRun}}</text></view>
+    <button class="agent-run-button" bindtap="runAgent">{{agent.status === '搜索中' ? '搜索中...' : '立即搜索'}}</button>
+  </view>
+
+  <view class="admin-tabs"><view wx:for="{{filters}}" wx:key="key" class="admin-tab {{activeFilter === item.key ? 'active' : ''}}" data-key="{{item.key}}" bindtap="onFilter">{{item.label}}</view></view>
+  <view class="section-head"><text class="section-title">活动审核</text><text class="section-caption">{{list.length}} 条记录</text></view>
+
+  <view wx:for="{{list}}" wx:key="id" class="review-card card">
+    <view class="review-head">
+      <view><text class="review-type">{{item.type}}</text><text wx:if="{{item.discoveryMode === 'agent'}}" class="review-source">Agent 发现</text><text wx:if="{{item.sourcePlatform}}" class="review-source">{{item.sourcePlatform}}</text></view>
+      <text class="review-status {{item.status === '待审核' ? 'waiting' : 'published'}}">{{item.status}}</text>
+    </view>
+    <text class="review-title">{{item.title}}</text>
+    <text class="review-meta">{{item.time}} · {{item.location}}</text>
+    <text class="review-meta">提交人：{{item.organizer}}</text>
+    <view wx:if="{{item.sourceUrl}}" class="review-url">来源：{{item.sourceUrl}}</view>
+    <view wx:if="{{item.status === '待审核'}}" class="review-actions"><button class="reject-button" bindtap="reject" data-id="{{item.id}}">驳回</button><button class="approve-button" bindtap="approve" data-id="{{item.id}}">通过并发布</button></view>
+  </view>
+  <view wx:if="{{!list.length}}" class="empty">没有活动记录</view>
+</view>
