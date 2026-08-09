@@ -131,6 +131,7 @@ pages/admin-review      活动审核与官方发布
 - [活动链接导入与 Agent 采集架构](docs/linkgen-ingest-architecture.md)
 - [头像库说明](docs/linkgen-avatar-library.md)
 - [公开运营与备案研究](docs/linkgen-compliance-research.md)
+- [公开运营准备与执行路线](docs/linkgen-public-operation-plan.md)
 
 ## 运营注意事项
 
