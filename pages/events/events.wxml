@@ -9,8 +9,10 @@
     <view wx:if="{{filterMenuOpen}}" class="filter-menu card"><view wx:for="{{filterOptions}}" wx:key="key" class="filter-option {{item.key === filterValues[activeFilterKey] ? 'selected' : ''}}" data-value="{{item.key}}" bindtap="selectFilter"><text>{{item.label}}</text><text wx:if="{{item.key === filterValues[activeFilterKey]}}" class="filter-check">✓</text></view></view>
   </view>
 
-  <view class="timeline-summary"><view><text class="summary-title">{{timelineTitle}}</text><text class="summary-caption">{{filteredEvents.length}} 场活动 · 按时间排序</text></view><text class="summary-range">{{timelineRange}}</text></view>
-  <view wx:if="{{timelineGroups.length}}" class="timeline">
+  <view class="calendar-mode-bar"><text class="calendar-mode-label">查看方式</text><view class="calendar-mode-options"><view wx:for="{{calendarModes}}" wx:key="key" class="calendar-mode {{calendarMode === item.key ? 'active' : ''}}" data-mode="{{item.key}}" bindtap="switchCalendarMode">{{item.label}}</view></view></view>
+
+  <view wx:if="{{calendarMode === 'timeline'}}" class="timeline-summary"><view><text class="summary-title">{{timelineTitle}}</text><text class="summary-caption">{{filteredEvents.length}} 场活动 · 按时间排序</text></view><text class="summary-range">{{timelineRange}}</text></view>
+  <view wx:if="{{calendarMode === 'timeline' && timelineGroups.length}}" class="timeline">
     <view wx:for="{{timelineGroups}}" wx:key="dateKey" class="timeline-group">
       <view class="day-marker"><view class="day-dot"></view><text class="day-date">{{item.dateLabel}}</text><text class="day-week">{{item.weekLabel}}</text></view>
       <view class="day-line"></view>
@@ -20,6 +22,18 @@
       </view>
     </view>
   </view>
-  <view wx:else class="empty timeline-empty">{{emptyTitle}}<br/><text class="muted">{{emptyCopy}}</text></view>
+  <view wx:if="{{calendarMode === 'timeline' && !timelineGroups.length}}" class="empty timeline-empty">{{emptyTitle}}<br/><text class="muted">{{emptyCopy}}</text></view>
+
+  <view wx:if="{{calendarMode !== 'timeline'}}" class="calendar-panel">
+    <view class="calendar-toolbar"><button class="calendar-nav" plain="true" data-direction="-1" bindtap="moveCalendar">‹</button><view class="calendar-heading"><text class="calendar-heading-title">{{calendarHeader}}</text><text class="calendar-heading-caption">{{calendarCaption}}</text></view><button class="calendar-nav" plain="true" data-direction="1" bindtap="moveCalendar">›</button></view>
+
+    <view wx:if="{{calendarMode === 'day' || calendarMode === 'week'}}" class="calendar-day-strip {{calendarMode === 'week' ? 'week-strip' : 'day-strip'}}"><view wx:for="{{calendarDays}}" wx:key="dateKey" class="calendar-day-chip {{item.isSelected ? 'selected' : ''}} {{item.eventCount ? 'has-events' : ''}}" data-date="{{item.dateKey}}" bindtap="selectCalendarDate"><text class="calendar-week-short">{{item.weekShort}}</text><text class="calendar-day-number">{{item.dayNumber}}</text><view wx:if="{{item.eventCount}}" class="calendar-day-dot"></view></view></view>
+
+    <view wx:if="{{calendarMode === 'month'}}" class="month-calendar"><view class="month-weekdays"><text wx:for="{{weekShortNames}}" wx:key="*this">{{item}}</text></view><view class="month-grid"><view wx:for="{{monthCells}}" wx:key="index" class="month-cell {{item.isEmpty ? 'empty-cell' : ''}} {{item.isSelected ? 'selected' : ''}} {{item.eventCount ? 'has-events' : ''}}" data-date="{{item.dateKey}}" bindtap="selectCalendarDate"><text wx:if="{{!item.isEmpty}}" class="month-cell-number">{{item.dayNumber}}</text><view wx:if="{{item.eventCount}}" class="month-cell-dot"></view><text wx:if="{{item.eventCount > 1}}" class="month-cell-count">{{item.eventCount}}</text></view></view></view>
+
+    <view class="calendar-list-heading"><view><text class="calendar-list-title">{{calendarListTitle}}</text><text class="calendar-list-caption">{{calendarEventCount}} 场活动</text></view><text class="calendar-list-range">{{calendarPeriodLabel}}</text></view>
+    <view wx:if="{{calendarGroups.length}}" class="calendar-event-groups"><view wx:for="{{calendarGroups}}" wx:key="dateKey" class="calendar-event-group"><view class="calendar-group-date"><text>{{item.dateLabel}}</text><text>{{item.weekLabel}}</text></view><view wx:for="{{item.events}}" wx:for-item="event" wx:key="id" class="calendar-event-row" data-id="{{event.id}}" bindtap="openEvent"><view class="calendar-event-time">{{event.timeShort}}</view><view class="calendar-event-body"><view class="calendar-event-topline"><text class="event-type">{{event.type}}</text><text class="event-status">{{event.status}}</text></view><text class="calendar-event-title">{{event.title}}</text><text class="calendar-event-meta">⌖ {{event.location}} · 预计 {{event.max}} 人</text></view><view class="calendar-event-color" style="background: {{event.color}}"></view></view></view></view>
+    <view wx:if="{{!calendarGroups.length}}" class="empty calendar-empty">{{calendarEmptyTitle}}<br/><text class="muted">{{calendarEmptyCopy}}</text></view>
+  </view>
 
 </view>
