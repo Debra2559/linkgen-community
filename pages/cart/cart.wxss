@@ -1,0 +1,180 @@
+/* pages/cart/cart.wxss */
+.page {
+  min-height: 100vh;
+  padding: 24rpx 24rpx 180rpx;
+}
+
+.block {
+  padding: 32rpx 28rpx;
+  margin-bottom: 24rpx;
+}
+.block-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  margin-bottom: 20rpx;
+}
+
+/* 谁点的 */
+.quick-names {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20rpx;
+}
+.quick-name {
+  font-size: 26rpx;
+  padding: 12rpx 32rpx;
+  border-radius: 999rpx;
+  background: #f2ede9;
+  color: #6f6660;
+  margin: 0 16rpx 16rpx 0;
+}
+.quick-name.on {
+  background: var(--brand-light);
+  color: var(--brand);
+  font-weight: 600;
+}
+.name-input {
+  display: block;
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: #faf7f5;
+  border-radius: 16rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+}
+
+/* 菜品清单 */
+.dish-row {
+  display: flex;
+  align-items: center;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid var(--line);
+}
+.dish-photo {
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 14rpx;
+  margin-right: 16rpx;
+  background: #eee5dc;
+  flex-shrink: 0;
+}
+.dish-photo-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76rpx;
+  height: 76rpx;
+  margin-right: 16rpx;
+  color: var(--brand-deep);
+  background: #e7f0e8;
+  border-radius: 14rpx;
+  flex-shrink: 0;
+  font-size: 34rpx;
+}
+.dish-name {
+  flex: 1;
+  font-size: 28rpx;
+}
+.dish-count {
+  color: var(--text-sub);
+  font-size: 26rpx;
+  margin-right: 24rpx;
+}
+.dish-price {
+  font-size: 28rpx;
+}
+.total-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 24rpx;
+  font-size: 28rpx;
+}
+.total-price {
+  font-size: 36rpx;
+}
+
+/* 备注 */
+.remark-input {
+  width: 100%;
+  min-height: 120rpx;
+  background: #faf7f5;
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+}
+
+/* 提交栏 */
+.submit-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  background: #fff;
+  padding: 20rpx 28rpx calc(20rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 16rpx rgba(43, 35, 32, 0.06);
+}
+.submit-hint {
+  width: 100%;
+  margin-bottom: 12rpx;
+  color: var(--text-sub);
+  font-size: 22rpx;
+  text-align: center;
+}
+.submit-btn {
+  width: 100%;
+  background: var(--brand);
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 999rpx;
+  padding: 20rpx 64rpx;
+}
+.submit-btn.disabled {
+  opacity: 0.6;
+}
+.btn-hover {
+  opacity: 0.8;
+}
+
+/* 花园水彩主题覆盖 */
+.block {
+  background: rgba(255, 254, 250, 0.92);
+  border: 1rpx solid #e0ebe1;
+  border-radius: 16rpx;
+  box-shadow: 0 8rpx 24rpx rgba(44, 86, 68, 0.07);
+}
+.block-title {
+  color: var(--brand-deep);
+  font-family: var(--font-display);
+  font-size: 32rpx;
+}
+.quick-name {
+  color: #648177;
+  background: #e8f1e9;
+  border-radius: 12rpx;
+}
+.quick-name.on {
+  color: var(--brand-deep);
+  background: #d4e8d9;
+}
+.name-input,
+.remark-input {
+  background: #f5f8f1;
+  border: 1rpx solid #deeadf;
+}
+.dish-photo { border-radius: 12rpx; }
+.submit-bar {
+  background: rgba(255, 254, 250, 0.96);
+  box-shadow: 0 -6rpx 18rpx rgba(42, 79, 65, 0.08);
+}
+.submit-btn {
+  background: var(--brand);
+  border-radius: 12rpx;
+  box-shadow: var(--shadow-brand);
+}
