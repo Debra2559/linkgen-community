@@ -7,28 +7,42 @@ LinkGen 面向 AI 从业者、独立开发者和创作者，提供讨论、活�
 | 模块 | 能力 |
 | --- | --- |
 | 发现 | 帖子、标签、搜索、点赞、评论、发帖 |
-| 活动 | 社区活动 / 精彩活动 / 我的活动，时间轴视图，类型、地点、状态筛选 |
+| 活动 | 社区活动 / 精彩活动 / 我的活动，时间轴主视图，日 / 周 / 月视图，类型、地点、状态筛选 |
 | 活动导入 | 识别微信公众号、小红书链接，生成可编辑活动草稿 |
 | Agent 采集 | 运营端手动运行 Agent 演示任务，候选活动进入待审核队列 |
 | 活动审核 | 官方审核、通过发布、驳回，展示来源平台和来源链接 |
 | 通讯录 | 成员搜索、标签、数字名片、目的和介绍 |
 | 个人中心 | 头像库、头像上传、身份、城市、标签、活动和帖子统计 |
 
-## 页面截图
+## 小程序运行截图
 
-### 活动时间轴
+以下三张是小程序页面原图，适合作为产品展示截图；图片只保留手机页面，不包含开发者工具外框。
 
-![活动时间轴](screenshots/events-timeline.jpg)
+<table>
+  <tr>
+    <td align="center"><img src="screenshots/home.png" alt="发现首页" width="240"><br><sub>发现首页：帖子流与社群入口</sub></td>
+    <td align="center"><img src="screenshots/events-calendar.png" alt="活动日历" width="240"><br><sub>活动日历：筛选与时间轴</sub></td>
+    <td align="center"><img src="screenshots/edit-profile.jpg" alt="编辑数字名片" width="240"><br><sub>编辑名片：头像、身份与城市</sub></td>
+  </tr>
+</table>
 
-### 链接导入
+页面原图尺寸为 `1206 × 2622`，来自微信开发者工具中的小程序实际运行页面。README 提供完整的七张核心页面截图。
 
-![活动链接导入](screenshots/event-import.jpg)
+### 开发者工具验证记录
 
-### 我的活动入口
+以下图片保留完整的微信开发者工具窗口，用于证明对应功能已在模拟器中跑通，不作为产品视觉展示图。图片尺寸为 `1281 × 768`，这是开发者工具窗口尺寸，不是手机模拟器分辨率。
 
-![我的活动入口](screenshots/profile-and-my-events.jpg)
+<details>
+  <summary>查看活动时间轴、链接导入、我的活动验证图</summary>
 
-截图来自微信开发者工具的 iPhone 12/13 模拟器，分辨率为 `1281 × 768` 的开发者工具窗口。
+  <table>
+    <tr>
+      <td align="center"><img src="screenshots/events-timeline.jpg" alt="活动时间轴开发者工具验证" width="420"><br><sub>活动时间轴</sub></td>
+      <td align="center"><img src="screenshots/event-import.jpg" alt="活动链接导入开发者工具验证" width="420"><br><sub>活动链接导入</sub></td>
+      <td align="center"><img src="screenshots/profile-and-my-events.jpg" alt="我的活动开发者工具验证" width="420"><br><sub>我的活动入口</sub></td>
+    </tr>
+  </table>
+</details>
 
 ## 链接导入流程
 
