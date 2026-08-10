@@ -60,13 +60,17 @@
 .venue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12rpx; margin-top: 16rpx; }
 .venue-option { min-height: 172rpx; padding: 16rpx; border: 1rpx solid var(--line); border-radius: 19rpx; background: var(--card); }
 .venue-option.selected { border-color: var(--coral); background: var(--coral-soft); }
+.custom-venue-option { border-style: dashed; background: rgba(255,255,255,.58); }
+.custom-venue-option.selected { border-style: solid; }
+.custom-venue-plus { color: var(--coral); font-size: 30rpx; line-height: 1; }
 .venue-name { max-width: 78%; overflow: hidden; color: var(--ink); font-size: 22rpx; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
 .venue-check { color: var(--coral); font-size: 23rpx; font-weight: 800; }
 .venue-city, .venue-detail, .venue-source { display: block; }
 .venue-city { margin-top: 8rpx; color: var(--ink-soft); font-size: 18rpx; }
 .venue-detail { margin-top: 9rpx; color: var(--muted); font-size: 18rpx; line-height: 1.4; }
 .venue-source { display: inline-block; padding: 4rpx 7rpx; margin-top: 10rpx; border-radius: 6rpx; color: var(--coral); background: rgba(255, 113, 59, .09); font-size: 16rpx; }
-.custom-location { padding: 20rpx 0 4rpx; margin-top: 16rpx; border-top: 1rpx solid var(--line); }
+.custom-location { padding: 20rpx; margin-top: 16rpx; border: 1rpx solid var(--coral); border-radius: 18rpx; background: var(--coral-soft); }
+.custom-hint { display: block; margin-top: 5rpx; color: var(--muted); font-size: 17rpx; }
 .custom-input { height: 64rpx; padding-top: 10rpx; color: var(--ink-soft); font-size: 22rpx; }
 .selected-location { display: flex; align-items: center; padding: 14rpx 16rpx; margin-top: 12rpx; border-radius: 13rpx; background: var(--mint); }
 .selected-location-label { flex-shrink: 0; margin-right: 12rpx; color: var(--ink-soft); font-size: 18rpx; }

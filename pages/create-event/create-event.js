@@ -30,9 +30,12 @@ Page({
     const venue = this.data.venueOptions.find((item) => item.id === selectedVenueId);
     this.setData({ selectedVenueId, location: `${venue.name} · ${venue.city}`, customLocation: '' });
   },
+  selectCustomVenue() {
+    this.setData({ selectedVenueId: 'custom', location: this.data.customLocation });
+  },
   onCustomLocation(e) {
     const customLocation = e.detail.value;
-    this.setData({ customLocation, location: customLocation, selectedVenueId: customLocation ? 'custom' : '' });
+    this.setData({ customLocation, location: customLocation, selectedVenueId: 'custom' });
   },
   increaseCount() { this.setData({ expectedCount: String(clampCount(Number(this.data.expectedCount) + 5)) }); },
   decreaseCount() { this.setData({ expectedCount: String(clampCount(Number(this.data.expectedCount) - 5)) }); },
@@ -52,6 +55,7 @@ Page({
     const rawCount = Number.parseInt(expectedCount, 10);
     const max = clampCount(expectedCount);
     if (!title.trim() || !description.trim() || !time.trim() || !location.trim()) return wx.showToast({ title: '请填写完整信息', icon: 'none' });
+    if (selectedVenueId === 'custom' && !this.data.customLocation.trim()) return wx.showToast({ title: '请填写自定义地点', icon: 'none' });
     if (!Number.isFinite(rawCount) || rawCount < 1) return wx.showToast({ title: '预计人数需大于 0', icon: 'none' });
     const dayMatch = time.match(/(\d{1,2})月(\d{1,2})/);
     const profile = getProfile();
