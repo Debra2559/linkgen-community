@@ -2,6 +2,15 @@
   padding-top: 28rpx;
 }
 
+.type-switch { display: flex; padding: 6rpx; margin: 24rpx 0; border-radius: 18rpx; background: #eee9df; }
+.type-option { flex: 1; padding: 14rpx 8rpx; border-radius: 14rpx; color: var(--muted); font-size: 22rpx; font-weight: 700; text-align: center; }
+.type-option.active { color: var(--ink); background: #fff; box-shadow: 0 5rpx 14rpx rgba(84, 56, 22, 0.08); }
+.task-block { margin-top: 24rpx; }
+.task-input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14rpx; margin-top: 20rpx; }
+.task-input-item, .event-picker { padding: 16rpx; border: 1rpx solid var(--line); border-radius: 16rpx; color: var(--muted); background: #fff; font-size: 20rpx; }
+.task-input-item input, .task-input-item picker, .event-picker picker { display: block; margin-top: 8rpx; color: var(--ink); font-size: 23rpx; }
+.event-picker { display: flex; justify-content: space-between; margin-top: 14rpx; }
+
 .form-intro {
   padding: 28rpx 6rpx 24rpx;
 }

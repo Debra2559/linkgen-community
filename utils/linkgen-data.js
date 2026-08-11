@@ -7,6 +7,8 @@ const posts = [
   { id: 'p-1', author: '苏打', initials: '苏', role: 'AI 产品经理', color: '#5a8f87', avatar: getAvatarPath('soda'), time: '刚刚', title: '大家最近在用什么 AI 工具做用户研究？', content: '想找一套从访谈录音到洞察整理的顺滑工作流，最好能和飞书配合。欢迎丢工具，也想听听大家的真实踩坑记录。', tags: ['AI 工具', '用户研究'], likes: 28, liked: false, comments: 8, hot: true, commentsList: [{ name: '小宇', initials: '宇', avatar: getAvatarPath('xiaoyu'), text: 'NotebookLM + 飞书多维表，够轻量。' }, { name: 'Mia', initials: 'M', avatar: getAvatarPath('mia'), text: '可以试试 Granola，会议记录很自然。' }] },
   { id: 'p-2', author: '阿吉', initials: '阿', role: '独立开发者', color: '#7f73bd', avatar: getAvatarPath('aji'), time: '18 分钟前', title: '周末做了一个很小的 Agent，想找人一起测试', content: '输入一段混乱的需求，它会帮你整理成可执行的用户故事。目前只支持中文，欢迎对产品、工程感兴趣的朋友来玩。', tags: ['独立开发', 'Agent'], likes: 16, liked: true, comments: 4, hot: false, commentsList: [{ name: 'Echo', initials: 'E', avatar: getAvatarPath('echo'), text: '发我链接，周末可以测一测。' }] },
   { id: 'p-3', author: 'Nova', initials: 'N', role: '内容创作者', color: '#db9c4e', avatar: getAvatarPath('nova'), time: '昨天', title: 'AI 时代，个人品牌还有必要长期经营吗？', content: '最近和几位朋友聊到一个问题：当内容生产越来越快，真正稀缺的会不会变成“持续表达的人”？想听听社群里的不同答案。', tags: ['个人成长', '内容创作'], likes: 42, liked: false, comments: 12, hot: true, commentsList: [] },
+  { id: 'task-1', contentType: 'task', taskKind: 'preparation', linkedEventId: 'e-2', author: 'Rex', initials: 'R', role: '活动发起人', color: '#5a8f87', avatar: getAvatarPath('rex'), time: '今天', title: '深圳 AI 咖啡局招募两位现场搭档', content: '需要一位协助签到和破冰，一位负责拍照并整理活动回顾。加入后我们会在活动前同步简单分工。', tags: ['活动协作', '找搭子'], likes: 9, liked: false, comments: 3, hot: true, commentsList: [], taskStatus: 'recruiting', neededPeople: 2, deadline: '2026-08-28', interestedMemberIds: ['m-3'], participantMemberIds: ['m-2'] },
+  { id: 'task-2', contentType: 'task', taskKind: 'collaboration', linkedEventId: '', author: '阿吉', initials: '阿', role: '独立开发者', color: '#7f73bd', avatar: getAvatarPath('aji'), time: '昨天', title: '找两位伙伴一起测试需求整理 Agent', content: '希望找到产品和设计方向的朋友，各用一个真实需求跑完整流程，最后一起整理一页反馈。', tags: ['Agent', '找搭子'], likes: 12, liked: true, comments: 2, hot: false, commentsList: [], taskStatus: 'in_progress', neededPeople: 3, deadline: '2026-09-05', interestedMemberIds: ['m-1', 'm-4'], participantMemberIds: ['m-3', 'm-5'] },
 ];
 
 const events = [
@@ -30,7 +32,12 @@ const read = (key, fallback) => wx.getStorageSync(key) || clone(fallback);
 const write = (key, value) => wx.setStorageSync(key, value);
 
 function seedLocalData() {
-  if (!wx.getStorageSync(POSTS_KEY)) write(POSTS_KEY, posts);
+  const storedPosts = wx.getStorageSync(POSTS_KEY);
+  if (!storedPosts) write(POSTS_KEY, posts);
+  else {
+    const missingPosts = posts.filter((post) => !storedPosts.some((item) => item.id === post.id));
+    if (missingPosts.length) write(POSTS_KEY, storedPosts.concat(missingPosts));
+  }
   const storedEvents = wx.getStorageSync(EVENTS_KEY);
   if (!storedEvents) write(EVENTS_KEY, events);
   else {
@@ -40,7 +47,26 @@ function seedLocalData() {
   if (!wx.getStorageSync(PROFILE_KEY)) write(PROFILE_KEY, { name: '林小满', initials: '满', role: '产品设计师', city: '上海', color: '#e77b61', avatarId: 'lin', avatar: getAvatarPath('lin'), tags: ['AI 产品', '设计协作'], purpose: '认识更多 AI 行业的朋友，持续做点有意思的事。', bio: 'LinkGen 社群成员，喜欢研究新工具，也喜欢把想法变成作品。' });
 }
 
-function getPosts() { return read(POSTS_KEY, posts).map((item) => ({ ...item, avatar: item.avatar || getAvatarPath(item.author === '苏打' ? 'soda' : item.author === '阿吉' ? 'aji' : 'nova') })); }
+function normalizePost(item) {
+  const contentType = item.contentType === 'task' ? 'task' : 'discussion';
+  return {
+    ...item,
+    contentType,
+    avatar: item.avatar || getAvatarPath(item.author === '苏打' ? 'soda' : item.author === '阿吉' ? 'aji' : 'nova'),
+    commentsList: item.commentsList || [],
+    tags: item.tags || [],
+    ...(contentType === 'task' ? {
+      taskKind: item.taskKind || 'collaboration',
+      taskStatus: item.taskStatus || 'recruiting',
+      neededPeople: Number(item.neededPeople) || 1,
+      deadline: item.deadline || '',
+      linkedEventId: item.linkedEventId || '',
+      interestedMemberIds: item.interestedMemberIds || [],
+      participantMemberIds: item.participantMemberIds || [],
+    } : {}),
+  };
+}
+function getPosts() { return read(POSTS_KEY, posts).map(normalizePost); }
 function savePosts(value) { write(POSTS_KEY, value); }
 function getEvents() { return read(EVENTS_KEY, events); }
 function saveEvents(value) { write(EVENTS_KEY, value); }
@@ -57,4 +83,4 @@ function normalizeProfile(value) {
 function getProfile() { return normalizeProfile(read(PROFILE_KEY, {})); }
 function saveProfile(value) { write(PROFILE_KEY, normalizeProfile(value)); }
 
-module.exports = { POSTS_KEY, EVENTS_KEY, PROFILE_KEY, seedLocalData, getPosts, savePosts, getEvents, saveEvents, getMembers, getProfile, saveProfile };
+module.exports = { POSTS_KEY, EVENTS_KEY, PROFILE_KEY, seedLocalData, getPosts, savePosts, getEvents, saveEvents, getMembers, getProfile, saveProfile, normalizePost };

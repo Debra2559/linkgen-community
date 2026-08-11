@@ -1,17 +1,19 @@
 <view class="page form-page post-form-page">
   <view class="form-intro">
-    <view class="intro-row"><text class="eyebrow">START A CONVERSATION</text><text class="draft-status">公开发布</text></view>
-    <text class="form-title">把你的想法<br/><text class="coral-word">放到桌面上</text></text>
-    <text class="form-copy">一个好问题，可能会遇见十个新朋友。</text>
+    <view class="intro-row"><text class="eyebrow">START SOMETHING</text><text class="draft-status">公开发布</text></view>
+    <text class="form-title">把想法和行动<br/><text class="coral-word">放到桌面上</text></text>
+    <text class="form-copy">一场讨论，也可以变成一次一起完成的事。</text>
   </view>
+  <view class="type-switch"><view class="type-option {{contentType === 'discussion' ? 'active' : ''}}" data-type="discussion" bindtap="onType">发起讨论</view><view class="type-option {{contentType === 'task' ? 'active' : ''}}" data-type="task" bindtap="onType">发布活动任务</view></view>
 
   <view class="editor-sheet">
-    <view class="editor-heading"><text class="section-kicker">NEW DISCUSSION</text><text class="editor-count">{{title.length}} / 40</text></view>
+    <view class="editor-heading"><text class="section-kicker">{{contentType === 'task' ? 'NEW TASK' : 'NEW DISCUSSION'}}</text><text class="editor-count">{{title.length}} / 40</text></view>
     <input class="title-input" placeholder="先写一个让人想点开的标题" maxlength="40" value="{{title}}" bindinput="onTitle" />
     <view class="editor-divider"></view>
-    <textarea class="content-input" placeholder="分享你的背景、问题或正在思考的事..." maxlength="500" value="{{content}}" bindinput="onContent" />
+    <textarea class="content-input" placeholder="{{contentType === 'task' ? '说清楚需要谁、一起完成什么...' : '分享你的背景、问题或正在思考的事...'}}" maxlength="500" value="{{content}}" bindinput="onContent" />
     <view class="editor-footer"><text>尽量具体，大家更容易接住你的话题</text><text>{{content.length}} / 500</text></view>
   </view>
+  <view wx:if="{{contentType === 'task'}}" class="section-block task-block"><view class="block-heading"><view><text class="section-kicker">任务类型</text><text class="block-title">这次想一起做什么</text></view></view><view class="choice-wrap"><view wx:for="{{taskKinds}}" wx:key="key" class="choice {{taskKind === item.key ? 'chosen' : ''}}" data-kind="{{item.key}}" bindtap="onTaskKind">{{item.label}}</view></view><view class="task-input-grid"><view class="task-input-item"><text>需要人数</text><input type="number" value="{{neededPeople}}" bindinput="onNeededPeople" /></view><view class="task-input-item"><text>截止日期</text><picker mode="date" value="{{deadline}}" bindchange="onDeadline"><view>{{deadline || '选择日期'}}</view></picker></view></view><view wx:if="{{taskKind !== 'collaboration'}}" class="event-picker"><text>关联活动（必填）</text><picker range="{{events}}" range-key="title" bindchange="onEvent"><view>{{linkedEventId ? '已选择活动' : '选择一场活动'}}</view></picker></view></view>
 
   <view class="section-block tag-block">
     <view class="block-heading"><view><text class="section-kicker">给讨论加个方向</text><text class="block-title">选择标签</text></view><text class="block-hint">{{selectedTags.length}} / 3</text></view>
@@ -19,5 +21,5 @@
   </view>
 
   <view class="visibility-note"><text class="note-dot">·</text><text>发布后，社群成员都可以查看、评论和收藏这条讨论</text></view>
-  <button class="primary-button submit-button" bindtap="submit">发布讨论 <text class="button-arrow">↗</text></button>
+  <button class="primary-button submit-button" bindtap="submit">{{contentType === 'task' ? '发布任务' : '发布讨论'}} <text class="button-arrow">↗</text></button>
 </view>
