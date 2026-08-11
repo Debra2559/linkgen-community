@@ -25,4 +25,4 @@ assert.equal(service.transitionTask(task.id, 'in_progress').taskStatus, 'in_prog
 assert.equal(service.transitionTask(task.id, 'completed').taskStatus, 'completed');
 assert.throws(() => service.transitionTask(task.id, 'recruiting'), /不允许/);
 
-console.log('community-data: 9 assertions passed');
+console.log('community-data: 14 assertions passed');
