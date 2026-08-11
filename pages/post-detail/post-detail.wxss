@@ -132,6 +132,15 @@
   padding-top: 20rpx;
   border-top: 1rpx solid var(--line);
 }
+.task-detail-panel { padding: 20rpx; margin-top: 24rpx; border-radius: 20rpx; background: #f6faf6; }
+.task-detail-head, .task-detail-line, .task-buttons, .task-advance { display: flex; align-items: center; }
+.task-detail-line { justify-content: space-between; padding: 13rpx 0; border-bottom: 1rpx solid #dce8df; color: var(--muted); font-size: 21rpx; }
+.task-detail-line text:last-child { max-width: 70%; overflow: hidden; color: var(--ink); font-weight: 700; text-align: right; text-overflow: ellipsis; white-space: nowrap; }
+.task-buttons { gap: 12rpx; margin-top: 18rpx; }
+.task-buttons button, .task-advance button { flex: 1; height: 68rpx; margin: 0; border-radius: 16rpx; color: #fff; background: var(--ink); font-size: 21rpx; }
+.task-buttons button:first-child { color: var(--ink); background: var(--yellow); }
+.task-advance { gap: 12rpx; margin-top: 12rpx; }
+.task-advance button { color: var(--ink); background: #e5ebe7; }
 
 .action-button {
   display: flex;
