@@ -20,6 +20,12 @@ const NEXT_STATUS = {
   cancelled: [],
 };
 
+function isValidDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value || '')) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
+}
+
 function decorateContent(item) {
   if (item.contentType !== 'task') return { ...item, contentTypeLabel: '讨论' };
   const profile = local.getProfile();
@@ -34,6 +40,7 @@ function decorateContent(item) {
     linkedEventTitle: event ? event.title : '',
     participantCount: item.participantMemberIds.length,
     interestedCount: item.interestedMemberIds.length,
+    isParticipating: item.participantMemberIds.includes(memberId),
     progressPercent: Math.min(100, Math.round((item.participantMemberIds.length / item.neededPeople) * 100)),
     canAdvance: (NEXT_STATUS[item.taskStatus] || []).length > 0 && (isAdmin || !item.creatorMemberId || item.creatorMemberId === memberId),
   };
@@ -53,7 +60,8 @@ function createContent(input) {
   if (!input.title || !input.title.trim() || !input.content || !input.content.trim()) throw new Error('标题和正文不能为空');
   if (isTask && ['preparation', 'followup'].includes(input.taskKind) && !input.linkedEventId) throw new Error('这类任务需要关联活动');
   if (isTask && input.linkedEventId && !local.getEvents().some((event) => event.id === input.linkedEventId)) throw new Error('关联活动不存在');
-  if (isTask && !/^\d{4}-\d{2}-\d{2}$/.test(input.deadline || '')) throw new Error('任务需要有效的截止日期');
+  if (isTask && !Object.prototype.hasOwnProperty.call(TASK_KIND_LABELS, input.taskKind)) throw new Error('任务类型无效');
+  if (isTask && !isValidDate(input.deadline)) throw new Error('任务需要有效的截止日期');
   const neededPeople = Number(input.neededPeople);
   if (isTask && (!Number.isInteger(neededPeople) || neededPeople < 1 || neededPeople > 100)) throw new Error('需要人数必须是 1-100 的整数');
   const creatorMemberId = currentMemberId();
