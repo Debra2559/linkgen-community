@@ -1,18 +1,33 @@
 const { getEvents, saveEvents, getProfile } = require('../../utils/linkgen-data');
 const { venueCategories, getVenueOptions } = require('../../utils/linkgen-venues');
 const { detectSource, buildLocalDraft } = require('../../utils/linkgen-ingest');
+const { call, isCloudReady } = require('../../utils/cloud');
 
 const clampCount = (value) => Math.max(1, Math.min(9999, Number.parseInt(value, 10) || 1));
 
 Page({
   data: {
-    title: '', description: '', time: '', location: '', customLocation: '', expectedCount: '30', importUrl: '', importStatus: 'idle', importMeta: { sourceLabel: '', modeLabel: '', confidenceLabel: '' },
+    title: '', description: '', coverImage: '', time: '', location: '', customLocation: '', expectedCount: '30', importUrl: '', importStatus: 'idle', importMeta: { sourceLabel: '', modeLabel: '', confidenceLabel: '' },
     types: [{ id: 'online', label: '线上分享', icon: '↗', note: '屏幕前见' }, { id: 'offline', label: '线下聚会', icon: '⌂', note: '一起见面' }],
     typeIndex: 0, isOffline: false, venueCategories, activeCategory: 'all', venueOptions: getVenueOptions(false, 'all'), selectedVenueId: '', isOfficial: false,
   },
   onLoad(options) { this.setData({ isOfficial: options && options.official === '1' }); },
   onTitle(e) { this.setData({ title: e.detail.value }); },
   onDescription(e) { this.setData({ description: e.detail.value }); },
+  chooseCoverImage() {
+    const handleResult = (res) => {
+      const tempPath = res.tempFiles ? res.tempFiles[0] && res.tempFiles[0].tempFilePath : res.tempFilePaths && res.tempFilePaths[0];
+      if (!tempPath) return;
+      wx.saveFile({
+        tempFilePath: tempPath,
+        success: (saved) => this.setData({ coverImage: saved.savedFilePath }),
+        fail: () => this.setData({ coverImage: tempPath }),
+      });
+    };
+    if (wx.chooseMedia) wx.chooseMedia({ count: 1, mediaType: ['image'], sourceType: ['album', 'camera'], success: handleResult });
+    else wx.chooseImage({ count: 1, sourceType: ['album', 'camera'], success: handleResult });
+  },
+  removeCoverImage() { this.setData({ coverImage: '' }); },
   onTime(e) { this.setData({ time: e.detail.value }); },
   onExpectedCount(e) { this.setData({ expectedCount: e.detail.value.replace(/\D/g, '') }); },
   onImportUrl(e) { this.setData({ importUrl: e.detail.value, importStatus: 'idle', importMeta: { sourceLabel: '', modeLabel: '', confidenceLabel: '' } }); },
@@ -39,11 +54,23 @@ Page({
   },
   increaseCount() { this.setData({ expectedCount: String(clampCount(Number(this.data.expectedCount) + 5)) }); },
   decreaseCount() { this.setData({ expectedCount: String(clampCount(Number(this.data.expectedCount) - 5)) }); },
-  parseImport() {
+  async parseImport() {
     const source = detectSource(this.data.importUrl);
     if (!source) return wx.showToast({ title: '请输入公众号或小红书链接', icon: 'none' });
     const importUrl = this.data.importUrl;
     this.setData({ importStatus: 'processing' });
+    if (isCloudReady()) {
+      try {
+        const draft = await call('parseActivityLink', { url: importUrl });
+        const isOffline = Boolean(draft.location && !/线上|直播|腾讯会议|Zoom|飞书会议/i.test(draft.location));
+        this.setData({ title: draft.title || '', description: draft.summary || draft.description || '', time: draft.time || '', location: draft.location || '', customLocation: draft.location || '', coverImage: draft.coverImageUrl || '', typeIndex: isOffline ? 1 : 0, isOffline, venueOptions: getVenueOptions(isOffline, 'all'), selectedVenueId: draft.location ? 'custom' : '', importStatus: 'ready', importMeta: { sourceLabel: draft.sourceLabel, modeLabel: draft.modeLabel, confidenceLabel: draft.confidenceLabel, registrationUrl: draft.registrationUrl || '', fieldEvidence: draft.fieldEvidence || {}, riskFlags: draft.riskFlags || [] } });
+        wx.showToast({ title: `已解析${draft.sourceLabel || source.label}`, icon: 'success' });
+      } catch (error) {
+        this.setData({ importStatus: 'error' });
+        wx.showToast({ title: error.message || '链接解析失败，请检查页面是否公开', icon: 'none' });
+      }
+      return;
+    }
     setTimeout(() => {
       const draft = buildLocalDraft(importUrl);
       this.setData({ title: draft.title, description: draft.description, time: draft.time, location: draft.location, customLocation: '', expectedCount: draft.expectedCount, typeIndex: 0, isOffline: false, venueOptions: getVenueOptions(false, 'all'), selectedVenueId: '', importStatus: 'ready', importMeta: { sourceLabel: draft.sourceLabel, modeLabel: draft.modeLabel, confidenceLabel: draft.confidenceLabel } });
@@ -59,8 +86,9 @@ Page({
     if (!Number.isFinite(rawCount) || rawCount < 1) return wx.showToast({ title: '预计人数需大于 0', icon: 'none' });
     const dayMatch = time.match(/(\d{1,2})月(\d{1,2})/);
     const profile = getProfile();
+    if (!isOfficial && !profile.setupComplete) return wx.showModal({ title: '先完成你的名片', content: '提交活动前，请先补充自己的身份信息。', confirmText: '去设置', success: (res) => { if (res.confirm) wx.navigateTo({ url: '/pages/edit-profile/edit-profile' }); } });
     const events = getEvents();
-    events.push({ id: `e-${Date.now()}`, day: dayMatch ? dayMatch[2] : '30', month: dayMatch ? `${dayMatch[1]}月` : '8月', type: types[typeIndex].label, typeId: types[typeIndex].id, title: title.trim(), description: description.trim(), time: time.trim(), location: location.trim(), locationMode: isOffline ? 'offline' : 'online', venueId: selectedVenueId, venueCategory: isOffline ? activeCategory : 'online', sourceUrl: this.data.importUrl.trim() || '', sourcePlatform: this.data.importMeta.sourceLabel || '', discoveryMode: this.data.importStatus === 'ready' ? 'link' : 'manual', attendees: 0, max, organizer: isOfficial ? 'LinkGen 官方' : profile.name, official: isOfficial, community: true, status: isOfficial ? '报名中' : '待审核', color: isOfficial ? '#f36b4f' : '#db9c4e', joined: false });
+    events.push({ id: `e-${Date.now()}`, day: dayMatch ? dayMatch[2] : '30', month: dayMatch ? `${dayMatch[1]}月` : '8月', type: types[typeIndex].label, typeId: types[typeIndex].id, title: title.trim(), description: description.trim(), summary: description.trim(), articleSummary: description.trim(), coverImage: this.data.coverImage || '', time: time.trim(), location: location.trim(), locationMode: isOffline ? 'offline' : 'online', venueId: selectedVenueId, venueCategory: isOffline ? activeCategory : 'online', sourceUrl: this.data.importUrl.trim() || '', registrationUrl: this.data.importMeta.registrationUrl || '', sourcePlatform: this.data.importMeta.sourceLabel || '', discoveryMode: this.data.importStatus === 'ready' ? 'link' : 'manual', attendees: 0, max, organizer: isOfficial ? 'LinkGen 官方' : profile.name, official: isOfficial, community: true, status: isOfficial ? '报名中' : '待审核', color: isOfficial ? '#f36b4f' : '#db9c4e', joined: false });
     saveEvents(events);
     wx.showToast({ title: isOfficial ? '活动已发布' : '已提交，等待审核', icon: 'success' });
     setTimeout(() => wx.switchTab({ url: '/pages/events/events' }), 650);

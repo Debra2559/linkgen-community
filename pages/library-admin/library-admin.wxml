@@ -1,0 +1,67 @@
+<view class="page library-admin-page">
+  <view class="topbar">
+    <view>
+      <text class="eyebrow">LINKGEN LIBRARY OPS</text>
+      <text class="section-title page-title">资料库管理</text>
+    </view>
+    <button class="topbar-link" bindtap="newResource">新资料</button>
+  </view>
+  <view class="admin-data-mode {{cloudMode ? 'connected' : ''}}">
+    <text>{{cloudMode ? 'CloudBase 内容数据' : '本地演示数据'}}</text>
+    <text wx:if="{{cloudError}}">{{cloudError}}</text>
+  </view>
+
+  <view wx:if="{{editing}}" class="editor-panel card">
+    <view class="editor-heading">
+      <view>
+        <text class="editor-kicker">RESOURCE EDITOR</text>
+        <text class="editor-title">{{formTitle}}</text>
+      </view>
+      <button class="close-button" bindtap="cancelEdit">×</button>
+    </view>
+    <input class="field-input" value="{{form.title}}" placeholder="资料标题" data-field="title" bindinput="onInput" />
+    <textarea class="field-textarea" value="{{form.summary}}" placeholder="80-140 字摘要：说明适合谁、解决什么问题" maxlength="300" data-field="summary" bindinput="onInput" />
+    <view class="field-grid">
+      <picker class="field-picker" mode="selector" range="{{categories}}" value="{{categoryIndex}}" data-field="category" bindchange="onPickerChange"><view>{{form.category}}⌄</view></picker>
+      <picker class="field-picker" mode="selector" range="{{sourceTypes}}" value="{{sourceTypeIndex}}" data-field="sourceType" bindchange="onPickerChange"><view>{{form.sourceType}}⌄</view></picker>
+    </view>
+    <input class="field-input" value="{{form.tagsText}}" placeholder="标签，用顿号分隔，最多 4 个" data-field="tagsText" bindinput="onInput" />
+    <input class="field-input" value="{{form.sourceLabel}}" placeholder="来源名称" data-field="sourceLabel" bindinput="onInput" />
+    <input class="field-input" value="{{form.sourceUrl}}" placeholder="飞书/公众号/官网链接" data-field="sourceUrl" bindinput="onInput" />
+    <view class="field-grid">
+      <input class="field-input" value="{{form.owner}}" placeholder="维护人" data-field="owner" bindinput="onInput" />
+      <input class="field-input" value="{{form.readTime}}" placeholder="阅读时长" data-field="readTime" bindinput="onInput" />
+    </view>
+    <view class="field-grid">
+      <picker class="field-picker" mode="selector" range="{{reviewStatuses}}" value="{{reviewStatusIndex}}" data-field="reviewStatus" bindchange="onPickerChange"><view>{{form.reviewStatus}}⌄</view></picker>
+      <picker class="field-picker" mode="selector" range="{{accessPolicies}}" value="{{accessPolicyIndex}}" data-field="accessPolicy" bindchange="onPickerChange"><view>{{form.accessPolicy}}⌄</view></picker>
+    </view>
+    <view class="switch-row"><text>加入精选</text><switch checked="{{form.featured}}" color="#f36b4f" bindchange="toggleFeatured" /></view>
+    <button class="primary-button" bindtap="save">保存资料</button>
+  </view>
+
+  <view wx:else class="resource-admin-list">
+    <view class="section-head">
+      <view>
+        <text class="section-title">资料条目</text>
+        <text class="section-caption">{{resources.length}} 条</text>
+      </view>
+      <text class="library-note">长文放外部文档</text>
+    </view>
+    <view wx:for="{{resources}}" wx:key="id" class="resource-admin-card card" data-id="{{item.rowId}}" bindtap="editResource">
+      <view class="resource-admin-main">
+        <view>
+          <text class="resource-admin-title">{{item.title}}</text>
+          <text class="resource-admin-meta">{{item.sourceMeta}}</text>
+        </view>
+        <text class="resource-status {{item.reviewStatus}}">{{item.reviewStatus}}</text>
+      </view>
+      <text class="resource-admin-summary">{{item.summary}}</text>
+      <view class="resource-admin-footer">
+        <text>{{item.updatedLabel}}</text>
+        <button class="archive-button" catchtap="archive" data-id="{{item.rowId}}">下线</button>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{!editing && !resources.length}}" class="empty">暂无资料，先新增一条</view>
+</view>

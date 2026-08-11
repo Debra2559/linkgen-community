@@ -1,0 +1,14 @@
+<view class="page library-detail-page">
+  <view wx:if="{{resource}}">
+    <view class="detail-kicker">{{resource.sourceType}} · {{resource.category}}</view>
+    <text class="detail-title">{{resource.title}}</text>
+    <view class="detail-source"><view class="detail-source-mark">LIB</view><view><text class="detail-source-name">{{resource.sourceLabel}}</text><text class="detail-source-meta">维护人 {{resource.owner}} · {{resource.readTime || '按需阅读'}}</text></view></view>
+    <view class="detail-summary"><text class="summary-label">资料摘要</text><text class="summary-copy">{{resource.summary}}</text></view>
+    <view class="detail-tags"><text wx:for="{{resource.tags}}" wx:key="*this" class="detail-tag">#{{item}}</text></view>
+    <view class="detail-note"><text>内容承载在原始文档或公开页面</text><text>LinkGen 负责目录、摘要、收藏与入口维护</text></view>
+    <view class="detail-actions"><button class="save-button {{resource.saved ? 'saved' : ''}}" bindtap="toggleSave">{{resource.saved ? '已收藏' : '收藏资料'}}</button><button class="open-button" bindtap="openResource">{{resource.sourceUrl ? '打开资料入口' : '等待发布'}} ↗</button></view>
+    <view class="detail-updated">最近更新：{{resource.updatedAt || '待记录'}}<text wx:if="{{resource.linkStatus}}"> · 链接{{resource.linkStatus === 'ok' ? '正常' : '待复核'}}</text></view>
+  </view>
+  <view wx:elif="{{loading}}" class="empty">正在加载资料</view>
+  <view wx:else class="empty">资料不存在或尚未发布</view>
+</view>

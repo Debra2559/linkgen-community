@@ -1,10 +1,18 @@
 .profile-page { padding-bottom: 120rpx; }
 .page-title { display: block; margin-top: 10rpx; }
 .eyebrow { color: var(--coral); font-size: 19rpx; font-weight: 800; letter-spacing: 3rpx; }
-.profile-card { padding: 24rpx; border-radius: 30rpx; background: var(--ink); color: #fff; box-shadow: 0 18rpx 40rpx rgba(22, 19, 16, .16); }
+.setup-banner { display: flex; align-items: center; min-height: 82rpx; padding: 14rpx 16rpx; margin-bottom: 14rpx; border: 1rpx solid rgba(255,113,59,.22); border-radius: 18rpx; background: var(--coral-soft); }
+.setup-mark { display: flex; align-items: center; justify-content: center; width: 48rpx; height: 48rpx; flex-shrink: 0; margin-right: 12rpx; border-radius: 15rpx; color: #fff; background: var(--coral); font-size: 18rpx; font-weight: 800; }
+.setup-copy { flex: 1; min-width: 0; }
+.setup-title, .setup-subtitle { display: block; }
+.setup-title { color: var(--ink); font-size: 21rpx; font-weight: 800; }
+.setup-subtitle { display: -webkit-box; margin-top: 3rpx; overflow: hidden; color: var(--muted); font-size: 17rpx; line-height: 1.35; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.setup-button { min-width: 0; flex-shrink: 0; padding: 8rpx 0 8rpx 10rpx; color: var(--coral); font-size: 18rpx; font-weight: 800; white-space: nowrap; }
+.profile-card { padding: 24rpx; border-radius: 30rpx; background: var(--ink); color: #fff; box-shadow: 0 18rpx 40rpx rgba(22, 19, 16, .16); transition: transform .15s ease, opacity .15s ease; }
+.profile-card:active { opacity: .94; transform: scale(.995); }
 .card-topline, .card-footer { display: flex; align-items: center; justify-content: space-between; }
 .card-code { color: var(--yellow); font-size: 17rpx; font-weight: 800; letter-spacing: 2rpx; }
-.edit-button { padding: 9rpx 16rpx; border: 1rpx solid rgba(255,255,255,.28); border-radius: 12rpx; color: #fff; font-size: 20rpx; }
+.card-open-mark { color: rgba(255,255,255,.52); font-size: 25rpx; }
 .profile-top { display: flex; align-items: center; margin-top: 32rpx; }
 .profile-avatar { position: relative; width: 116rpx; height: 116rpx; overflow: hidden; border: 4rpx solid rgba(255,255,255,.22); border-radius: 36rpx; font-size: 40rpx; }
 .avatar-image { display: block; width: 100%; height: 100%; }
@@ -20,6 +28,8 @@
 .purpose-label { display: block; color: rgba(255,255,255,.5); font-size: 18rpx; }
 .purpose-text { display: block; margin-top: 6rpx; color: #fff; font-size: 22rpx; line-height: 1.5; }
 .card-footer { padding-top: 24rpx; margin-top: 22rpx; border-top: 1rpx solid rgba(255,255,255,.15); color: rgba(255,255,255,.4); font-size: 16rpx; letter-spacing: 1rpx; }
+.card-edit-link { display: flex; align-items: center; padding: 6rpx 0 6rpx 14rpx; color: var(--yellow); font-size: 19rpx; font-weight: 800; letter-spacing: 0; }
+.card-edit-link text + text { margin-left: 6rpx; font-size: 22rpx; }
 .stats-row { display: flex; justify-content: space-around; padding: 26rpx 0 10rpx; text-align: center; }
 .stats-row > view { flex: 1; border-right: 1rpx solid var(--line); }
 .stats-row > view:last-child { border: 0; }

@@ -1,7 +1,42 @@
 const POSTS_KEY = 'linkgen_posts_v1';
 const EVENTS_KEY = 'linkgen_events_v1';
 const PROFILE_KEY = 'linkgen_profile_v1';
+const AGENT_CONFIG_KEY = 'linkgen_agent_config_v1';
+const LIBRARY_KEY = 'linkgen_library_v1';
 const { getAvatarPath } = require('./avatar-library');
+
+const initialProfile = { name: '', initials: '你', role: '', city: '', color: '#e77b61', avatarId: 'lin', avatar: getAvatarPath('lin'), tags: [], purpose: '', bio: '', setupComplete: false };
+
+const initialAgentConfig = {
+  enabled: true,
+  status: '待运行',
+  schedule: '每天 09:00',
+  lastRun: '尚未巡查',
+  notifyChannel: '管理员微信',
+  keywords: 'AI / 产品 / 创作者',
+  qualityThreshold: '较高',
+  lastScanSummary: { scanned: 0, activity: 0, share: 0, highQuality: 0 },
+  notification: { status: '等待每日巡查', detail: '巡查发现高质量活动后通知管理员' },
+  sources: [
+    { id: 'wechat-saibozhixin', platform: '微信公众号', name: '赛博禅心', note: 'AI 原创内容与行业观察', url: '', authorizationStatus: 'unknown', enabled: false, focus: true, lastScan: '待配置来源 URL' },
+    { id: 'wechat-kazike', platform: '微信公众号', name: '数字生命卡兹克', note: 'AI 工具、模型与实践分享', url: '', authorizationStatus: 'unknown', enabled: false, focus: true, lastScan: '待配置来源 URL' },
+    { id: 'wechat-tone', platform: '微信公众号', name: 'T-ONE创新中心', note: '产业、投资与创业活动', url: '', authorizationStatus: 'unknown', enabled: false, focus: true, lastScan: '待配置来源 URL' },
+    { id: 'wechat-linkgen', platform: '微信公众号', name: 'Link & Gen', note: 'LinkGen 社群官方动态', url: '', authorizationStatus: 'unknown', enabled: false, focus: true, lastScan: '待配置来源 URL' },
+    { id: 'xiaohongshu-discovery', platform: '小红书', name: '重点观察池', note: 'AI / 产品 / 创作者活动笔记', url: '', authorizationStatus: 'unknown', enabled: false, focus: true, lastScan: '待配置来源 URL' },
+    { id: 'search-public-activities', kind: 'search', platform: '搜索连接器', name: '官网与公开活动搜索', note: '按关键词发现公开活动页面，需配置搜索 API', query: 'AI 活动 上海', authorizationStatus: 'unknown', enabled: false, focus: false, lastScan: '待配置搜索 API' },
+    { id: 'search-wechat-activities', kind: 'search', platform: '微信公众号搜索', name: '公众号活动发现', note: '只发现公开文章，仍需回原文核验和管理员审批', query: 'site:mp.weixin.qq.com/s AI 活动 上海', authorizationStatus: 'unknown', enabled: false, focus: true, lastScan: '待配置搜索 API', defaultScope: 'featured' },
+    { id: 'search-xiaohongshu-activities', kind: 'search', platform: '小红书搜索', name: '小红书活动发现', note: '重点观察公开笔记，不能绕过登录和平台限制', query: 'site:xiaohongshu.com/explore AI 活动 上海', authorizationStatus: 'unknown', enabled: false, focus: true, lastScan: '待配置搜索 API', defaultScope: 'featured' },
+  ],
+};
+
+const libraryResources = [
+  { id: 'r-1', title: 'Agent 项目启动清单', summary: '从问题定义、用户场景到第一版评估指标，整理一份适合社群共创的启动清单。', category: '社群沉淀', tags: ['Agent', '产品方法'], sourceLabel: 'LinkGen 社群', sourceType: '飞书文档', sourceUrl: '', readTime: '10 分钟', updatedAt: '本周更新', featured: true, saved: false },
+  { id: 'r-2', title: 'OpenAI API 文档', summary: '从模型调用、工具使用到结构化输出，适合开始搭建 AI 应用时作为主参考。', category: 'Agent', tags: ['API', '开发'], sourceLabel: 'OpenAI', sourceType: '官方文档', sourceUrl: 'https://platform.openai.com/docs/overview', readTime: '按需查看', updatedAt: '官方更新', featured: true, saved: false },
+  { id: 'r-3', title: 'Hugging Face Learn', summary: '覆盖大模型、Agents、计算机视觉和音频的公开课程入口，适合按主题深入。', category: '入门', tags: ['课程', '模型'], sourceLabel: 'Hugging Face', sourceType: '公开课程', sourceUrl: 'https://huggingface.co/learn', readTime: '系列课程', updatedAt: '官方更新', featured: false, saved: false },
+  { id: 'r-4', title: 'GitHub Skills', summary: '通过真实仓库练习 Actions、项目管理和协作流程，适合边做边学。', category: '独立开发', tags: ['GitHub', '协作'], sourceLabel: 'GitHub', sourceType: '公开课程', sourceUrl: 'https://skills.github.com/', readTime: '按需查看', updatedAt: '官方更新', featured: false, saved: false },
+  { id: 'r-5', title: '技术写作入门', summary: '学习如何把复杂的产品、技术和研究讲清楚，适合写文档、教程和公开分享。', category: '产品', tags: ['表达', '写作'], sourceLabel: 'Google', sourceType: '公开课程', sourceUrl: 'https://developers.google.com/tech-writing', readTime: '约 2 小时', updatedAt: '官方更新', featured: false, saved: false },
+  { id: 'r-6', title: 'LinkGen 活动复盘模板', summary: '记录活动目标、参与者反馈、有效连接和下一次改进点，让每次聚会留下可复用的经验。', category: '社群沉淀', tags: ['活动', '复盘'], sourceLabel: 'LinkGen 社群', sourceType: '飞书文档', sourceUrl: '', readTime: '5 分钟', updatedAt: '待发布', featured: false, saved: false },
+];
 
 const posts = [
   { id: 'p-1', author: '苏打', initials: '苏', role: 'AI 产品经理', color: '#5a8f87', avatar: getAvatarPath('soda'), time: '刚刚', title: '大家最近在用什么 AI 工具做用户研究？', content: '想找一套从访谈录音到洞察整理的顺滑工作流，最好能和飞书配合。欢迎丢工具，也想听听大家的真实踩坑记录。', tags: ['AI 工具', '用户研究'], likes: 28, liked: false, comments: 8, hot: true, commentsList: [{ name: '小宇', initials: '宇', avatar: getAvatarPath('xiaoyu'), text: 'NotebookLM + 飞书多维表，够轻量。' }, { name: 'Mia', initials: 'M', avatar: getAvatarPath('mia'), text: '可以试试 Granola，会议记录很自然。' }] },
@@ -37,13 +72,22 @@ function seedLocalData() {
     const missingEvents = events.filter((event) => !storedEvents.some((item) => item.id === event.id));
     if (missingEvents.length) write(EVENTS_KEY, storedEvents.concat(missingEvents));
   }
-  if (!wx.getStorageSync(PROFILE_KEY)) write(PROFILE_KEY, { name: '林小满', initials: '满', role: '产品设计师', city: '上海', color: '#e77b61', avatarId: 'lin', avatar: getAvatarPath('lin'), tags: ['AI 产品', '设计协作'], purpose: '认识更多 AI 行业的朋友，持续做点有意思的事。', bio: 'LinkGen 社群成员，喜欢研究新工具，也喜欢把想法变成作品。' });
+  const storedProfile = wx.getStorageSync(PROFILE_KEY);
+  if (!storedProfile) write(PROFILE_KEY, { ...initialProfile });
+  else if (storedProfile.setupComplete !== true && storedProfile.name === '林小满' && storedProfile.role === '产品设计师' && storedProfile.city === '上海') write(PROFILE_KEY, { ...initialProfile });
+  else if (storedProfile.setupComplete === undefined) write(PROFILE_KEY, { ...storedProfile, setupComplete: Boolean(storedProfile.name && storedProfile.role && storedProfile.city && storedProfile.purpose) });
+  if (!wx.getStorageSync(AGENT_CONFIG_KEY)) write(AGENT_CONFIG_KEY, initialAgentConfig);
+  if (!wx.getStorageSync(LIBRARY_KEY)) write(LIBRARY_KEY, libraryResources);
 }
 
 function getPosts() { return read(POSTS_KEY, posts).map((item) => ({ ...item, avatar: item.avatar || getAvatarPath(item.author === '苏打' ? 'soda' : item.author === '阿吉' ? 'aji' : 'nova') })); }
 function savePosts(value) { write(POSTS_KEY, value); }
 function getEvents() { return read(EVENTS_KEY, events); }
 function saveEvents(value) { write(EVENTS_KEY, value); }
+function getAgentConfig() { return read(AGENT_CONFIG_KEY, initialAgentConfig); }
+function saveAgentConfig(value) { write(AGENT_CONFIG_KEY, value); }
+function getLibraryResources() { return read(LIBRARY_KEY, libraryResources); }
+function saveLibraryResources(value) { write(LIBRARY_KEY, value); }
 function getMembers() { return clone(members); }
 function normalizeProfile(value) {
   const profile = { ...value };
@@ -52,9 +96,9 @@ function normalizeProfile(value) {
     profile.role = parts.shift();
     profile.city = parts.join(' · ');
   }
-  return { ...profile, avatarId: profile.avatarId || 'lin', avatar: profile.avatar || getAvatarPath(profile.avatarId || 'lin'), tags: profile.tags || [], city: profile.city || '' };
+  return { ...profile, initials: profile.initials || (profile.name ? profile.name.slice(0, 1) : '你'), avatarId: profile.avatarId || 'lin', avatar: profile.avatar || getAvatarPath(profile.avatarId || 'lin'), tags: profile.tags || [], city: profile.city || '', setupComplete: profile.setupComplete === true };
 }
-function getProfile() { return normalizeProfile(read(PROFILE_KEY, {})); }
+function getProfile() { return normalizeProfile(read(PROFILE_KEY, initialProfile)); }
 function saveProfile(value) { write(PROFILE_KEY, normalizeProfile(value)); }
 
-module.exports = { POSTS_KEY, EVENTS_KEY, PROFILE_KEY, seedLocalData, getPosts, savePosts, getEvents, saveEvents, getMembers, getProfile, saveProfile };
+module.exports = { POSTS_KEY, EVENTS_KEY, PROFILE_KEY, AGENT_CONFIG_KEY, LIBRARY_KEY, initialAgentConfig, libraryResources, seedLocalData, getPosts, savePosts, getEvents, saveEvents, getAgentConfig, saveAgentConfig, getLibraryResources, saveLibraryResources, getMembers, getProfile, saveProfile };

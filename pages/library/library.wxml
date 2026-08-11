@@ -1,0 +1,21 @@
+<view class="page library-page">
+  <view class="topbar"><view><text class="eyebrow">LINKGEN LIBRARY</text><text class="section-title page-title">学习库</text></view></view>
+
+  <view class="library-intro"><view><text class="intro-overline">KEEP THE GOOD STUFF</text><text class="intro-title">把好资料留在社群里</text><text class="intro-copy">精选公开课程、工具文档和 LinkGen 自己沉淀的方法。</text></view><view class="intro-mark"><text>LIB</text><text>01</text></view></view>
+  <view class="library-data-mode {{cloudMode ? 'connected' : ''}}"><text>{{cloudMode ? 'CloudBase 资料目录' : '本地演示资料'}}</text><text wx:if="{{cloudError}}">{{cloudError}}</text></view>
+
+  <view class="library-stats"><view><text class="library-stat-number">{{stats.total}}</text><text class="library-stat-label">份资料</text></view><view><text class="library-stat-number">{{stats.internal}}</text><text class="library-stat-label">社群沉淀</text></view><view><text class="library-stat-number">{{stats.saved}}</text><text class="library-stat-label">已收藏</text></view></view>
+  <view class="search-box"><text class="search-icon">⌕</text><input class="search-input" placeholder="搜索资料、主题或来源" value="{{search}}" bindinput="onSearch" /></view>
+  <scroll-view scroll-x class="category-scroll" show-scrollbar="{{false}}"><view wx:for="{{categories}}" wx:key="*this" class="category-chip {{activeCategory === item ? 'selected' : ''}}" data-category="{{item}}" bindtap="selectCategory">{{item}}</view></scroll-view>
+
+  <view class="section-head"><view><text class="section-title">{{activeCategory === '精选' ? '本周精选' : activeCategory}}</text><text class="section-caption">{{filteredResources.length}} 份资料</text></view><text class="library-note">持续更新</text></view>
+  <view wx:if="{{filteredResources.length}}" class="resource-list">
+      <view wx:for="{{filteredResources}}" wx:key="id" class="resource-card" bindtap="openDetail" data-id="{{item.id}}">
+      <view class="resource-card-head"><view><text class="resource-type">{{item.sourceType}}</text><text class="resource-category">{{item.category}}</text></view><button class="resource-save" catchtap="toggleSave" data-id="{{item.id}}">{{item.saved ? '★' : '☆'}}</button></view>
+      <view class="resource-main"><view class="resource-mark"><text>{{item.category === 'Agent' ? 'A' : item.category === '产品' ? 'P' : item.category === '入门' ? '01' : 'L'}}</text></view><view class="resource-copy"><text class="resource-title">{{item.title}}</text><text class="resource-summary">{{item.summary}}</text></view></view>
+      <view class="resource-footer"><view class="resource-tags"><text wx:for="{{item.tags}}" wx:key="*this" class="resource-tag">#{{item}}</text></view><text class="resource-meta">{{item.readTime}} · {{item.updatedAt}}</text></view>
+      <button class="resource-open" catchtap="openResource" data-id="{{item.id}}">{{item.sourceUrl ? '复制资料链接' : '等待发布'}} <text>↗</text></button>
+    </view>
+  </view>
+  <view wx:else class="empty library-empty">没有找到相关资料<br/><text class="muted">换个关键词或主题试试</text></view>
+</view>

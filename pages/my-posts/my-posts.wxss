@@ -1,0 +1,47 @@
+.my-posts-page { padding-bottom: 120rpx; }
+.page-title { display: block; margin-top: 10rpx; }
+.eyebrow { color: var(--coral); font-size: 19rpx; font-weight: 800; letter-spacing: 3rpx; }
+.activity-intro { display: flex; align-items: center; padding: 20rpx; margin-top: 12rpx; border-radius: 22rpx; background: var(--ink); color: #fff; }
+.activity-avatar { width: 76rpx; height: 76rpx; overflow: hidden; flex-shrink: 0; border: 3rpx solid rgba(255,255,255,.2); border-radius: 24rpx; }
+.avatar-image { display: block; width: 100%; height: 100%; }
+.activity-copy { flex: 1; min-width: 0; margin-left: 16rpx; }
+.activity-name { display: block; color: #fff; font-size: 27rpx; font-weight: 800; }
+.activity-note { display: block; margin-top: 5rpx; color: rgba(255,255,255,.58); font-size: 19rpx; }
+.activity-mark { align-self: flex-start; color: var(--yellow); font-size: 17rpx; font-weight: 800; letter-spacing: 2rpx; }
+.activity-stats { display: flex; padding: 24rpx 0 10rpx; text-align: center; }
+.activity-stats > view { flex: 1; border-right: 1rpx solid var(--line); }
+.activity-stats > view:last-child { border-right: 0; }
+.activity-stat-number { display: block; color: var(--ink); font-family: var(--font-display); font-size: 36rpx; font-weight: 800; }
+.activity-stat-label { display: block; margin-top: 4rpx; color: var(--muted); font-size: 19rpx; }
+.activity-tabs { display: flex; padding: 5rpx; margin: 18rpx 0 20rpx; border-radius: 16rpx; background: #eee9df; }
+.activity-tab { display: flex; align-items: center; justify-content: center; flex: 1; height: 66rpx; border-radius: 12rpx; color: var(--muted); font-size: 22rpx; }
+.activity-tab.active { color: var(--ink); background: #fff; box-shadow: 0 5rpx 16rpx rgba(22,19,16,.07); font-weight: 800; }
+.tab-count { margin-left: 7rpx; color: var(--coral); font-size: 18rpx; }
+.mine-post-card, .reply-card { padding: 24rpx; margin-bottom: 16rpx; border: 1rpx solid rgba(230,235,230,.9); }
+.mine-post-head, .reply-label, .reply-source, .mine-post-footer { display: flex; align-items: center; }
+.mine-post-head { justify-content: space-between; }
+.post-status { padding: 5rpx 10rpx; border-radius: 7rpx; color: #2d815f; background: #e2f1e6; font-size: 17rpx; }
+.post-time { margin-left: 10rpx; color: var(--muted); font-size: 18rpx; }
+.mine-post-arrow { margin-left: auto; color: var(--coral); font-size: 25rpx; }
+.mine-post-title { display: block; margin-top: 19rpx; color: var(--ink); font-size: 29rpx; font-weight: 800; line-height: 1.4; }
+.mine-post-content { display: block; margin-top: 8rpx; color: var(--ink-soft); font-size: 23rpx; line-height: 1.6; }
+.mine-attachments { display: flex; align-items: center; margin-top: 14rpx; color: var(--muted); font-size: 18rpx; }
+.mine-attachment { display: flex; align-items: center; justify-content: center; width: 58rpx; height: 58rpx; margin-right: 7rpx; overflow: hidden; border-radius: 10rpx; color: var(--coral); background: var(--coral-soft); font-size: 23rpx; }
+.mine-attachment image { width: 100%; height: 100%; }
+.mine-post-tags { margin-top: 14rpx; }
+.mine-post-footer { padding-top: 15rpx; margin-top: 16rpx; border-top: 1rpx solid var(--line); color: var(--muted); font-size: 19rpx; }
+.mine-post-footer text + text { margin-left: 24rpx; }
+.reply-card { padding-bottom: 18rpx; }
+.reply-label { justify-content: space-between; color: var(--coral); font-size: 18rpx; font-weight: 800; }
+.reply-label text:last-child { color: var(--muted); font-weight: 400; }
+.reply-text { display: block; margin-top: 18rpx; color: var(--ink); font-size: 25rpx; line-height: 1.6; }
+.reply-source { padding-top: 14rpx; margin-top: 14rpx; border-top: 1rpx solid var(--line); color: var(--muted); font-size: 18rpx; }
+.reply-source-title { max-width: 72%; margin-left: 8rpx; overflow: hidden; color: var(--ink-soft); text-overflow: ellipsis; white-space: nowrap; }
+.activity-empty { display: flex; flex-direction: column; align-items: center; padding: 72rpx 28rpx 80rpx; text-align: center; }
+.empty-symbol { display: flex; align-items: center; justify-content: center; width: 76rpx; height: 76rpx; border-radius: 24rpx; color: var(--coral); background: var(--coral-soft); font-size: 32rpx; }
+.empty-title { display: block; margin-top: 18rpx; color: var(--ink); font-size: 27rpx; font-weight: 800; }
+.empty-copy { display: block; margin-top: 8rpx; color: var(--muted); font-size: 20rpx; }
+.empty-action { height: 72rpx; padding: 0 24rpx; margin-top: 24rpx; font-size: 21rpx; }
+.profile-reminder { display: flex; align-items: center; padding: 15rpx 16rpx; border: 1rpx solid rgba(243,107,79,.2); border-radius: 16rpx; color: var(--muted); background: var(--coral-soft); font-size: 18rpx; }
+.reminder-dot { display: flex; align-items: center; justify-content: center; width: 30rpx; height: 30rpx; flex-shrink: 0; margin-right: 8rpx; border-radius: 50%; color: #fff; background: var(--coral); font-size: 17rpx; font-weight: 800; }
+.profile-reminder button { margin-left: auto; padding-left: 10rpx; color: var(--coral); font-size: 19rpx; font-weight: 800; }

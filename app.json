@@ -7,6 +7,8 @@
     "pages/post-detail/post-detail",
     "pages/event-detail/event-detail",
     "pages/member-detail/member-detail",
+    "pages/profile-preview/profile-preview",
+    "pages/my-posts/my-posts",
     "pages/create-post/create-post",
     "pages/create-event/create-event",
     "pages/edit-profile/edit-profile",
@@ -25,10 +27,10 @@
     "backgroundColor": "#ffffff",
     "borderStyle": "white",
     "list": [
-      { "pagePath": "pages/feed/feed", "text": "发现" },
-      { "pagePath": "pages/events/events", "text": "活动" },
-      { "pagePath": "pages/contacts/contacts", "text": "通讯录" },
-      { "pagePath": "pages/profile/profile", "text": "我的" }
+      { "pagePath": "pages/feed/feed", "text": "发现", "iconPath": "assets/tabbar/discover.png", "selectedIconPath": "assets/tabbar/discover-active.png" },
+      { "pagePath": "pages/events/events", "text": "活动", "iconPath": "assets/tabbar/events.png", "selectedIconPath": "assets/tabbar/events-active.png" },
+      { "pagePath": "pages/contacts/contacts", "text": "通讯录", "iconPath": "assets/tabbar/contacts.png", "selectedIconPath": "assets/tabbar/contacts-active.png" },
+      { "pagePath": "pages/profile/profile", "text": "我的", "iconPath": "assets/tabbar/profile.png", "selectedIconPath": "assets/tabbar/profile-active.png" }
     ]
   },
   "style": "v2",

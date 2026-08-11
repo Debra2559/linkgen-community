@@ -310,3 +310,22 @@
   margin-left: 14rpx;
   font-size: 28rpx;
 }
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  margin-top: 34rpx;
+}
+
+.form-actions > button {
+  flex: 1;
+}
+
+.form-actions .submit-button {
+  margin-top: 0;
+}
+
+.preview-button {
+  height: 84rpx;
+}

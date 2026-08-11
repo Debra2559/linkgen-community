@@ -1,7 +1,13 @@
 // utils/cloud.js - 云函数调用统一封装
 // 约定所有云函数返回 { code: 0, data } 或 { code: -1, message }
+const isCloudReady = () => Boolean(wx.cloud && typeof wx.cloud.callFunction === 'function' && getApp().globalData.cloudReady);
+
 const call = (name, data = {}) => {
   return new Promise((resolve, reject) => {
+    if (!isCloudReady()) {
+      reject(new Error('CloudBase 尚未初始化，请先在微信开发者工具中开通并选择云开发环境'));
+      return;
+    }
     wx.cloud.callFunction({
       name,
       data,
@@ -34,4 +40,4 @@ const formatTime = (t) => {
   return `${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 };
 
-module.exports = { call, fen2yuanText, formatTime };
+module.exports = { call, isCloudReady, fen2yuanText, formatTime };

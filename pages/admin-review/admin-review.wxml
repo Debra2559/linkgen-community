@@ -10,12 +10,17 @@
 
   <view class="agent-panel card">
     <view class="agent-head">
-      <view><text class="agent-kicker">AGENT DISCOVERY</text><text class="agent-title">自动搜集公开活动</text><text class="agent-copy">按关键词搜索公众号和小红书，候选内容先进入审核队列</text></view>
-      <text class="agent-status {{agent.status === '搜索中' ? 'running' : ''}}">{{agent.status}}</text>
+      <view><text class="agent-kicker">AGENT DISCOVERY</text><text class="agent-title">每日巡查公开活动</text><text class="agent-copy">先识别“活动 / 分享”，再按质量筛选；高质量候选通过微信通知管理员</text></view>
+      <switch checked="{{agent.enabled}}" color="#ff713b" bindchange="toggleAgent" />
     </view>
-    <view class="agent-sources"><text wx:for="{{agent.sources}}" wx:key="*this" class="agent-source">{{item}}</text></view>
-    <view class="agent-meta"><text>关键词：{{agent.keywords}}</text><text>频率：{{agent.schedule}}</text><text>上次运行：{{agent.lastRun}}</text></view>
-    <button class="agent-run-button" bindtap="runAgent">{{agent.status === '搜索中' ? '搜索中...' : '立即搜索'}}</button>
+    <view class="agent-status-row"><text class="agent-status {{agent.status === '巡查中' ? 'running' : ''}}">{{agent.status}}</text><text class="agent-notify-channel">通知：{{agent.notifyChannel}}</text></view>
+    <view class="agent-data-mode {{cloudMode ? 'connected' : ''}}"><text>{{cloudMode ? 'CloudBase 实时数据' : '本地演示数据'}}</text><text wx:if="{{cloudError}}">{{cloudError}}</text></view>
+    <view class="agent-sources"><view wx:for="{{monitoredSources}}" wx:key="id" class="agent-source-row {{item.enabled ? 'enabled' : 'disabled'}}" data-id="{{item.id || item._id}}" bindtap="toggleSource"><view class="source-main"><view><picker class="source-kind-picker" mode="selector" range="{{sourceKindLabels}}" value="{{item.kindIndex}}" data-id="{{item.id || item._id}}" catchtap="stopSourceToggle" bindchange="onSourceKindChange"><text class="source-kind-label">{{sourceKindLabels[item.kindIndex]}}</text></picker><picker class="source-auth-picker" mode="selector" range="{{sourceAuthLabels}}" value="{{item.authIndex}}" data-id="{{item.id || item._id}}" catchtap="stopSourceToggle" bindchange="onSourceAuthChange"><text class="source-auth-label">{{sourceAuthLabels[item.authIndex]}}</text></picker><text class="source-platform">{{item.kind === 'search' ? '关键词搜索' : item.kind === 'feed' ? '授权 Feed' : item.platform}}</text><text class="agent-source-name">{{item.name}}</text></view><text class="agent-source-note">{{item.note}}</text><textarea class="source-url-input" value="{{item.urlText}}" placeholder="{{item.kind === 'search' ? '输入搜索关键词' : item.kind === 'feed' ? '粘贴授权 RSS / Atom / Feed URL' : '粘贴已授权来源 URL，多个链接换行'}}" data-id="{{item.id || item._id}}" catchtap="stopSourceToggle" bindinput="onSourceUrlInput" auto-height maxlength="10000" /></view><view class="source-side"><text class="source-toggle">{{item.enabled ? '监控中' : '已暂停'}}</text><text class="source-scope">{{item.defaultScope === 'community' ? '社区活动' : '社区外精选'}}</text><text class="source-scan">{{item.lastScanStatus === 'failed' ? '上次失败' : item.lastScanAt ? '最近已巡查' : (item.kind === 'search' ? '待配置关键词' : (item.url ? '待巡查' : '待配置 URL'))}}</text><text wx:if="{{item.lastScanError}}" class="source-error">{{item.lastScanError}}</text></view></view></view>
+    <button class="save-source-button" bindtap="saveSources">保存来源配置</button>
+    <view class="agent-meta"><text>关键词：{{agent.keywords}}</text><text>频率：{{agent.schedule}}</text><text>搜索：{{scanSummary.searches || 0}} 次</text><text>上次运行：{{agent.lastRun}}</text></view>
+    <view wx:if="{{scanSummary.scanned}}" class="scan-summary"><view><text>{{scanSummary.scanned}}</text><text>篇已检查</text></view><view><text>{{scanSummary.activity}}</text><text>条活动</text></view><view><text>{{scanSummary.share}}</text><text>条分享</text></view><view><text>{{scanSummary.highQuality}}</text><text>条高质量</text></view></view>
+    <view class="agent-notification"><view class="notification-dot {{notification.status === '已发送微信通知' ? 'sent' : ''}}"></view><view><text class="notification-title">{{notification.status}}</text><text class="notification-detail">{{notification.detail}}</text></view><button plain class="subscribe-button" style="flex-shrink:0;padding:4rpx 0 4rpx 12rpx;margin:0 0 0 auto;color:var(--coral);background:transparent;font-size:17rpx;" catchtap="subscribeAgentNotice">订阅提醒</button></view>
+    <button class="agent-run-button" bindtap="runAgent">{{agent.status === '巡查中' ? '巡查中...' : '立即巡查'}}</button>
   </view>
 
   <view class="admin-tabs"><view wx:for="{{filters}}" wx:key="key" class="admin-tab {{activeFilter === item.key ? 'active' : ''}}" data-key="{{item.key}}" bindtap="onFilter">{{item.label}}</view></view>
@@ -23,13 +28,17 @@
 
   <view wx:for="{{list}}" wx:key="id" class="review-card card">
     <view class="review-head">
-      <view><text class="review-type">{{item.type}}</text><text wx:if="{{item.discoveryMode === 'agent'}}" class="review-source">Agent 发现</text><text wx:if="{{item.sourcePlatform}}" class="review-source">{{item.sourcePlatform}}</text></view>
+      <view><text class="review-type">{{item.type}}</text><text wx:if="{{item.discoveryMode === 'agent'}}" class="review-source">Agent 发现</text><text wx:if="{{item.sourcePlatform}}" class="review-source">{{item.sourcePlatform}}</text><text wx:if="{{item.contentType}}" class="review-source">{{item.contentType === 'activity' ? '识别为活动' : '内容分享'}}</text></view>
       <text class="review-status {{item.status === '待审核' ? 'waiting' : 'published'}}">{{item.status}}</text>
     </view>
     <text class="review-title">{{item.title}}</text>
+    <view wx:if="{{item.discoveryMode === 'agent'}}" class="review-preview"><image wx:if="{{item.coverImage}}" class="review-cover" src="{{item.coverImage}}" mode="aspectFill" bindtap="chooseCandidateImage" data-id="{{item.id}}"/><view wx:else class="review-cover-placeholder"><text>活动图片</text><text>待从原文核验</text><button class="review-image-button" catchtap="chooseCandidateImage" data-id="{{item.id}}">补充封面</button></view><view class="review-summary-wrap"><text class="review-summary-label">文章概要</text><text class="review-summary">{{item.summary || item.description}}</text></view></view>
     <text class="review-meta">{{item.time}} · {{item.location}}</text>
-    <text class="review-meta">提交人：{{item.organizer}}</text>
+    <text class="review-meta">来源：{{item.sourceName || item.organizer}} · 质量 {{item.qualityLabel || item.quality || '待评估'}}</text>
+    <text class="review-meta">来源状态：{{item.authorizationStatus === 'authorized' ? '已授权' : item.authorizationStatus === 'owned' ? '自有来源' : item.authorizationStatus === 'public_link' ? '已确认公开链接' : '待确认授权'}}</text>
+    <text wx:if="{{item.qualityReasonText}}" class="review-meta">判断依据：{{item.qualityReasonText}}</text>
     <view wx:if="{{item.sourceUrl}}" class="review-url">来源：{{item.sourceUrl}}</view>
+    <view wx:if="{{item.registrationUrl && item.registrationUrl !== item.sourceUrl}}" class="review-url">报名入口：{{item.registrationUrl}}</view>
     <view wx:if="{{item.status === '待审核'}}" class="review-actions"><button class="reject-button" bindtap="reject" data-id="{{item.id}}">驳回</button><button class="approve-button" bindtap="approve" data-id="{{item.id}}">通过并发布</button></view>
   </view>
   <view wx:if="{{!list.length}}" class="empty">没有活动记录</view>

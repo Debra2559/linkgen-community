@@ -53,6 +53,10 @@
         "type": "folder"
       },
       {
+        "value": "docs",
+        "type": "folder"
+      },
+      {
         "value": "codex-task-chime",
         "type": "folder"
       },
