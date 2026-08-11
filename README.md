@@ -71,20 +71,22 @@ LinkGen 是一个社群成员日常使用的小程序：可以发帖交流、参
 
 ## 小程序实际截图
 
-以下均为 LinkGen 小程序运行页面截图，不是设计稿。截图覆盖发现、帖子、活动、通讯录、成员名片与个人名片等核心使用路径。
+以下均为 LinkGen 小程序运行页面截图，不是设计稿。截图覆盖发现、活动、通讯录、成员名片与个人名片等核心使用路径。
 
 <table>
   <tr>
-    <td width="33%" align="center"><img src="docs/screenshots/home.png" alt="发现首页" width="240"><br><sub>发现首页：帖子流、标签与入口</sub></td>
-    <td width="33%" align="center"><img src="docs/screenshots/post-detail.png" alt="帖子详情" width="240"><br><sub>帖子详情：正文、点赞与评论</sub></td>
-    <td width="33%" align="center"><img src="docs/screenshots/events-calendar.png" alt="活动日历" width="240"><br><sub>活动日历：筛选与时间安排</sub></td>
+    <td width="33%" align="center"><img src="docs/screenshots/home.jpg" alt="发现首页" width="240"><br><sub>发现首页：帖子流与社群入口</sub></td>
+    <td width="33%" align="center"><img src="docs/screenshots/events-day.jpg" alt="活动日历日视图" width="240"><br><sub>活动日历：日视图与活动安排</sub></td>
+    <td width="33%" align="center"><img src="docs/screenshots/events-timeline.jpg" alt="活动时间轴" width="240"><br><sub>活动日历：时间轴与筛选</sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="docs/screenshots/contacts.jpg" alt="通讯录" width="240"><br><sub>通讯录：搜索与标签筛选</sub></td>
-    <td align="center"><img src="docs/screenshots/member-detail.jpg" alt="成员数字名片" width="240"><br><sub>成员名片：清晰展示个人信息</sub></td>
-    <td align="center"><img src="docs/screenshots/profile.jpg" alt="我的" width="240"><br><sub>我的：名片与参与记录</sub></td>
+    <td align="center"><img src="docs/screenshots/event-detail.jpg" alt="活动详情" width="240"><br><sub>活动详情：报名、日程与发起人</sub></td>
+    <td align="center"><img src="docs/screenshots/contacts.jpg" alt="通讯录" width="240"><br><sub>通讯录：成员搜索与标签</sub></td>
+    <td align="center"><img src="docs/screenshots/member-detail.jpg" alt="成员数字名片" width="240"><br><sub>成员名片：身份、标签与介绍</sub></td>
   </tr>
   <tr>
+    <td align="center"><img src="docs/screenshots/profile.jpg" alt="我的" width="240"><br><sub>我的：个人数据与参与记录</sub></td>
+    <td align="center"><img src="docs/screenshots/profile-preview.jpg" alt="数字名片预览" width="240"><br><sub>数字名片：对外展示预览</sub></td>
     <td align="center"><img src="docs/screenshots/edit-profile.jpg" alt="编辑数字名片" width="240"><br><sub>编辑名片：头像、身份、城市与标签</sub></td>
   </tr>
 </table>

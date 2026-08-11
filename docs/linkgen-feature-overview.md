@@ -17,33 +17,27 @@ LinkGen 面向 AI 从业者、独立开发者和创作者，提供讨论、活�
 
 ## 小程序运行截图
 
-以下三张是小程序页面原图，适合作为产品展示截图；图片只保留手机页面，不包含开发者工具外框。
+以下均为小程序页面原图，适合作为产品展示截图；图片只保留手机页面，不包含开发者工具外框。
 
 <table>
   <tr>
-    <td align="center"><img src="screenshots/home.png" alt="发现首页" width="240"><br><sub>发现首页：帖子流与社群入口</sub></td>
-    <td align="center"><img src="screenshots/events-calendar.png" alt="活动日历" width="240"><br><sub>活动日历：筛选与时间轴</sub></td>
-    <td align="center"><img src="screenshots/edit-profile.jpg" alt="编辑数字名片" width="240"><br><sub>编辑名片：头像、身份与城市</sub></td>
+    <td align="center"><img src="screenshots/home.jpg" alt="发现首页" width="240"><br><sub>发现首页：帖子流与社群入口</sub></td>
+    <td align="center"><img src="screenshots/events-day.jpg" alt="活动日历日视图" width="240"><br><sub>活动日历：日视图与活动安排</sub></td>
+    <td align="center"><img src="screenshots/events-timeline.jpg" alt="活动时间轴" width="240"><br><sub>活动日历：时间轴与筛选</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="screenshots/event-detail.jpg" alt="活动详情" width="240"><br><sub>活动详情：报名、日程与发起人</sub></td>
+    <td align="center"><img src="screenshots/contacts.jpg" alt="通讯录" width="240"><br><sub>通讯录：成员搜索与标签</sub></td>
+    <td align="center"><img src="screenshots/member-detail.jpg" alt="成员数字名片" width="240"><br><sub>成员名片：身份、标签与介绍</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="screenshots/profile.jpg" alt="我的" width="240"><br><sub>我的：个人数据与参与记录</sub></td>
+    <td align="center"><img src="screenshots/profile-preview.jpg" alt="数字名片预览" width="240"><br><sub>数字名片：对外展示预览</sub></td>
+    <td align="center"><img src="screenshots/edit-profile.jpg" alt="编辑数字名片" width="240"><br><sub>编辑名片：头像、身份、城市与标签</sub></td>
   </tr>
 </table>
 
-页面原图尺寸为 `1206 × 2622`，来自微信开发者工具中的小程序实际运行页面。README 提供完整的七张核心页面截图。
-
-### 开发者工具验证记录
-
-以下图片保留完整的微信开发者工具窗口，用于证明对应功能已在模拟器中跑通，不作为产品视觉展示图。图片尺寸为 `1281 × 768`，这是开发者工具窗口尺寸，不是手机模拟器分辨率。
-
-<details>
-  <summary>查看活动时间轴、链接导入、我的活动验证图</summary>
-
-  <table>
-    <tr>
-      <td align="center"><img src="screenshots/events-timeline.jpg" alt="活动时间轴开发者工具验证" width="420"><br><sub>活动时间轴</sub></td>
-      <td align="center"><img src="screenshots/event-import.jpg" alt="活动链接导入开发者工具验证" width="420"><br><sub>活动链接导入</sub></td>
-      <td align="center"><img src="screenshots/profile-and-my-events.jpg" alt="我的活动开发者工具验证" width="420"><br><sub>我的活动入口</sub></td>
-    </tr>
-  </table>
-</details>
+页面原图尺寸为 `1206 × 2622`，来自微信开发者工具中的小程序实际运行页面。README 与本说明均使用同一组九张新版真机截图。
 
 ## 链接导入流程
 
