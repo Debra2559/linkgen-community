@@ -1,13 +1,15 @@
 <view class="page profile-page">
-  <view class="topbar"><view><text class="eyebrow">YOUR LINKGEN</text><text class="section-title page-title">我的</text></view><button class="icon-button">···</button></view>
+  <view class="topbar"><view><text class="eyebrow">YOUR LINKGEN</text><text class="section-title page-title">我的</text></view></view>
 
-  <view class="profile-card">
-    <view class="card-topline"><text class="card-code">LINKGEN / DIGITAL CARD</text><button class="edit-button" bindtap="goEdit">编辑名片</button></view>
-    <view class="profile-top"><view class="avatar profile-avatar" style="background: {{profile.color}}"><image wx:if="{{profile.avatar}}" class="avatar-image" src="{{profile.avatar}}" mode="aspectFill"/><text wx:if="{{!profile.avatar}}">{{profile.initials}}</text></view><view class="profile-info"><text class="profile-name">{{profile.name}}</text><text class="profile-role">{{profile.role}}<text wx:if="{{profile.city}}"> · {{profile.city}}</text></text><view class="connect-status"><view class="status-dot"></view><text>正在连接</text></view></view></view>
-    <view class="profile-bio">{{profile.bio}}</view>
+  <view wx:if="{{!profile.setupComplete}}" class="setup-banner"><view class="setup-mark">01</view><view class="setup-copy"><text class="setup-title">先做一张属于你的名片</text><text class="setup-subtitle">补充身份、城市和加入目的，让更多人认识你。</text></view><button class="setup-button" bindtap="goEdit">开始设置 ↗</button></view>
+
+  <view class="profile-card" bindtap="previewProfile">
+    <view class="card-topline"><text class="card-code">LINKGEN / DIGITAL CARD</text><text class="card-open-mark">↗</text></view>
+    <view class="profile-top"><view class="avatar profile-avatar" style="background: {{profile.color}}"><image wx:if="{{profile.avatar}}" class="avatar-image" src="{{profile.avatar}}" mode="aspectFill"/><text wx:if="{{!profile.avatar}}">{{profile.initials}}</text></view><view class="profile-info"><text class="profile-name">{{profile.name || '你的名片'}}</text><text class="profile-role">{{profile.role || '身份待填写'}}<text wx:if="{{profile.city}}"> · {{profile.city}}</text></text><view class="connect-status"><view class="status-dot"></view><text>{{profile.setupComplete ? '正在连接' : '等待你的介绍'}}</text></view></view></view>
+    <view class="profile-bio">{{profile.bio || '选择默认头像也可以，先写下真实的你。'}}</view>
     <view class="profile-tags"><text wx:for="{{profile.tags}}" wx:key="*this" class="tag">#{{item}}</text></view>
-    <view class="profile-purpose"><text class="purpose-label">我来这里，是因为</text><text class="purpose-text">{{profile.purpose}}</text></view>
-    <view class="card-footer"><text>LINK 01</text><text>OPEN TO GOOD THINGS ↗</text></view>
+    <view class="profile-purpose"><text class="purpose-label">我来这里，是因为</text><text class="purpose-text">{{profile.purpose || '还没有填写加入社群的目的'}}</text></view>
+    <view class="card-footer"><text>LINK 01</text><view class="card-edit-link" catchtap="goEdit"><text>编辑</text><text>↗</text></view></view>
   </view>
 
   <view class="stats-row"><view><text class="stat-number">{{stats.posts}}</text><text class="stat-label">发起讨论</text></view><view><text class="stat-number">{{stats.events}}</text><text class="stat-label">参加活动</text></view><view><text class="stat-number">{{stats.likes}}</text><text class="stat-label">获得赞</text></view></view>

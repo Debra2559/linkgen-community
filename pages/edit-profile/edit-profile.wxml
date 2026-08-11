@@ -19,7 +19,7 @@
 
   <view class="section-block">
     <view class="block-heading"><text class="section-kicker">01 · 基础信息</text><text class="section-caption">别人先看到这些</text></view>
-    <view class="field-line"><text class="field-label">昵称</text><input class="line-input" value="{{profile.name}}" maxlength="12" placeholder="例如：林小满" bindinput="onName" /></view>
+    <view class="field-line"><text class="field-label">昵称</text><input class="line-input" value="{{profile.name}}" maxlength="12" placeholder="例如：小满" bindinput="onName" /></view>
     <view class="field-line"><text class="field-label">身份</text><input class="line-input" value="{{profile.role}}" placeholder="例如：AI 产品经理" bindinput="onRole" /></view>
     <view class="field-line"><text class="field-label">所在城市</text><input class="line-input" value="{{profile.city}}" placeholder="例如：上海" bindinput="onCity" /></view>
   </view>
@@ -36,5 +36,5 @@
   </view>
 
   <view class="visibility-note"><text class="note-dot">·</text><text>名片会公开展示在通讯录，只有你能修改。</text></view>
-  <button class="primary-button submit-button" bindtap="save">保存名片 <text class="button-arrow">✓</text></button>
+  <view class="form-actions"><button class="secondary-button preview-button" bindtap="previewProfile">预览名片 <text class="button-arrow">↗</text></button><button class="primary-button submit-button" bindtap="save">保存名片 <text class="button-arrow">✓</text></button></view>
 </view>

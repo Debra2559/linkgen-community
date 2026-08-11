@@ -13,6 +13,7 @@
 
     <text class="detail-title">{{post.title}}</text>
     <text class="detail-content">{{post.content}}</text>
+    <view wx:if="{{post.attachments && post.attachments.length}}" class="detail-attachments"><view wx:for="{{post.attachments}}" wx:key="id" class="detail-attachment"><image wx:if="{{item.type === 'image'}}" class="detail-attachment-image" src="{{item.path}}" mode="aspectFill" /><video wx:elif="{{item.type === 'video'}}" class="detail-attachment-video" src="{{item.path}}" controls show-center-play-btn object-fit="contain" /><view wx:else class="detail-attachment-link" bindtap="copyAttachmentLink" data-url="{{item.url}}"><text class="detail-link-mark">↗</text><view class="detail-link-copy"><text class="detail-link-name">{{item.name}}</text><text class="detail-link-url">{{item.url}}</text><text class="detail-link-action">点击复制链接</text></view></view></view></view>
     <view class="post-tags"><text wx:for="{{post.tags}}" wx:key="*this" class="tag">#{{item}}</text></view>
 
     <view class="detail-actions">

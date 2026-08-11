@@ -6,6 +6,8 @@
 
 围绕「交流、活动、认识彼此」三条主线，提供帖子讨论、活动日历、数字名片与活动采集能力。
 
+[查看变更日志](CHANGELOG.md)
+
 </div>
 
 <table>
@@ -20,7 +22,7 @@
 
 LinkGen 是一个社群成员日常使用的小程序：可以发帖交流、参加活动、搜索成员，也可以维护自己的数字名片。
 
-当前仓库是可直接导入微信开发者工具运行的版本。页面交互与默认数据已经准备好，数据暂存于本地 Storage，适合产品体验、流程验证与后续接入云开发。
+当前仓库是可直接导入微信开发者工具运行的版本。页面交互与默认数据已经准备好，数据暂存于本地 Storage，适合产品体验、流程验证与后续接入云开发。学习库前端入口暂缓接入，相关后端方案保留。
 
 ## 怎么使用
 
@@ -105,9 +107,9 @@ Agent 搜索 --(生成候选)--> 待审核 --(官方通过)--> 已发布
 3. 编译运行，默认进入「发现」页。
 4. 通过底部导航体验「活动」「通讯录」「我的」三条主流程。
 
-当前数据写入本地 Storage，默认数据与相关 key 位于 `utils/linkgen-data.js`。接入云开发时，将数据读写函数替换为云函数调用，页面层无需重写。
+发现、活动、通讯录等页面仍使用本地演示数据；运营管理页已接入 CloudBase 优先的 Agent 候选查询、来源配置、巡查、审批和驳回链路。未部署云函数或未配置管理员时，页面会显示“本地演示数据”，不会把演示候选当作真实采集结果。
 
-活动链接解析与 Agent 搜索目前使用本地演示数据。真实公众号、小红书内容解析，以及定期搜索任务，需要接入服务端抓取、内容审核与任务调度。
+活动链接解析仍提供本地草稿兜底；Agent 真实采集需要按 [Agent 部署清单](docs/linkgen-agent-deployment.md) 部署 CloudBase 云函数、配置已授权来源和微信订阅消息。
 
 ## 页面结构
 
@@ -125,10 +127,15 @@ pages/edit-profile      编辑个人名片
 pages/admin-review      活动审核与官方发布
 ```
 
+学习库页面暂不加入 `app.json`，相关云函数和方案文档保留在仓库中，当前版本不作为小程序用户流程的一部分。
+
 ## 相关文档
 
 - [功能说明与页面截图](docs/linkgen-feature-overview.md)
 - [活动链接导入与 Agent 采集架构](docs/linkgen-ingest-architecture.md)
+- [学习库方案与内容承载策略](docs/linkgen-learning-library-plan.md)
+- [Agent 与学习库落地方案](docs/linkgen-agent-library-implementation-plan.md)
+- [Agent 与 CloudBase 部署清单](docs/linkgen-agent-deployment.md)
 - [头像库说明](docs/linkgen-avatar-library.md)
 - [公开运营与备案研究](docs/linkgen-compliance-research.md)
 - [公开运营准备与执行路线](docs/linkgen-public-operation-plan.md)

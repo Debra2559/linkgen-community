@@ -16,6 +16,11 @@
     <view class="block-heading"><text class="section-kicker">01 · 活动内容</text><text class="section-caption">先说清楚这是什么</text></view>
     <view class="field-line featured-field"><text class="field-label">活动名称</text><input class="line-input title-line-input" placeholder="例如：AI 产品经理线下交流会" value="{{title}}" bindinput="onTitle" /></view>
     <view class="field-line"><view class="field-label-row"><text class="field-label">活动简介</text><text class="field-count">{{description.length}} / 120</text></view><textarea class="line-textarea" placeholder="适合谁？会发生什么？" maxlength="120" value="{{description}}" bindinput="onDescription" /></view>
+    <view class="cover-field">
+      <view class="cover-field-heading"><view><text class="field-label">活动封面</text><text class="cover-field-hint">一张图片，让活动更容易被记住</text></view><text class="field-count">可选</text></view>
+      <view wx:if="{{coverImage}}" class="cover-uploader has-cover" bindtap="chooseCoverImage"><image class="cover-preview" src="{{coverImage}}" mode="aspectFill" /><view class="cover-preview-overlay"><text>点击更换</text></view><button class="cover-delete" catchtap="removeCoverImage">删除</button></view>
+      <view wx:else class="cover-uploader" bindtap="chooseCoverImage"><view class="cover-upload-mark">＋</view><view><text class="cover-upload-title">添加活动图片</text><text class="cover-upload-copy">支持相册或拍摄，建议横图</text></view><text class="cover-upload-arrow">↗</text></view>
+    </view>
   </view>
 
   <view class="section-block type-block">

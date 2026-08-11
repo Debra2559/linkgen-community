@@ -3,9 +3,15 @@
 ## 来源
 
 - 头像生成库：DiceBear
-- 风格：Notionists Neutral（与生成接口一致）
+- 风格：Notionists（与现有头像资源一致）
 - 本地资源：`assets/avatars/`
-- 生成接口：`https://api.dicebear.com/9.x/notionists-neutral/png`
+- 生成接口：`https://api.dicebear.com/9.x/notionists/png`
+
+## 当前资源
+
+- 共 20 张本地头像，包含默认头像、短发、长发和中性外观。
+- 新增头像：Aria、可可、露露、Ryan、Vivi、乔乔、Iris、Yuki、沫沫、Kai、Tom、Jo。
+- 头像通过固定 seed 生成并固化到小程序包内；用户选择后不依赖远程图片域名。
 
 ## 运行方式
 
@@ -15,4 +21,4 @@
 
 ## 许可注意
 
-DiceBear 与具体头像风格的许可可能不同。正式公开运营前，保留来源说明并核对当前 DiceBear 及 Notionists Neutral 的许可文本。
+DiceBear 与具体头像风格的许可可能不同。正式公开运营前，保留来源说明并核对当前 DiceBear 及 Notionists 的许可文本。

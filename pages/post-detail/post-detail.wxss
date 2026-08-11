@@ -115,6 +115,19 @@
   line-height: 1.8;
 }
 
+.detail-attachments { margin-top: 24rpx; }
+.detail-attachment { overflow: hidden; margin-bottom: 12rpx; border: 1rpx solid var(--line); border-radius: 16rpx; background: #fff; }
+.detail-attachment-image { display: block; width: 100%; height: 360rpx; }
+.detail-attachment-video { display: block; width: 100%; height: 380rpx; color: #fff; background: var(--ink-soft); }
+.detail-video-mark, .detail-link-mark { display: flex; align-items: center; justify-content: center; width: 56rpx; height: 56rpx; margin-right: 14rpx; border-radius: 50%; color: var(--ink); background: var(--yellow); font-size: 20rpx; }
+.detail-attachment-link { display: flex; align-items: center; padding: 18rpx; }
+.detail-attachment-link .detail-link-mark { flex-shrink: 0; margin-right: 14rpx; color: var(--coral); background: var(--coral-soft); }
+.detail-link-copy { min-width: 0; flex: 1; }
+.detail-link-name, .detail-link-url, .detail-link-action { display: block; max-width: 100%; }
+.detail-link-name { color: var(--ink-soft); font-size: 22rpx; font-weight: 700; }
+.detail-link-url { margin-top: 5rpx; color: var(--muted); font-size: 18rpx; line-height: 1.4; word-break: break-all; }
+.detail-link-action { margin-top: 8rpx; color: var(--coral); font-size: 17rpx; }
+
 .post-tags {
   margin-top: 20rpx;
 }

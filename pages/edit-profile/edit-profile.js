@@ -23,6 +23,10 @@ Page({
     if (wx.chooseMedia) wx.chooseMedia({ count: 1, mediaType: ['image'], sourceType: ['album', 'camera'], success: handleResult });
     else wx.chooseImage({ count: 1, sourceType: ['album', 'camera'], success: handleResult });
   },
+  previewProfile() {
+    wx.setStorageSync('linkgen_profile_preview_v1', this.data.profile);
+    wx.navigateTo({ url: '/pages/profile-preview/profile-preview?draft=1' });
+  },
   toggleTag(e) {
     const tag = e.currentTarget.dataset.tag;
     let tags = this.data.profile.tags.slice();
@@ -34,7 +38,7 @@ Page({
   save() {
     const { profile } = this.data;
     if (!profile.name || !profile.role || !profile.city || !profile.purpose) return wx.showToast({ title: '请至少填写昵称、身份、城市和目的', icon: 'none' });
-    saveProfile(profile);
+    saveProfile({ ...profile, setupComplete: true });
     wx.showToast({ title: '名片已更新', icon: 'success' });
     setTimeout(() => wx.navigateBack(), 500);
   },

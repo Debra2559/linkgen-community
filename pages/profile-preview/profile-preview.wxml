@@ -1,0 +1,21 @@
+<view class="page profile-preview-page">
+  <view class="preview-nav">
+    <button class="back-button" bindtap="goBack">‹</button>
+    <view class="preview-nav-title"><text class="eyebrow">YOUR DIGITAL CARD</text><text class="page-title">{{isDraft ? '预览未保存名片' : '我的数字名片'}}</text></view>
+    <button class="preview-edit-button" bindtap="goEdit">编辑 <text>↗</text></button>
+  </view>
+
+  <view class="card-stage" style="background: {{profile.color}}">
+    <view class="stage-grid"></view>
+    <view class="stage-topline"><text>LINKGEN / MEMBER CARD</text><text>01</text></view>
+    <view class="stage-identity"><view class="avatar stage-avatar"><image wx:if="{{profile.avatar}}" class="avatar-image" src="{{profile.avatar}}" mode="aspectFill"/><text wx:if="{{!profile.avatar}}">{{profile.initials}}</text></view><view class="stage-person"><text class="stage-name">{{profile.name}}</text><text class="stage-role">{{profile.role}}<text wx:if="{{profile.city}}"> · {{profile.city}}</text></text><view class="stage-status"><view class="stage-status-dot"></view><text>正在连接</text></view></view></view>
+    <view class="stage-intro"><text class="stage-intro-label">A LITTLE ABOUT ME</text><text class="stage-intro-text">{{profile.bio}}</text></view>
+    <view class="stage-tags"><text wx:for="{{profile.tags}}" wx:key="*this" class="stage-tag">#{{item}}</text><text wx:if="{{!profile.tags.length}}" class="stage-tag empty-stage-tag">添加标签</text></view>
+    <view class="stage-footer"><text>OPEN TO GOOD THINGS</text><text>↗</text></view>
+  </view>
+
+  <view class="preview-info-section"><view class="info-heading"><text class="section-kicker">CURRENT SIGNAL</text><text class="info-index">01</text></view><text class="purpose-copy">{{profile.purpose}}</text></view>
+  <view class="preview-info-section bio-info"><view class="info-heading"><text class="section-kicker">WHY LINKGEN</text><text class="info-index">02</text></view><text class="purpose-copy">通过身份、城市和标签，让别人更快找到合拍的连接。</text></view>
+
+  <button wx:if="{{isDraft}}" class="primary-button continue-edit-button" bindtap="goEdit">返回继续编辑 <text class="button-arrow">↗</text></button>
+</view>
