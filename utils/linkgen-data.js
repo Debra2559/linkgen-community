@@ -58,7 +58,8 @@ function normalizePost(item) {
     ...(contentType === 'task' ? {
       taskKind: item.taskKind || 'collaboration',
       taskStatus: item.taskStatus || 'recruiting',
-      neededPeople: Number(item.neededPeople) || 1,
+      neededPeople: Math.min(100, Math.max(1, Number(item.neededPeople) || 1)),
+      creatorMemberId: item.creatorMemberId || item.author || '',
       deadline: item.deadline || '',
       linkedEventId: item.linkedEventId || '',
       interestedMemberIds: item.interestedMemberIds || [],
