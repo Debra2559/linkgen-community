@@ -89,3 +89,15 @@ button::after { border: 0; }
 .page:not(.theme-light) .join-button.full { background: var(--surface-raised); color: var(--muted); }
 .page:not(.theme-light) .info-item + .info-item { border-color: var(--line); }
 .page:not(.theme-light) .community-scope { color: var(--coral); background: var(--card); }
+.page:not(.theme-light) .field-input,
+.page:not(.theme-light) .field-textarea,
+.page:not(.theme-light) .field-picker,
+.page:not(.theme-light) .task-input-item,
+.page:not(.theme-light) .event-picker,
+.page:not(.theme-light) .count-stepper,
+.page:not(.theme-light) .category-chip,
+.page:not(.theme-light) .cover-upload-mark,
+.page:not(.theme-light) .type-symbol,
+.page:not(.theme-light) .save-button { background: var(--surface-input); color: var(--ink); }
+.page:not(.theme-light) .profile-preview-card,
+.page:not(.theme-light) .preview-card { background: var(--card); }
