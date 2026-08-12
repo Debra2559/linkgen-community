@@ -101,3 +101,14 @@ button::after { border: 0; }
 .page:not(.theme-light) .save-button { background: var(--surface-input); color: var(--ink); }
 .page:not(.theme-light) .profile-preview-card,
 .page:not(.theme-light) .preview-card { background: var(--card); }
+.page:not(.theme-light) .tag,
+.page:not(.theme-light) .post-tags .tag,
+.page:not(.theme-light) .choice,
+.page:not(.theme-light) .category-chip,
+.page:not(.theme-light) .admin-tab { background: var(--surface-raised); color: var(--ink-soft); }
+.page:not(.theme-light) .send-button[disabled],
+.page:not(.theme-light) button[disabled].primary-button,
+.page:not(.theme-light) .contact-actions .primary-button,
+.page:not(.theme-light) .upload-button { background: var(--surface-raised); color: var(--muted); }
+.page:not(.theme-light) .review-card,
+.page:not(.theme-light) .agent-source-row { background: var(--card); }
