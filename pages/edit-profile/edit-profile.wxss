@@ -38,7 +38,7 @@
 .profile-preview {
   padding: 22rpx 24rpx 24rpx;
   border-radius: 24rpx;
-  background: var(--ink);
+  background: linear-gradient(135deg, #111a35, #172a4b) !important;
   box-shadow: 0 16rpx 34rpx rgba(22, 19, 16, 0.16);
 }
 
