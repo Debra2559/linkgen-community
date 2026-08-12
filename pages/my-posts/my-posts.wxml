@@ -1,4 +1,4 @@
-<view class="page my-posts-page">
+<view class="page my-posts-page {{themeMode === 'light' ? 'theme-light' : ''}}">
   <view class="topbar">
     <view><text class="eyebrow">YOUR ACTIVITY</text><text class="section-title page-title">我的动态</text></view>
     <button class="icon-button" bindtap="goProfile">⌂</button>

@@ -1,4 +1,4 @@
-<view class="page form-page event-form-page">
+<view class="page form-page event-form-page {{themeMode === 'light' ? 'theme-light' : ''}}">
   <view class="form-intro">
     <view class="intro-row"><text class="eyebrow">{{isOfficial ? 'PUBLISH FROM OFFICIAL' : 'ADD TO THE CALENDAR'}}</text><text class="draft-status">{{isOfficial ? '官方账号' : '社区提交'}}</text></view>
     <text class="form-title">让更多人<br/><text class="coral-word">遇见好活动</text></text>

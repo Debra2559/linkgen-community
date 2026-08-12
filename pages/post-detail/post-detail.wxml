@@ -1,4 +1,4 @@
-<view class="page detail-page" wx:if="{{post}}">
+<view class="page detail-page {{themeMode === 'light' ? 'theme-light' : ''}}" wx:if="{{post}}">
   <view class="detail-kicker"><text>LINKGEN / {{post.contentTypeLabel}}</text><text wx:if="{{post.hot}}" class="detail-hot">HOT</text></view>
 
   <view class="detail-content-panel">

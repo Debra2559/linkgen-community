@@ -1,4 +1,4 @@
-<view class="page contacts-page">
+<view class="page contacts-page {{themeMode === 'light' ? 'theme-light' : ''}}">
   <view class="topbar"><view><text class="eyebrow">MEET THE COMMUNITY</text><text class="section-title page-title">通讯录</text></view><button class="icon-button" bindtap="goProfile">⌁</button></view>
   <view class="directory-intro"><view><text class="intro-title">找到和你同频的人</text><text class="intro-copy">每个人，都有一张可被发现的数字名片</text></view><view class="people-stack"><view class="stack-avatar"><image src="../../assets/avatars/avatar-soda.png" mode="aspectFill"/></view><view class="stack-avatar"><image src="../../assets/avatars/avatar-mia.png" mode="aspectFill"/></view><view class="stack-avatar"><image src="../../assets/avatars/avatar-aji.png" mode="aspectFill"/></view><text class="stack-more">+1.2k</text></view></view>
   <view class="search-box"><text class="search-icon">⌕</text><input class="search-input" placeholder="搜索姓名、介绍或标签" value="{{search}}" bindinput="onSearch" /></view>

@@ -14,13 +14,13 @@ Page({
   selectTheme(event) {
     const themeMode = event.currentTarget.dataset.theme;
     wx.setStorageSync('linkgen_theme', themeMode);
-    this.setData({ themeMode });
+    getApp().applyTheme(themeMode);
     wx.showToast({ title: themeMode === 'dark' ? '已切换暗色' : '已切换亮色', icon: 'none' });
   },
   toggleTheme() {
     const themeMode = this.data.themeMode === 'dark' ? 'light' : 'dark';
     wx.setStorageSync('linkgen_theme', themeMode);
-    this.setData({ themeMode });
+    getApp().applyTheme(themeMode);
   },
   goEdit() { wx.navigateTo({ url: '/pages/edit-profile/edit-profile' }); },
   previewProfile() { wx.navigateTo({ url: '/pages/profile-preview/profile-preview' }); },
