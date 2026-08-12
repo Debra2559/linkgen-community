@@ -5,7 +5,7 @@
     <text class="form-copy">填得越具体，越容易遇见真正合拍的人。</text>
   </view>
 
-  <view class="profile-preview">
+  <view class="profile-preview" style="background: {{profile.color}}">
     <view class="preview-top"><text class="preview-label">LINKGEN MEMBER CARD</text><text class="preview-live">实时预览</text></view>
     <view class="preview-main"><view class="avatar preview-avatar" style="background: {{profile.color}}"><image wx:if="{{profile.avatar}}" class="avatar-image" src="{{profile.avatar}}" mode="aspectFill"/><text wx:if="{{!profile.avatar}}">{{profile.initials || '你'}}</text></view><view class="preview-info"><text class="preview-name">{{profile.name || '你的昵称'}}</text><text class="preview-role">{{profile.role || '身份'}}<text wx:if="{{profile.city}}"> · {{profile.city}}</text></text></view></view>
     <text class="preview-bio">{{profile.bio || '一句话介绍自己，让别人快速认识你。'}}</text>
