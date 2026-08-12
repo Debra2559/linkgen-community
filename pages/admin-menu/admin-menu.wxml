@@ -1,4 +1,4 @@
-<view class="page">
+<view class="page {{themeMode === 'light' ? 'theme-light' : ''}}">
   <view class="admin-head">
     <view class="admin-head-copy">
       <text class="admin-kicker">OWNER WORKSPACE</text>

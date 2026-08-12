@@ -1,4 +1,4 @@
-<view class="page library-page">
+<view class="page library-page {{themeMode === 'light' ? 'theme-light' : ''}}">
   <view class="topbar"><view><text class="eyebrow">LINKGEN LIBRARY</text><text class="section-title page-title">学习库</text></view></view>
 
   <view class="library-intro"><view><text class="intro-overline">KEEP THE GOOD STUFF</text><text class="intro-title">把好资料留在社群里</text><text class="intro-copy">精选公开课程、工具文档和 LinkGen 自己沉淀的方法。</text></view><view class="intro-mark"><text>LIB</text><text>01</text></view></view>
