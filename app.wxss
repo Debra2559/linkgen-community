@@ -24,6 +24,25 @@ page {
   font-family: var(--font-ui);
 }
 
+/* Optional light mode, applied by pages that opt in via the theme-light class. */
+.theme-light {
+  --ink: #161310;
+  --ink-soft: #5b5046;
+  --coral: #ff713b;
+  --coral-soft: #fff0e3;
+  --mint: #e9edc9;
+  --yellow: #ffd95c;
+  --sky: #e8eff4;
+  --bg: #fffaf1;
+  --card: #fffef9;
+  --text: #201b16;
+  --muted: #8f8275;
+  --line: #eee3d3;
+  --surface-raised: #f4f0e8;
+  --surface-input: #fffef9;
+  --success: #42aa75;
+}
+
 view, text, scroll-view, button, input, textarea, picker { box-sizing: border-box; }
 button { margin: 0; padding: 0; background: none; border: 0; line-height: 1.5; font-size: inherit; }
 button::after { border: 0; }

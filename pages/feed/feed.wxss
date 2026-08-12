@@ -31,7 +31,7 @@
 .quick-note { display: block; margin-top: 5rpx; font-size: 20rpx; opacity: 0.72; }
 .tag-scroll { white-space: nowrap; margin: -4rpx 0 20rpx; }
 .topic-chip { display: inline-block; padding: 12rpx 20rpx; margin-right: 10rpx; border: 1rpx solid var(--line); border-radius: 999rpx; color: var(--muted); background: var(--surface-raised); font-size: 22rpx; }
-.topic-chip.selected { border-color: var(--ink); color: #fff; background: var(--ink); }
+.topic-chip.selected { border-color: var(--coral); color: var(--ink); background: var(--coral); }
 .post-card { padding: 26rpx 24rpx 18rpx; margin-bottom: 20rpx; border: 1rpx solid rgba(230, 235, 230, 0.9); }
 .post-author .avatar { overflow: hidden; }
 .avatar-image { display: block; width: 100%; height: 100%; }
