@@ -47,7 +47,9 @@
 .menu-sub { display: block; margin-top: 5rpx; color: var(--muted); font-size: 20rpx; }
 .menu-arrow { margin-left: auto; color: var(--muted); font-size: 38rpx; }
 .profile-footer { display: flex; justify-content: space-between; margin-top: 42rpx; color: #aeb8b3; font-size: 19rpx; }
-.profile-topbar { align-items: center; }
+.profile-topbar { display: flex; align-items: center; width: 100%; }
+.profile-topbar > view:first-child { min-width: 0; }
+.profile-topbar .theme-switch { margin-left: auto; }
 .theme-switch { position: relative; display: block; width: 104rpx !important; min-width: 104rpx; max-width: 104rpx; height: 54rpx; flex: 0 0 104rpx; padding: 0; overflow: hidden; border: 1rpx solid var(--line); border-radius: 999rpx; background: var(--surface-input); line-height: 54rpx; }
 .theme-icon { position: absolute; z-index: 1; top: 0; width: 50%; height: 52rpx; color: var(--muted); font-size: 23rpx; text-align: center; line-height: 52rpx; }
 .theme-moon { left: 0; }
