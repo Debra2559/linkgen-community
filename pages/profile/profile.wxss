@@ -47,10 +47,7 @@
 .menu-sub { display: block; margin-top: 5rpx; color: var(--muted); font-size: 20rpx; }
 .menu-arrow { margin-left: auto; color: var(--muted); font-size: 38rpx; }
 .profile-footer { display: flex; justify-content: space-between; margin-top: 42rpx; color: #aeb8b3; font-size: 19rpx; }
-.theme-panel { display: flex; align-items: center; justify-content: space-between; padding: 18rpx 20rpx; margin-top: 24rpx; border: 1rpx solid var(--line); border-radius: 18rpx; background: var(--card); }
-.theme-panel-title, .theme-panel-subtitle { display: block; }
-.theme-panel-title { color: var(--ink); font-size: 23rpx; font-weight: 800; }
-.theme-panel-subtitle { margin-top: 4rpx; color: var(--muted); font-size: 17rpx; }
+.profile-topbar { align-items: center; }
 .theme-options { display: flex; align-items: center; gap: 4rpx; padding: 4rpx; border: 1rpx solid var(--line); border-radius: 999rpx; background: var(--surface-input); }
 .theme-option { display: flex; align-items: center; justify-content: center; width: 52rpx; height: 44rpx; padding: 0; border-radius: 999rpx; color: var(--muted); background: transparent; font-size: 26rpx; line-height: 1; }
 .theme-option.active { color: var(--ink); background: var(--coral); font-weight: 800; }

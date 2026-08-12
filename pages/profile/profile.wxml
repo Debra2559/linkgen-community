@@ -1,5 +1,8 @@
-<view class="page profile-page">
-  <view class="topbar"><view><text class="eyebrow">YOUR LINKGEN</text><text class="section-title page-title">我的</text></view></view>
+<view class="page profile-page {{themeMode === 'light' ? 'theme-light' : ''}}">
+  <view class="topbar profile-topbar">
+    <view><text class="eyebrow">YOUR LINKGEN</text><text class="section-title page-title">我的</text></view>
+    <view class="theme-options" aria-label="主题外观"><button aria-label="暗色主题" class="theme-option {{themeMode === 'dark' ? 'active' : ''}}" data-theme="dark" bindtap="selectTheme">☾</button><button aria-label="亮色主题" class="theme-option {{themeMode === 'light' ? 'active' : ''}}" data-theme="light" bindtap="selectTheme">☀</button></view>
+  </view>
   <view wx:if="{{!profile.setupComplete}}" class="setup-banner"><view class="setup-mark">01</view><view class="setup-copy"><text class="setup-title">先做一张属于你的名片</text><text class="setup-subtitle">补充身份、城市和加入目的，让更多人认识你。</text></view><button class="setup-button" bindtap="goEdit">开始设置 →</button></view>
   <view class="profile-card" bindtap="previewProfile">
     <view class="card-topline"><text class="card-code">LINKGEN / DIGITAL CARD</text><text class="card-open-mark">↗</text></view>
@@ -13,5 +16,4 @@
   <view class="section-head"><text class="section-title">我的 Link</text><text class="section-caption">更多</text></view>
   <view class="menu-list"><view class="menu-item" bindtap="goFeed"><view class="menu-icon menu-orange">✦</view><view><text class="menu-title">我的动态</text><text class="menu-sub">查看你发起的讨论和回复</text></view><text class="menu-arrow">›</text></view><view class="menu-item" bindtap="goEvents"><view class="menu-icon menu-yellow">○</view><view><text class="menu-title">我的活动</text><text class="menu-sub">已报名和提交审核的活动</text></view><text class="menu-arrow">›</text></view><view class="menu-item" bindtap="goEdit"><view class="menu-icon menu-mint">⌁</view><view><text class="menu-title">我的名片</text><text class="menu-sub">编辑头像、身份和社群标签</text></view><text class="menu-arrow">›</text></view><view class="menu-item" bindtap="goAdmin"><view class="menu-icon menu-admin">✓</view><view><text class="menu-title">运营管理</text><text class="menu-sub">审核活动、发布官方活动</text></view><text class="menu-arrow">›</text></view></view>
   <view class="profile-footer"><text>LinkGen 01.0</text><text>连接，让好事发生</text></view>
-  <view class="theme-panel"><view><text class="theme-panel-title">主题外观</text><text class="theme-panel-subtitle">选择你喜欢的社区氛围</text></view><view class="theme-options"><button class="theme-option {{themeMode === 'dark' ? 'active' : ''}}" data-theme="dark" bindtap="selectTheme">☾</button><button class="theme-option {{themeMode === 'light' ? 'active' : ''}}" data-theme="light" bindtap="selectTheme">☀</button></view></view>
 </view>
