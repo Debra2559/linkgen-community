@@ -140,5 +140,18 @@ button:active,
 .category-chip:active,
 .tag:active { opacity: .72; transform: scale(.98); }
 .choice.chosen { box-shadow: 0 0 0 3rpx rgba(155, 119, 255, .22), 0 5rpx 12rpx rgba(255, 113, 59, .16); }
-.page:not(.theme-light) .choice.chosen { background: var(--coral-soft); color: var(--coral); }
+.page:not(.theme-light) .choice.chosen {
+  border-color: var(--coral) !important;
+  background: var(--coral) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 0 3rpx rgba(155, 123, 255, .26), 0 8rpx 18rpx rgba(0, 0, 0, .24);
+}
+.page:not(.theme-light) .choice.chosen .choice-mark,
+.page:not(.theme-light) .choice.chosen .choice-check { color: #ffffff !important; }
+.page:not(.theme-light) .topic-chip.selected,
+.page:not(.theme-light) .category-chip.selected,
+.page:not(.theme-light) .calendar-mode.active,
+.page:not(.theme-light) .view-tab.active {
+  font-weight: 800;
+}
 .page:not(.theme-light) button[disabled] { opacity: .58; }
