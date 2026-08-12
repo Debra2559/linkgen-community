@@ -1,7 +1,7 @@
 <view class="page profile-page {{themeMode === 'light' ? 'theme-light' : ''}}">
   <view class="topbar profile-topbar">
     <view><text class="eyebrow">YOUR LINKGEN</text><text class="section-title page-title">我的</text></view>
-    <view class="theme-options" aria-label="主题外观"><button aria-label="暗色主题" class="theme-option {{themeMode === 'dark' ? 'active' : ''}}" data-theme="dark" bindtap="selectTheme">☾</button><button aria-label="亮色主题" class="theme-option {{themeMode === 'light' ? 'active' : ''}}" data-theme="light" bindtap="selectTheme">☀</button></view>
+    <button aria-label="切换明暗主题" class="theme-switch {{themeMode === 'light' ? 'is-light' : ''}}" bindtap="toggleTheme"><text class="theme-icon theme-moon">☾</text><text class="theme-icon theme-sun">☀</text><view class="theme-switch-thumb"></view></button>
   </view>
   <view wx:if="{{!profile.setupComplete}}" class="setup-banner"><view class="setup-mark">01</view><view class="setup-copy"><text class="setup-title">先做一张属于你的名片</text><text class="setup-subtitle">补充身份、城市和加入目的，让更多人认识你。</text></view><button class="setup-button" bindtap="goEdit">开始设置 →</button></view>
   <view class="profile-card" bindtap="previewProfile">
