@@ -108,16 +108,15 @@ button::after { border: 0; }
 .page:not(.theme-light) .admin-tab { background: var(--surface-raised); color: var(--ink-soft); }
 .page:not(.theme-light) .send-button[disabled],
 .page:not(.theme-light) button[disabled].primary-button,
-.page:not(.theme-light) .contact-actions .primary-button,
 .page:not(.theme-light) .upload-button { background: var(--surface-raised); color: var(--muted); }
 .page:not(.theme-light) .review-card,
 .page:not(.theme-light) .agent-source-row { background: var(--card); }
 .page:not(.theme-light) .profile-preview,
 .page:not(.theme-light) .bio-info { background: var(--surface-raised); }
 .page:not(.theme-light) .upload-button,
-.page:not(.theme-light) .back-button,
+.page:not(.theme-light) .back-button { background: var(--surface-raised); color: var(--ink-soft); }
 .page:not(.theme-light) .submit-button,
-.page:not(.theme-light) .continue-edit-button { background: var(--surface-raised); color: var(--ink-soft); }
+.page:not(.theme-light) .continue-edit-button { background: var(--ink); color: #fff; }
 
 /* Immediate tap feedback for buttons, chips, and selectable options. */
 button:active,
