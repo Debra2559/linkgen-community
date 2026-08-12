@@ -72,3 +72,20 @@ button::after { border: 0; }
 .small-avatar { width: 58rpx; height: 58rpx; border-radius: 18rpx; font-size: 21rpx; }
 .divider { height: 1rpx; background: var(--line); }
 .safe-bottom { height: 32rpx; }
+
+/* Keep legacy detail surfaces in the dark theme. */
+.page:not(.theme-light) .detail-attachment,
+.page:not(.theme-light) .info-list,
+.page:not(.theme-light) .link-preview,
+.page:not(.theme-light) .sheet-secondary,
+.page:not(.theme-light) .source-button,
+.page:not(.theme-light) .bio-panel,
+.page:not(.theme-light) .organizer-bio,
+.page:not(.theme-light) .comment-input-wrap { background: var(--card); }
+.page:not(.theme-light) .task-detail-panel,
+.page:not(.theme-light) .source-block { background: var(--surface-raised); }
+.page:not(.theme-light) .comment-bar { background: rgba(6, 10, 24, .97); }
+.page:not(.theme-light) .task-advance button,
+.page:not(.theme-light) .join-button.full { background: var(--surface-raised); color: var(--muted); }
+.page:not(.theme-light) .info-item + .info-item { border-color: var(--line); }
+.page:not(.theme-light) .community-scope { color: var(--coral); background: var(--card); }
