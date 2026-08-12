@@ -10,7 +10,7 @@
 .stack-avatar image { display: block; width: 100%; height: 100%; }
 .stack-more { margin-left: 6rpx; color: var(--ink-soft); font-size: 19rpx; }
 .tag-scroll { white-space: nowrap; margin: -4rpx 0 20rpx; }
-.topic-chip { display: inline-block; padding: 12rpx 20rpx; margin-right: 10rpx; border: 1rpx solid var(--line); border-radius: 999rpx; color: var(--muted); background: #fff; font-size: 22rpx; }
+.topic-chip { display: inline-block; padding: 12rpx 20rpx; margin-right: 10rpx; border: 1rpx solid var(--line); border-radius: 999rpx; color: var(--muted); background: var(--surface-raised); font-size: 22rpx; }
 .topic-chip.selected { border-color: var(--ink); color: #fff; background: var(--ink); }
 .member-row { display: flex; align-items: flex-start; padding: 22rpx 0; border-bottom: 1rpx solid var(--line); }
 .member-avatar { overflow: hidden; border-radius: 24rpx; }
@@ -22,5 +22,5 @@
 .member-role { display: block; margin-top: 3rpx; color: var(--muted); font-size: 20rpx; }
 .member-purpose { display: block; overflow: hidden; margin-top: 12rpx; color: var(--ink-soft); font-size: 23rpx; line-height: 1.4; text-overflow: ellipsis; white-space: nowrap; }
 .member-tags { margin-top: 10rpx; white-space: nowrap; overflow: hidden; }
-.mini-tag { display: inline-block; margin-right: 8rpx; padding: 5rpx 10rpx; border-radius: 7rpx; background: #f0f4f0; color: var(--ink-soft); font-size: 18rpx; }
+.mini-tag { display: inline-block; margin-right: 8rpx; padding: 5rpx 10rpx; border-radius: 7rpx; background: var(--surface-raised); color: var(--ink-soft); font-size: 18rpx; }
 .member-arrow { align-self: center; padding-left: 14rpx; color: var(--muted); font-size: 40rpx; font-weight: 200; }

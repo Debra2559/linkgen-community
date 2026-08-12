@@ -35,14 +35,14 @@
 .stats-row > view:last-child { border: 0; }
 .stat-number { display: block; color: var(--ink); font-family: var(--font-display); font-size: 38rpx; font-weight: 800; }
 .stat-label { display: block; margin-top: 5rpx; color: var(--muted); font-size: 20rpx; }
-.menu-list { overflow: hidden; border-radius: 24rpx; background: #fff; }
+.menu-list { overflow: hidden; border-radius: 24rpx; background: var(--card); }
 .menu-item { display: flex; align-items: center; padding: 22rpx; border-bottom: 1rpx solid var(--line); }
 .menu-item:last-child { border-bottom: 0; }
 .menu-icon { width: 62rpx; height: 62rpx; margin-right: 18rpx; border-radius: 20rpx; color: var(--ink); text-align: center; line-height: 62rpx; font-size: 30rpx; }
 .menu-orange { background: var(--coral-soft); color: var(--coral); }
-.menu-yellow { background: #fff4d5; }
+.menu-yellow { background: #3a3020; }
 .menu-mint { background: var(--mint); }
-.menu-admin { background: #e6e4f7; color: #6d61ae; }
+.menu-admin { background: #292247; color: #b7a4ff; }
 .menu-title { display: block; color: var(--ink); font-size: 26rpx; font-weight: 800; }
 .menu-sub { display: block; margin-top: 5rpx; color: var(--muted); font-size: 20rpx; }
 .menu-arrow { margin-left: auto; color: var(--muted); font-size: 38rpx; }
