@@ -112,3 +112,19 @@ button::after { border: 0; }
 .page:not(.theme-light) .upload-button { background: var(--surface-raised); color: var(--muted); }
 .page:not(.theme-light) .review-card,
 .page:not(.theme-light) .agent-source-row { background: var(--card); }
+.page:not(.theme-light) .profile-preview,
+.page:not(.theme-light) .bio-info { background: var(--surface-raised); }
+.page:not(.theme-light) .upload-button,
+.page:not(.theme-light) .back-button,
+.page:not(.theme-light) .submit-button,
+.page:not(.theme-light) .continue-edit-button { background: var(--surface-raised); color: var(--ink-soft); }
+
+/* Immediate tap feedback for buttons, chips, and selectable options. */
+button:active,
+.choice:active,
+.avatar-choice:active,
+.category-chip:active,
+.tag:active { opacity: .72; transform: scale(.98); }
+.choice.chosen { box-shadow: 0 0 0 3rpx rgba(155, 119, 255, .22), 0 5rpx 12rpx rgba(255, 113, 59, .16); }
+.page:not(.theme-light) .choice.chosen { background: var(--coral-soft); color: var(--coral); }
+.page:not(.theme-light) button[disabled] { opacity: .58; }
