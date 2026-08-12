@@ -415,6 +415,9 @@
   color: var(--coral);
   background: var(--coral-soft);
 }
+.page:not(.theme-light) .choice.chosen { border-color: var(--coral) !important; color: #fff !important; background: var(--coral) !important; box-shadow: 0 0 0 3rpx rgba(155, 123, 255, .26), 0 8rpx 18rpx rgba(0, 0, 0, .24) !important; }
+.page:not(.theme-light) .choice.chosen .choice-mark,
+.page:not(.theme-light) .choice.chosen .choice-check { color: #fff !important; }
 
 .visibility-note {
   display: flex;
