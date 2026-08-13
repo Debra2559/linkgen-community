@@ -1,4 +1,4 @@
-<view class="page library-detail-page">
+<view class="page library-detail-page {{themeMode === 'light' ? 'theme-light' : ''}}">
   <view wx:if="{{resource}}">
     <view class="detail-kicker">{{resource.sourceType}} · {{resource.category}}</view>
     <text class="detail-title">{{resource.title}}</text>

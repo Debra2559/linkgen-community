@@ -1,4 +1,4 @@
-<view class="page feed-page">
+<view class="page feed-page {{themeMode === 'light' ? 'theme-light' : ''}}">
   <view class="topbar">
     <view class="brand-lockup"><view class="brand-dot">L</view><text class="brand-name">LinkGen</text><text class="brand-sub">OPEN COMMUNITY</text></view>
   </view>

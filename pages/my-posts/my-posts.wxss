@@ -13,11 +13,11 @@
 .activity-stats > view:last-child { border-right: 0; }
 .activity-stat-number { display: block; color: var(--ink); font-family: var(--font-display); font-size: 36rpx; font-weight: 800; }
 .activity-stat-label { display: block; margin-top: 4rpx; color: var(--muted); font-size: 19rpx; }
-.activity-tabs { display: flex; padding: 5rpx; margin: 18rpx 0 20rpx; border-radius: 16rpx; background: #eee9df; }
+.activity-tabs { display: flex; padding: 5rpx; margin: 18rpx 0 20rpx; border-radius: 16rpx; background: var(--surface-raised); }
 .activity-tab { display: flex; align-items: center; justify-content: center; flex: 1; height: 66rpx; border-radius: 12rpx; color: var(--muted); font-size: 22rpx; }
-.activity-tab.active { color: var(--ink); background: #fff; box-shadow: 0 5rpx 16rpx rgba(22,19,16,.07); font-weight: 800; }
+.activity-tab.active { color: var(--ink); background: var(--card); box-shadow: 0 5rpx 16rpx rgba(0,0,0,.22); font-weight: 800; }
 .tab-count { margin-left: 7rpx; color: var(--coral); font-size: 18rpx; }
-.mine-post-card, .reply-card { padding: 24rpx; margin-bottom: 16rpx; border: 1rpx solid rgba(230,235,230,.9); }
+.mine-post-card, .reply-card { padding: 24rpx; margin-bottom: 16rpx; border: 1rpx solid var(--line); }
 .mine-post-head, .reply-label, .reply-source, .mine-post-footer { display: flex; align-items: center; }
 .mine-post-head { justify-content: space-between; }
 .post-status { padding: 5rpx 10rpx; border-radius: 7rpx; color: #2d815f; background: #e2f1e6; font-size: 17rpx; }
@@ -31,6 +31,7 @@
 .mine-post-tags { margin-top: 14rpx; }
 .mine-post-footer { padding-top: 15rpx; margin-top: 16rpx; border-top: 1rpx solid var(--line); color: var(--muted); font-size: 19rpx; }
 .mine-post-footer text + text { margin-left: 24rpx; }
+.mine-delete-button { min-width: 0; padding: 0; margin: 0 0 0 auto; color: var(--muted); background: transparent; font-size: 18rpx; line-height: 1.4; }
 .reply-card { padding-bottom: 18rpx; }
 .reply-label { justify-content: space-between; color: var(--coral); font-size: 18rpx; font-weight: 800; }
 .reply-label text:last-child { color: var(--muted); font-weight: 400; }

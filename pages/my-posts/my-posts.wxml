@@ -1,4 +1,4 @@
-<view class="page my-posts-page">
+<view class="page my-posts-page {{themeMode === 'light' ? 'theme-light' : ''}}">
   <view class="topbar">
     <view><text class="eyebrow">YOUR ACTIVITY</text><text class="section-title page-title">我的动态</text></view>
     <button class="icon-button" bindtap="goProfile">⌂</button>
@@ -27,7 +27,7 @@
       <text class="mine-post-content">{{item.content}}</text>
       <view wx:if="{{item.attachments && item.attachments.length}}" class="mine-attachments"><view wx:for="{{item.attachments}}" wx:key="id" class="mine-attachment"><image wx:if="{{item.type === 'image'}}" src="{{item.path}}" mode="aspectFill"/><text wx:elif="{{item.type === 'video'}}">▶</text><text wx:else>↗</text></view><text>{{item.attachments.length}} 个附件</text></view>
       <view class="mine-post-tags"><text wx:for="{{item.tags}}" wx:key="*this" class="tag">#{{item}}</text></view>
-      <view class="mine-post-footer"><text>♡ {{item.likes}} 获得赞</text><text>◌ {{item.comments}} 条回复</text></view>
+      <view class="mine-post-footer"><text>♡ {{item.likes}} 获得赞</text><text>◌ {{item.comments}} 条回复</text><button class="mine-delete-button" catchtap="deletePost" data-id="{{item.id}}">删除</button></view>
     </view>
   </view>
 

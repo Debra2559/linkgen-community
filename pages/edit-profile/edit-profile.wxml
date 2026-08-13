@@ -1,11 +1,11 @@
-<view class="page form-page profile-form-page">
+<view class="page form-page profile-form-page {{themeMode === 'light' ? 'theme-light' : ''}}">
   <view class="form-intro">
     <text class="eyebrow">MAKE YOURSELF KNOWN</text>
     <text class="form-title">你的名片<br/><text class="coral-word">值得被看见</text></text>
     <text class="form-copy">填得越具体，越容易遇见真正合拍的人。</text>
   </view>
 
-  <view class="profile-preview">
+  <view class="profile-preview" style="background: {{profile.color}}">
     <view class="preview-top"><text class="preview-label">LINKGEN MEMBER CARD</text><text class="preview-live">实时预览</text></view>
     <view class="preview-main"><view class="avatar preview-avatar" style="background: {{profile.color}}"><image wx:if="{{profile.avatar}}" class="avatar-image" src="{{profile.avatar}}" mode="aspectFill"/><text wx:if="{{!profile.avatar}}">{{profile.initials || '你'}}</text></view><view class="preview-info"><text class="preview-name">{{profile.name || '你的昵称'}}</text><text class="preview-role">{{profile.role || '身份'}}<text wx:if="{{profile.city}}"> · {{profile.city}}</text></text></view></view>
     <text class="preview-bio">{{profile.bio || '一句话介绍自己，让别人快速认识你。'}}</text>
@@ -32,9 +32,11 @@
 
   <view class="section-block tag-section">
     <view class="block-heading"><view><text class="section-kicker">03 · 社群标签</text><text class="block-title">选择最像你的 3 个词</text></view><text class="section-caption">{{profile.tags.length}} / 3</text></view>
-    <view class="choice-wrap"><view wx:for="{{tagOptions}}" wx:key="*this" class="choice {{profile.tags.indexOf(item) >= 0 ? 'chosen' : ''}}" data-tag="{{item}}" bindtap="toggleTag"><text class="choice-mark">#</text>{{item}}</view></view>
+    <view class="choice-wrap"><view wx:for="{{tagChoices}}" wx:key="label" class="choice {{item.selected ? 'chosen' : ''}}" data-tag="{{item.label}}" bindtap="toggleTag"><text class="choice-mark">#</text><text>{{item.label}}</text></view><button class="custom-tag-button" bindtap="addCustomTag">＋ 自定义标签</button></view>
   </view>
 
   <view class="visibility-note"><text class="note-dot">·</text><text>名片会公开展示在通讯录，只有你能修改。</text></view>
   <view class="form-actions"><button class="secondary-button preview-button" bindtap="previewProfile">预览名片 <text class="button-arrow">↗</text></button><button class="primary-button submit-button" bindtap="save">保存名片 <text class="button-arrow">✓</text></button></view>
+
+  <view wx:if="{{customTagOpen}}" class="custom-tag-modal" catchtap="closeCustomTag"><view class="custom-tag-sheet" catchtap="noop"><view class="custom-tag-kicker">COMMUNITY TAG</view><text class="custom-tag-title">添加自定义标签</text><text class="custom-tag-copy">用一个词，让别人更快了解你。</text><input class="custom-tag-input" focus="{{customTagOpen}}" maxlength="12" value="{{customTagValue}}" placeholder="例如：AI 教育" bindinput="onCustomTagInput" bindconfirm="confirmCustomTag" /><view class="custom-tag-actions"><button class="custom-tag-cancel" bindtap="closeCustomTag">取消</button><button class="custom-tag-confirm" bindtap="confirmCustomTag">添加标签</button></view></view></view>
 </view>

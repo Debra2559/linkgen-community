@@ -15,17 +15,17 @@
     "pages/admin-review/admin-review"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#161310",
+    "navigationBarBackgroundColor": "#050816",
     "navigationBarTitleText": "LinkGen",
     "navigationBarTextStyle": "white",
-    "backgroundColor": "#fffaf1",
-    "backgroundTextStyle": "dark"
+    "backgroundColor": "#050816",
+    "backgroundTextStyle": "light"
   },
   "tabBar": {
-    "color": "#83918c",
-    "selectedColor": "#f36b4f",
-    "backgroundColor": "#ffffff",
-    "borderStyle": "white",
+    "color": "#7180a0",
+    "selectedColor": "#9b7bff",
+    "backgroundColor": "#0d1428",
+    "borderStyle": "black",
     "list": [
       { "pagePath": "pages/feed/feed", "text": "发现", "iconPath": "assets/tabbar/discover.png", "selectedIconPath": "assets/tabbar/discover-active.png" },
       { "pagePath": "pages/events/events", "text": "活动", "iconPath": "assets/tabbar/events.png", "selectedIconPath": "assets/tabbar/events-active.png" },

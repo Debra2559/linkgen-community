@@ -1,5 +1,5 @@
-<view class="page detail-page" wx:if="{{post}}">
-  <view class="detail-kicker"><text>LINKGEN / DISCUSSION</text><text wx:if="{{post.hot}}" class="detail-hot">HOT</text></view>
+<view class="page detail-page {{themeMode === 'light' ? 'theme-light' : ''}}" wx:if="{{post}}">
+  <view class="detail-kicker"><text>LINKGEN / {{post.contentTypeLabel}}</text><text wx:if="{{post.hot}}" class="detail-hot">HOT</text></view>
 
   <view class="detail-content-panel">
     <view class="detail-author">
@@ -21,6 +21,7 @@
       <view class="action-divider"></view>
       <view class="action-button reply-action"><text class="action-icon reply-icon">◌</text><text>{{post.comments}}</text><text class="action-label">条回复</text></view>
     </view>
+    <view wx:if="{{post.contentType === 'task'}}" class="task-detail-panel"><view class="task-detail-head"><text class="task-kind">{{post.taskKindLabel}}</text><text class="task-status task-status-{{post.taskStatus}}">{{post.taskStatusLabel}}</text></view><view wx:if="{{post.linkedEventTitle}}" class="task-detail-line"><text>关联活动</text><text>{{post.linkedEventTitle}}</text></view><view class="task-detail-line"><text>参与进度</text><text>{{post.participantCount}} / {{post.neededPeople}} 人</text></view><view wx:if="{{post.deadline}}" class="task-detail-line"><text>截止日期</text><text>{{post.deadline}}</text></view><view class="task-buttons"><button bindtap="taskAction" data-action="interest">{{post.interestedCount}} 人感兴趣</button><button disabled="{{!post.isParticipating && post.participantCount >= post.neededPeople}}" bindtap="taskAction" data-action="join">{{post.isParticipating ? '退出任务' : (post.participantCount >= post.neededPeople ? '人数已满' : '我想加入')}}</button></view><view wx:if="{{post.canAdvance}}" class="task-advance"><button wx:if="{{post.taskStatus === 'recruiting'}}" bindtap="advanceTask" data-status="in_progress">开始执行</button><button wx:if="{{post.taskStatus === 'in_progress'}}" bindtap="advanceTask" data-status="completed">标记完成</button><button wx:if="{{post.taskStatus === 'recruiting' || post.taskStatus === 'in_progress'}}" bindtap="advanceTask" data-status="cancelled">取消任务</button></view></view>
   </view>
 
   <view class="section-head"><view><text class="section-eyebrow">CONVERSATION</text><text class="section-title">全部回复</text></view><text class="section-caption">{{post.comments}} 条</text></view>

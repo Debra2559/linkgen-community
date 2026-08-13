@@ -21,6 +21,7 @@ const requiredFunctions = [
   'toggleLibrarySave',
   'manageLibraryResource',
   'libraryMaintenance',
+  'manageCommunityContent',
 ];
 const requiredPages = [
   'pages/events/events',

@@ -1,5 +1,37 @@
-/* LinkGen community theme: warm coral accents on a deep ink base. */
+/* LinkGen community theme: dark navy surfaces with the logo's blue-violet-cyan accent. */
 page {
+  --ink: #f5f7ff;
+  --ink-soft: #c8d0e6;
+  --coral: #9b7bff;
+  --coral-soft: rgba(155, 123, 255, 0.16);
+  --mint: #173248;
+  --yellow: #58d8ff;
+  --sky: #10253d;
+  --bg: #050816;
+  --card: #0d1428;
+  --text: #f5f7ff;
+  --muted: #8d9ab8;
+  --line: #202b46;
+  --shadow: 0 14rpx 36rpx rgba(0, 0, 0, 0.28);
+  --surface-raised: #131d36;
+  --surface-input: #0a1122;
+  --success: #68d391;
+  --action-bg: #7f5af0;
+  --action-text: #ffffff;
+  --choice-active-bg: #7f5af0;
+  --choice-active-border: #b59cff;
+  --choice-active-text: #ffffff;
+  --choice-active-ring: rgba(181, 156, 255, .28);
+  --font-ui: 'Avenir Next', 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans CJK SC', sans-serif;
+  --font-display: 'Avenir Next', 'SF Pro Rounded', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 28rpx;
+  font-family: var(--font-ui);
+}
+
+/* Optional light mode, applied by pages that opt in via the theme-light class. */
+.theme-light {
   --ink: #161310;
   --ink-soft: #5b5046;
   --coral: #ff713b;
@@ -12,13 +44,15 @@ page {
   --text: #201b16;
   --muted: #8f8275;
   --line: #eee3d3;
-  --shadow: 0 14rpx 36rpx rgba(84, 56, 22, 0.09);
-  --font-ui: 'Avenir Next', 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans CJK SC', sans-serif;
-  --font-display: 'Avenir Next', 'SF Pro Rounded', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 28rpx;
-  font-family: var(--font-ui);
+  --surface-raised: #f4f0e8;
+  --surface-input: #fffef9;
+  --success: #42aa75;
+  --action-bg: #161310;
+  --action-text: #ffffff;
+  --choice-active-bg: #ff713b;
+  --choice-active-border: #e85d2f;
+  --choice-active-text: #ffffff;
+  --choice-active-ring: rgba(255, 113, 59, .28);
 }
 
 view, text, scroll-view, button, input, textarea, picker { box-sizing: border-box; }
@@ -29,24 +63,102 @@ button::after { border: 0; }
 .muted { color: var(--muted); }
 .accent { color: var(--coral); }
 .pill { display: inline-flex; align-items: center; padding: 7rpx 16rpx; border-radius: 999rpx; background: var(--coral-soft); color: var(--coral); font-size: 21rpx; }
-.tag { display: inline-block; margin: 0 10rpx 10rpx 0; padding: 7rpx 14rpx; color: var(--ink-soft); background: #eef4ef; border-radius: 9rpx; font-size: 21rpx; }
+.tag { display: inline-block; margin: 0 10rpx 10rpx 0; padding: 7rpx 14rpx; color: var(--ink-soft); background: var(--surface-raised); border-radius: 9rpx; font-size: 21rpx; }
 .topbar { display: flex; align-items: center; justify-content: space-between; padding: 42rpx 0 28rpx; }
 .brand-lockup { display: flex; align-items: center; }
 .brand-dot { width: 44rpx; height: 44rpx; margin-right: 14rpx; border-radius: 14rpx; background: var(--coral); color: #fff; font-size: 27rpx; font-weight: 800; text-align: center; line-height: 44rpx; transform: rotate(-8deg); }
 .brand-name { color: var(--ink); font-size: 34rpx; font-weight: 800; letter-spacing: 1rpx; }
 .brand-sub { margin-left: 12rpx; color: var(--muted); font-size: 20rpx; }
-.icon-button { display: flex; align-items: center; justify-content: center; width: 72rpx; min-width: 72rpx; max-width: 72rpx; height: 72rpx; padding: 0; overflow: hidden; border: 0; border-radius: 50%; background: #fff; color: var(--ink); font-size: 32rpx; text-align: center; line-height: 1; box-shadow: 0 6rpx 20rpx rgba(22, 48, 41, 0.08); }
-.search-box { display: flex; align-items: center; height: 78rpx; padding: 0 22rpx; margin-bottom: 26rpx; border: 1rpx solid var(--line); border-radius: 20rpx; background: #fff; color: var(--muted); }
+.icon-button { display: flex; align-items: center; justify-content: center; width: 72rpx; min-width: 72rpx; max-width: 72rpx; height: 72rpx; padding: 0; overflow: hidden; border: 1rpx solid var(--line); border-radius: 50%; background: var(--surface-raised); color: var(--ink); font-size: 32rpx; text-align: center; line-height: 1; box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.18); }
+.search-box { display: flex; align-items: center; height: 78rpx; padding: 0 22rpx; margin-bottom: 26rpx; border: 1rpx solid var(--line); border-radius: 20rpx; background: var(--surface-input); color: var(--muted); }
 .search-icon { margin-right: 12rpx; font-size: 28rpx; }
 .search-input { flex: 1; min-width: 0; color: var(--text); font-size: 25rpx; }
 .section-head { display: flex; align-items: baseline; justify-content: space-between; margin: 32rpx 0 18rpx; }
 .section-title { color: var(--ink); font-family: var(--font-display); font-size: 38rpx; font-weight: 800; letter-spacing: 0; }
 .section-caption { color: var(--muted); font-size: 22rpx; }
 .empty { padding: 120rpx 0; color: var(--muted); text-align: center; }
-.primary-button { display: flex; align-items: center; justify-content: center; height: 84rpx; padding: 0 30rpx; border-radius: 18rpx; background: var(--ink); color: #fff; font-size: 27rpx; font-weight: 700; }
-.secondary-button { display: flex; align-items: center; justify-content: center; height: 78rpx; padding: 0 24rpx; border: 1rpx solid var(--line); border-radius: 18rpx; background: #fff; color: var(--ink); font-size: 26rpx; font-weight: 700; }
+.primary-button { display: flex; align-items: center; justify-content: center; height: 84rpx; padding: 0 30rpx; border-radius: 18rpx; background: var(--action-bg); color: var(--action-text); font-size: 27rpx; font-weight: 700; }
+.secondary-button { display: flex; align-items: center; justify-content: center; height: 78rpx; padding: 0 24rpx; border: 1rpx solid var(--line); border-radius: 18rpx; background: var(--surface-raised); color: var(--ink); font-size: 26rpx; font-weight: 700; }
 .fab { position: fixed; right: 28rpx; bottom: 140rpx; z-index: 5; display: flex; align-items: center; justify-content: center; width: 92rpx !important; min-width: 92rpx; max-width: 92rpx; height: 92rpx; min-height: 92rpx; padding: 0; border-radius: 30rpx; background: var(--coral); color: #fff; font-size: 34rpx; line-height: 1; box-shadow: 0 14rpx 28rpx rgba(243, 107, 79, 0.3); }
 .avatar { display: flex; align-items: center; justify-content: center; width: 76rpx; height: 76rpx; flex-shrink: 0; border-radius: 24rpx; color: #fff; font-size: 27rpx; font-weight: 800; }
 .small-avatar { width: 58rpx; height: 58rpx; border-radius: 18rpx; font-size: 21rpx; }
 .divider { height: 1rpx; background: var(--line); }
 .safe-bottom { height: 32rpx; }
+
+/* Keep legacy detail surfaces in the dark theme. */
+.page:not(.theme-light) .detail-attachment,
+.page:not(.theme-light) .info-list,
+.page:not(.theme-light) .link-preview,
+.page:not(.theme-light) .sheet-secondary,
+.page:not(.theme-light) .source-button,
+.page:not(.theme-light) .bio-panel,
+.page:not(.theme-light) .organizer-bio,
+.page:not(.theme-light) .comment-input-wrap { background: var(--card); }
+.page:not(.theme-light) .task-detail-panel,
+.page:not(.theme-light) .source-block { background: var(--surface-raised); }
+.page:not(.theme-light) .comment-bar { background: rgba(6, 10, 24, .97); }
+.page:not(.theme-light) .task-advance button,
+.page:not(.theme-light) .join-button.full { background: var(--surface-raised); color: var(--muted); }
+.page:not(.theme-light) .info-item + .info-item { border-color: var(--line); }
+.page:not(.theme-light) .community-scope { color: var(--coral); background: var(--card); }
+.page:not(.theme-light) .field-input,
+.page:not(.theme-light) .field-textarea,
+.page:not(.theme-light) .field-picker,
+.page:not(.theme-light) .task-input-item,
+.page:not(.theme-light) .event-picker,
+.page:not(.theme-light) .count-stepper,
+.page:not(.theme-light) .category-chip,
+.page:not(.theme-light) .cover-upload-mark,
+.page:not(.theme-light) .type-symbol,
+.page:not(.theme-light) .save-button { background: var(--surface-input); color: var(--ink); }
+.page:not(.theme-light) .profile-preview-card,
+.page:not(.theme-light) .preview-card { background: var(--card); }
+.page:not(.theme-light) .tag,
+.page:not(.theme-light) .post-tags .tag,
+.page:not(.theme-light) .choice,
+.page:not(.theme-light) .category-chip,
+.page:not(.theme-light) .admin-tab { background: var(--surface-raised); color: var(--ink-soft); }
+.page:not(.theme-light) .send-button[disabled],
+.page:not(.theme-light) button[disabled].primary-button,
+.page:not(.theme-light) .upload-button { background: var(--surface-raised); color: var(--muted); }
+.page:not(.theme-light) .review-card,
+.page:not(.theme-light) .agent-source-row { background: var(--card); }
+.page:not(.theme-light) .profile-preview,
+.page:not(.theme-light) .bio-info,
+.page:not(.theme-light) .activity-intro,
+.page:not(.theme-light) .admin-hero { background: var(--surface-raised); color: var(--ink); }
+.page:not(.theme-light) .upload-button,
+.page:not(.theme-light) .back-button { background: var(--surface-raised); color: var(--ink-soft); }
+.page:not(.theme-light) .submit-button,
+.page:not(.theme-light) .continue-edit-button { background: var(--action-bg); color: var(--action-text); }
+
+.page:not(.theme-light) .ai-button,
+.page:not(.theme-light) .send-button,
+.page:not(.theme-light) .sheet-primary,
+.page:not(.theme-light) .agent-run-button,
+.page:not(.theme-light) .task-buttons button,
+.page:not(.theme-light) .task-advance button { background: var(--action-bg); color: var(--action-text); }
+.page:not(.theme-light) .category-chip.selected,
+.page:not(.theme-light) .admin-tab.active { border-color: var(--coral); background: var(--coral); color: #ffffff; }
+
+/* Immediate tap feedback for buttons, chips, and selectable options. */
+button:active,
+.choice:active,
+.avatar-choice:active,
+.category-chip:active,
+.tag:active { opacity: .72; transform: scale(.98); }
+.choice.chosen { border-color: var(--choice-active-border) !important; background: var(--choice-active-bg) !important; color: var(--choice-active-text) !important; box-shadow: 0 0 0 3rpx var(--choice-active-ring), 0 8rpx 18rpx rgba(0, 0, 0, .24); }
+.choice.chosen .choice-mark,
+.choice.chosen .choice-check { color: var(--choice-active-text) !important; }
+.page:not(.theme-light) .choice.chosen {
+  border-color: var(--choice-active-border) !important;
+  background: var(--choice-active-bg) !important;
+  color: var(--choice-active-text) !important;
+}
+.page:not(.theme-light) .topic-chip.selected,
+.page:not(.theme-light) .category-chip.selected,
+.page:not(.theme-light) .calendar-mode.active,
+.page:not(.theme-light) .view-tab.active {
+  font-weight: 800;
+}
+.page:not(.theme-light) button[disabled] { opacity: .58; }

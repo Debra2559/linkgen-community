@@ -20,6 +20,8 @@ Page({
     attachments: [],
     linkInput: '',
     linkPanelOpen: false,
+    customTagOpen: false,
+    customTagValue: '',
   },
 
   onTitle(e) { this.setData({ title: e.detail.value }); },
@@ -32,6 +34,19 @@ Page({
     else if (selectedTags.length < 3) selectedTags.push(tag);
     else return wx.showToast({ title: '最多选择 3 个标签', icon: 'none' });
     this.setData({ selectedTags });
+  },
+  addCustomTag() {
+    if (this.data.selectedTags.length >= 3) return wx.showToast({ title: '最多选择 3 个标签', icon: 'none' });
+    this.setData({ customTagOpen: true, customTagValue: '' });
+  },
+  onCustomTagInput(e) { this.setData({ customTagValue: e.detail.value }); },
+  closeCustomTag() { this.setData({ customTagOpen: false, customTagValue: '' }); },
+  noop() {},
+  confirmCustomTag() {
+    const label = String(this.data.customTagValue || '').replace(/^#+/, '').trim().slice(0, 12);
+    if (!label) return wx.showToast({ title: '请输入标签内容', icon: 'none' });
+    if (this.data.selectedTags.includes(label)) return wx.showToast({ title: '这个标签已经选过了', icon: 'none' });
+    this.setData({ selectedTags: this.data.selectedTags.concat(label), customTagOpen: false, customTagValue: '' });
   },
 
   addImage() {
@@ -111,7 +126,7 @@ Page({
     const profile = getProfile();
     if (!profile.setupComplete) return wx.showModal({ title: '先完成你的名片', content: '发布讨论前，请先补充昵称、身份、城市和来社群的目的。', confirmText: '去设置', success: (res) => { if (res.confirm) wx.navigateTo({ url: '/pages/edit-profile/edit-profile' }); } });
     const posts = getPosts();
-    posts.unshift({ id: `p-${Date.now()}`, author: profile.name, initials: profile.initials, role: [profile.role, profile.city].filter(Boolean).join(' · '), color: profile.color, avatar: profile.avatar, time: '刚刚', title: title.trim(), content: content.trim(), attachments, tags: selectedTags.length ? selectedTags : ['新鲜想法'], likes: 0, liked: false, comments: 0, hot: false, commentsList: [] });
+    posts.unshift({ id: `p-${Date.now()}`, authorId: profile.memberId, author: profile.name, initials: profile.initials, role: [profile.role, profile.city].filter(Boolean).join(' · '), color: profile.color, avatar: profile.avatar, time: '刚刚', title: title.trim(), content: content.trim(), attachments, tags: selectedTags.length ? selectedTags : ['新鲜想法'], likes: 0, liked: false, comments: 0, hot: false, commentsList: [] });
     savePosts(posts);
     wx.showToast({ title: '发布成功', icon: 'success' });
     setTimeout(() => wx.switchTab({ url: '/pages/feed/feed' }), 500);
