@@ -29,7 +29,7 @@
   <view wx:for="{{list}}" wx:key="id" class="review-card card">
     <view class="review-head">
       <view><text class="review-type">{{item.type}}</text><text wx:if="{{item.discoveryMode === 'agent'}}" class="review-source">Agent 发现</text><text wx:if="{{item.sourcePlatform}}" class="review-source">{{item.sourcePlatform}}</text><text wx:if="{{item.contentType}}" class="review-source">{{item.contentType === 'activity' ? '识别为活动' : '内容分享'}}</text></view>
-      <text class="review-status {{item.status === '待审核' ? 'waiting' : 'published'}}">{{item.status}}</text>
+      <text class="review-status {{item.status === '待审核' || item.status === '待补充' ? 'waiting' : item.status === '未通过' ? 'rejected' : 'published'}}">{{item.status}}</text>
     </view>
     <text class="review-title">{{item.title}}</text>
     <view wx:if="{{item.discoveryMode === 'agent'}}" class="review-preview"><image wx:if="{{item.coverImage}}" class="review-cover" src="{{item.coverImage}}" mode="aspectFill" bindtap="chooseCandidateImage" data-id="{{item.id}}"/><view wx:else class="review-cover-placeholder"><text>活动图片</text><text>待从原文核验</text><button class="review-image-button" catchtap="chooseCandidateImage" data-id="{{item.id}}">补充封面</button></view><view class="review-summary-wrap"><text class="review-summary-label">文章概要</text><text class="review-summary">{{item.summary || item.description}}</text></view></view>

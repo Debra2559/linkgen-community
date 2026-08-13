@@ -1,11 +1,15 @@
 const { getProfile, saveProfile } = require('../../utils/linkgen-data');
 const { getAvatarOptions, getAvatarPath } = require('../../utils/avatar-library');
+const { getTagOptions } = require('../../utils/tag-taxonomy');
 
 const emptyProfile = { name: '', initials: '', role: '', city: '', bio: '', purpose: '', tags: [], color: '#e77b61' };
 
 Page({
-  data: { profile: emptyProfile, avatarOptions: [], tagOptions: ['AI 产品', '设计协作', '独立开发', '内容创作', '找搭子', '线下活动', '开源'] },
-  onLoad() { this.setData({ profile: Object.assign({}, emptyProfile, getProfile()), avatarOptions: getAvatarOptions() }); },
+  data: { profile: emptyProfile, avatarOptions: [], tagChoices: [] },
+  onLoad() {
+    const profile = Object.assign({}, emptyProfile, getProfile());
+    this.setData({ profile, avatarOptions: getAvatarOptions() }, () => this.syncTagChoices());
+  },
   onName(e) { this.setData({ 'profile.name': e.detail.value, 'profile.initials': e.detail.value.slice(0, 1) }); },
   onRole(e) { this.setData({ 'profile.role': e.detail.value }); },
   onCity(e) { this.setData({ 'profile.city': e.detail.value }); },
@@ -33,7 +37,13 @@ Page({
     if (tags.includes(tag)) tags = tags.filter((item) => item !== tag);
     else if (tags.length < 3) tags.push(tag);
     else return wx.showToast({ title: '最多选择 3 个标签', icon: 'none' });
-    this.setData({ 'profile.tags': tags });
+    this.setData({ 'profile.tags': tags }, () => this.syncTagChoices());
+  },
+  syncTagChoices() {
+    const tags = this.data.profile.tags || [];
+    const tagOptions = getTagOptions();
+    (tags || []).forEach((tag) => { if (!tagOptions.includes(tag)) tagOptions.push(tag); });
+    this.setData({ tagChoices: tagOptions.map((label) => ({ label, selected: tags.includes(label) })) });
   },
   save() {
     const { profile } = this.data;

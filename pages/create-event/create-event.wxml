@@ -9,7 +9,8 @@
       <view class="ai-icon">↗</view>
       <view class="ai-copy-wrap"><text class="ai-title">粘贴活动链接</text><text class="ai-copy">支持微信公众号、小红书，识别后自动生成活动草稿</text></view>
       <view class="import-input-row"><input class="import-input" placeholder="粘贴链接" value="{{importUrl}}" bindinput="onImportUrl"/><button class="ai-button" bindtap="parseImport">{{importStatus === 'processing' ? '识别中' : '解析'}}</button></view>
-      <view wx:if="{{importStatus === 'ready'}}" class="import-result"><text class="import-result-source">✓ {{importMeta.sourceLabel}}</text><text class="import-result-note">{{importMeta.modeLabel}} · {{importMeta.confidenceLabel}}</text></view>
+      <view wx:if="{{importStatus === 'ready'}}" class="import-result"><view><text class="import-result-source">✓ {{importMeta.sourceLabel}}</text><text class="import-result-note">{{importMeta.modeLabel}} · {{importMeta.confidenceLabel}}</text></view><text wx:if="{{importMeta.missingFields && importMeta.missingFields.length}}" class="import-missing">待补：{{importMeta.missingFieldsText}}</text><text wx:else class="import-complete">字段齐全，请核对后提交</text></view>
+      <view wx:if="{{importStatus === 'error'}}" class="import-error">解析失败：请确认链接公开可访问，或改为手工填写。</view>
     </view>
 
   <view class="section-block">

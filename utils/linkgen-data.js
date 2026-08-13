@@ -80,7 +80,18 @@ function seedLocalData() {
   if (!wx.getStorageSync(LIBRARY_KEY)) write(LIBRARY_KEY, libraryResources);
 }
 
-function getPosts() { return read(POSTS_KEY, posts).map((item) => ({ ...item, avatar: item.avatar || getAvatarPath(item.author === '苏打' ? 'soda' : item.author === '阿吉' ? 'aji' : 'nova') })); }
+function normalizePost(value) {
+  const item = { ...value };
+  item.contentType = item.contentType || 'discussion';
+  item.tags = Array.isArray(item.tags) ? item.tags : [];
+  item.commentsList = Array.isArray(item.commentsList) ? item.commentsList : [];
+  if (item.contentType === 'task') {
+    item.interestedMemberIds = Array.isArray(item.interestedMemberIds) ? item.interestedMemberIds : [];
+    item.participantMemberIds = Array.isArray(item.participantMemberIds) ? item.participantMemberIds : [];
+  }
+  return item;
+}
+function getPosts() { return read(POSTS_KEY, posts).map((item) => normalizePost({ ...item, avatar: item.avatar || getAvatarPath(item.author === '苏打' ? 'soda' : item.author === '阿吉' ? 'aji' : 'nova') })); }
 function savePosts(value) { write(POSTS_KEY, value); }
 function getEvents() { return read(EVENTS_KEY, events); }
 function saveEvents(value) { write(EVENTS_KEY, value); }
@@ -101,4 +112,4 @@ function normalizeProfile(value) {
 function getProfile() { return normalizeProfile(read(PROFILE_KEY, initialProfile)); }
 function saveProfile(value) { write(PROFILE_KEY, normalizeProfile(value)); }
 
-module.exports = { POSTS_KEY, EVENTS_KEY, PROFILE_KEY, AGENT_CONFIG_KEY, LIBRARY_KEY, initialAgentConfig, libraryResources, seedLocalData, getPosts, savePosts, getEvents, saveEvents, getAgentConfig, saveAgentConfig, getLibraryResources, saveLibraryResources, getMembers, getProfile, saveProfile };
+module.exports = { POSTS_KEY, EVENTS_KEY, PROFILE_KEY, AGENT_CONFIG_KEY, LIBRARY_KEY, initialAgentConfig, libraryResources, seedLocalData, getPosts, savePosts, getEvents, saveEvents, getAgentConfig, saveAgentConfig, getLibraryResources, saveLibraryResources, getMembers, getProfile, saveProfile, normalizePost };

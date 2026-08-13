@@ -63,7 +63,8 @@ Page({
       try {
         const draft = await call('parseActivityLink', { url: importUrl });
         const isOffline = Boolean(draft.location && !/线上|直播|腾讯会议|Zoom|飞书会议/i.test(draft.location));
-        this.setData({ title: draft.title || '', description: draft.summary || draft.description || '', time: draft.time || '', location: draft.location || '', customLocation: draft.location || '', coverImage: draft.coverImageUrl || '', typeIndex: isOffline ? 1 : 0, isOffline, venueOptions: getVenueOptions(isOffline, 'all'), selectedVenueId: draft.location ? 'custom' : '', importStatus: 'ready', importMeta: { sourceLabel: draft.sourceLabel, modeLabel: draft.modeLabel, confidenceLabel: draft.confidenceLabel, registrationUrl: draft.registrationUrl || '', fieldEvidence: draft.fieldEvidence || {}, riskFlags: draft.riskFlags || [] } });
+        const missingFields = Object.keys(draft.fieldEvidence || {}).filter((key) => !draft.fieldEvidence[key]);
+        this.setData({ title: draft.title || '', description: draft.summary || draft.description || '', time: draft.time || '', location: draft.location || '', customLocation: draft.location || '', coverImage: draft.coverImageUrl || '', typeIndex: isOffline ? 1 : 0, isOffline, venueOptions: getVenueOptions(isOffline, 'all'), selectedVenueId: draft.location ? 'custom' : '', importStatus: 'ready', importMeta: { sourceLabel: draft.sourceLabel, modeLabel: draft.modeLabel, confidenceLabel: draft.confidenceLabel, registrationUrl: draft.registrationUrl || '', fieldEvidence: draft.fieldEvidence || {}, riskFlags: draft.riskFlags || [], missingFields, missingFieldsText: missingFields.join('、') } });
         wx.showToast({ title: `已解析${draft.sourceLabel || source.label}`, icon: 'success' });
       } catch (error) {
         this.setData({ importStatus: 'error' });
@@ -73,7 +74,7 @@ Page({
     }
     setTimeout(() => {
       const draft = buildLocalDraft(importUrl);
-      this.setData({ title: draft.title, description: draft.description, time: draft.time, location: draft.location, customLocation: '', expectedCount: draft.expectedCount, typeIndex: 0, isOffline: false, venueOptions: getVenueOptions(false, 'all'), selectedVenueId: '', importStatus: 'ready', importMeta: { sourceLabel: draft.sourceLabel, modeLabel: draft.modeLabel, confidenceLabel: draft.confidenceLabel } });
+      this.setData({ title: draft.title, description: draft.description, time: draft.time, location: draft.location, customLocation: '', expectedCount: draft.expectedCount, typeIndex: 0, isOffline: false, venueOptions: getVenueOptions(false, 'all'), selectedVenueId: '', importStatus: 'ready', importMeta: { sourceLabel: draft.sourceLabel, modeLabel: draft.modeLabel, confidenceLabel: draft.confidenceLabel, missingFields: ['time', 'location', 'coverImage'], missingFieldsText: 'time、location、coverImage' } });
       wx.showToast({ title: `已识别${draft.sourceLabel}`, icon: 'success' });
     }, 450);
   },

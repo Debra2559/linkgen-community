@@ -10,7 +10,12 @@
 .member-detail-role { display: block; margin-top: 5rpx; color: var(--muted); font-size: 23rpx; }
 .member-online { display: flex; align-items: center; padding-top: 12rpx; color: #419c6b; font-size: 19rpx; }
 .online-dot { width: 11rpx; height: 11rpx; margin-right: 7rpx; border-radius: 50%; background: #43b87a; }
-.member-detail-tags { margin-top: 18rpx; }
+.member-detail-tags { display: flex; flex-wrap: wrap; gap: 10rpx; margin-top: 18rpx; }
+.member-tag { display: inline-flex; align-items: center; padding: 9rpx 14rpx 9rpx 11rpx; border: 1rpx solid var(--line); border-radius: 999rpx; color: var(--ink-soft); background: var(--surface-raised); font-size: 20rpx; font-weight: 700; }
+.member-tag-dot { width: 12rpx; height: 12rpx; margin-right: 7rpx; border-radius: 50%; background: var(--coral); }
+.member-tag-1 .member-tag-dot { background: var(--yellow); }
+.member-tag-2 .member-tag-dot { background: var(--success); }
+.member-tag-3 .member-tag-dot { background: #72b7ff; }
 .member-signal, .bio-panel { padding: 22rpx; margin-top: 24rpx; border-radius: 22rpx; }
 .member-signal { background: var(--yellow); }
 .signal-label, .panel-label { display: block; color: var(--ink-soft); font-size: 18rpx; font-weight: 800; letter-spacing: 2rpx; }

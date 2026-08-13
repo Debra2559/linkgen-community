@@ -271,7 +271,7 @@
   border: 1rpx solid var(--line);
   border-radius: 14rpx;
   color: var(--ink-soft);
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--surface-input);
   font-size: 22rpx;
 }
 
@@ -288,12 +288,11 @@
 }
 
 .choice.chosen {
-  border-color: var(--coral);
-  color: var(--coral);
-  background: var(--coral-soft);
-  box-shadow: 0 5rpx 12rpx rgba(255, 113, 59, 0.16);
+  border-color: var(--coral) !important;
+  color: #fff !important;
+  background: var(--action-bg) !important;
+  box-shadow: 0 0 0 3rpx var(--coral-soft), 0 8rpx 18rpx rgba(0, 0, 0, .24);
 }
-.choice.chosen { border-color: #9b7bff !important; color: #fff !important; background: #7f5af0 !important; box-shadow: 0 0 0 3rpx rgba(155, 123, 255, .26), 0 8rpx 18rpx rgba(0, 0, 0, .24) !important; }
 .choice.chosen .choice-mark,
 .choice.chosen .choice-check { color: #fff !important; }
 

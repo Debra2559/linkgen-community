@@ -32,7 +32,7 @@
 
   <view class="section-block tag-section">
     <view class="block-heading"><view><text class="section-kicker">03 · 社群标签</text><text class="block-title">选择最像你的 3 个词</text></view><text class="section-caption">{{profile.tags.length}} / 3</text></view>
-    <view class="choice-wrap"><view wx:for="{{tagOptions}}" wx:key="*this" class="choice {{profile.tags.indexOf(item) >= 0 ? 'chosen' : ''}}" data-tag="{{item}}" bindtap="toggleTag"><text class="choice-mark">#</text><text>{{item}}</text><text wx:if="{{profile.tags.indexOf(item) >= 0}}" class="choice-check">✓</text></view></view>
+    <view class="choice-wrap"><view wx:for="{{tagChoices}}" wx:key="label" class="choice {{item.selected ? 'chosen' : ''}}" data-tag="{{item.label}}" bindtap="toggleTag"><text class="choice-mark">#</text><text>{{item.label}}</text><text wx:if="{{item.selected}}" class="choice-check">✓</text></view></view>
   </view>
 
   <view class="visibility-note"><text class="note-dot">·</text><text>名片会公开展示在通讯录，只有你能修改。</text></view>

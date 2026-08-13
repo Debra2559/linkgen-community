@@ -10,3 +10,4 @@
 .source-kind-picker { display: inline-block; margin-right: 7rpx; vertical-align: middle; }.source-kind-label { padding: 3rpx 6rpx; border-radius: 5rpx; color: var(--ink-soft); background: var(--mint); font-size: 15rpx; }
 .source-auth-picker { display: inline-block; margin-right: 7rpx; vertical-align: middle; }.source-auth-label { padding: 3rpx 6rpx; border-radius: 5rpx; color: #906d27; background: #fff3cb; font-size: 15rpx; }
 .source-error { display: block; max-width: 190rpx; margin-top: 4rpx; overflow: hidden; color: #c35c45; font-size: 14rpx; line-height: 1.25; text-overflow: ellipsis; white-space: nowrap; }
+.review-status.rejected { color: #c35c45; background: rgba(195, 92, 69, .14); }
