@@ -20,6 +20,7 @@ Page({
     attachments: [],
     linkInput: '',
     linkPanelOpen: false,
+    selectedTagText: '',
   },
 
   onTitle(e) { this.setData({ title: e.detail.value }); },
@@ -31,7 +32,18 @@ Page({
     if (selectedTags.includes(tag)) selectedTags = selectedTags.filter((item) => item !== tag);
     else if (selectedTags.length < 3) selectedTags.push(tag);
     else return wx.showToast({ title: '最多选择 3 个标签', icon: 'none' });
-    this.setData({ selectedTags });
+    this.setData({ selectedTags, selectedTagText: selectedTags.join('、') });
+  },
+  addCustomTag() {
+    if (this.data.selectedTags.length >= 3) return wx.showToast({ title: '最多选择 3 个标签', icon: 'none' });
+    wx.showModal({ title: '添加自定义标签', editable: true, placeholderText: '例如：AI 教育', confirmText: '添加', success: (res) => {
+      if (!res.confirm) return;
+      const label = String(res.content || '').replace(/^#+/, '').trim().slice(0, 12);
+      if (!label) return wx.showToast({ title: '请输入标签内容', icon: 'none' });
+      if (this.data.selectedTags.includes(label)) return wx.showToast({ title: '这个标签已经选过了', icon: 'none' });
+      const selectedTags = this.data.selectedTags.concat(label);
+      this.setData({ selectedTags, selectedTagText: selectedTags.join('、') });
+    } });
   },
 
   addImage() {

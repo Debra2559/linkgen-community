@@ -5,7 +5,7 @@ const { getTagOptions } = require('../../utils/tag-taxonomy');
 const emptyProfile = { name: '', initials: '', role: '', city: '', bio: '', purpose: '', tags: [], color: '#e77b61' };
 
 Page({
-  data: { profile: emptyProfile, avatarOptions: [], tagChoices: [] },
+  data: { profile: emptyProfile, avatarOptions: [], tagChoices: [], selectedTagText: '' },
   onLoad() {
     const profile = Object.assign({}, emptyProfile, getProfile());
     this.setData({ profile, avatarOptions: getAvatarOptions() }, () => this.syncTagChoices());
@@ -39,11 +39,21 @@ Page({
     else return wx.showToast({ title: '最多选择 3 个标签', icon: 'none' });
     this.setData({ 'profile.tags': tags }, () => this.syncTagChoices());
   },
+  addCustomTag() {
+    if ((this.data.profile.tags || []).length >= 3) return wx.showToast({ title: '最多选择 3 个标签', icon: 'none' });
+    wx.showModal({ title: '添加自定义标签', editable: true, placeholderText: '例如：AI 教育', confirmText: '添加', success: (res) => {
+      if (!res.confirm) return;
+      const label = String(res.content || '').replace(/^#+/, '').trim().slice(0, 12);
+      if (!label) return wx.showToast({ title: '请输入标签内容', icon: 'none' });
+      if ((this.data.profile.tags || []).includes(label)) return wx.showToast({ title: '这个标签已经选过了', icon: 'none' });
+      this.setData({ 'profile.tags': (this.data.profile.tags || []).concat(label) }, () => this.syncTagChoices());
+    } });
+  },
   syncTagChoices() {
     const tags = this.data.profile.tags || [];
     const tagOptions = getTagOptions();
     (tags || []).forEach((tag) => { if (!tagOptions.includes(tag)) tagOptions.push(tag); });
-    this.setData({ tagChoices: tagOptions.map((label) => ({ label, selected: tags.includes(label) })) });
+    this.setData({ tagChoices: tagOptions.map((label) => ({ label, selected: tags.includes(label) })), selectedTagText: tags.join('、') });
   },
   save() {
     const { profile } = this.data;
