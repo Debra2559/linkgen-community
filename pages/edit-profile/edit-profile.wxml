@@ -37,4 +37,6 @@
 
   <view class="visibility-note"><text class="note-dot">·</text><text>名片会公开展示在通讯录，只有你能修改。</text></view>
   <view class="form-actions"><button class="secondary-button preview-button" bindtap="previewProfile">预览名片 <text class="button-arrow">↗</text></button><button class="primary-button submit-button" bindtap="save">保存名片 <text class="button-arrow">✓</text></button></view>
+
+  <view wx:if="{{customTagOpen}}" class="custom-tag-modal" catchtap="closeCustomTag"><view class="custom-tag-sheet" catchtap="noop"><view class="custom-tag-kicker">COMMUNITY TAG</view><text class="custom-tag-title">添加自定义标签</text><text class="custom-tag-copy">用一个词，让别人更快了解你。</text><input class="custom-tag-input" focus="{{customTagOpen}}" maxlength="12" value="{{customTagValue}}" placeholder="例如：AI 教育" bindinput="onCustomTagInput" bindconfirm="confirmCustomTag" /><view class="custom-tag-actions"><button class="custom-tag-cancel" bindtap="closeCustomTag">取消</button><button class="custom-tag-confirm" bindtap="confirmCustomTag">添加标签</button></view></view></view>
 </view>

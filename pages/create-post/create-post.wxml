@@ -46,4 +46,5 @@
 
   <view class="visibility-note"><text class="note-dot">·</text><text>发布后，社群成员都可以查看、评论和收藏这条讨论</text></view>
   <button class="primary-button submit-button" bindtap="submit">发布讨论 <text class="button-arrow">↗</text></button>
+  <view wx:if="{{customTagOpen}}" class="custom-tag-modal" catchtap="closeCustomTag"><view class="custom-tag-sheet" catchtap="noop"><view class="custom-tag-kicker">DISCUSSION TAG</view><text class="custom-tag-title">添加自定义标签</text><text class="custom-tag-copy">用一个词，给这次讨论加上方向。</text><input class="custom-tag-input" focus="{{customTagOpen}}" maxlength="12" value="{{customTagValue}}" placeholder="例如：AI 教育" bindinput="onCustomTagInput" bindconfirm="confirmCustomTag" /><view class="custom-tag-actions"><button class="custom-tag-cancel" bindtap="closeCustomTag">取消</button><button class="custom-tag-confirm" bindtap="confirmCustomTag">添加标签</button></view></view></view>
 </view>

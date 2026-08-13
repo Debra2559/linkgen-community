@@ -420,6 +420,16 @@
 .choice.chosen .choice-check { color: var(--choice-active-text) !important; }
 
 .custom-tag-button { display: inline-flex; align-items: center; justify-content: center; min-height: 54rpx; padding: 0 16rpx; margin: 0 10rpx 10rpx 0; border: 1rpx dashed var(--coral); border-radius: 14rpx; color: var(--coral); background: transparent; font-size: 20rpx; }
+.custom-tag-modal { position: fixed; inset: 0; z-index: 20; display: flex; align-items: center; justify-content: center; padding: 36rpx; background: rgba(3, 6, 18, .68); }
+.custom-tag-sheet { width: 100%; padding: 34rpx 30rpx 26rpx; border: 1rpx solid var(--line); border-radius: 28rpx; background: var(--card); box-shadow: 0 24rpx 70rpx rgba(0, 0, 0, .42); }
+.custom-tag-kicker { color: var(--coral); font-size: 17rpx; font-weight: 800; letter-spacing: 3rpx; }
+.custom-tag-title { display: block; margin-top: 10rpx; color: var(--ink); font-size: 34rpx; font-weight: 800; }
+.custom-tag-copy { display: block; margin-top: 8rpx; color: var(--muted); font-size: 19rpx; }
+.custom-tag-input { width: 100%; padding: 18rpx 16rpx; margin-top: 24rpx; border: 1rpx solid var(--line); border-radius: 14rpx; color: var(--ink); background: var(--surface-input); font-size: 24rpx; }
+.custom-tag-actions { display: flex; gap: 12rpx; margin-top: 22rpx; }
+.custom-tag-actions button { flex: 1; height: 68rpx; border-radius: 14rpx; font-size: 22rpx; font-weight: 700; }
+.custom-tag-cancel { border: 1rpx solid var(--line); color: var(--ink-soft); background: var(--surface-raised); }
+.custom-tag-confirm { color: var(--choice-active-text); background: var(--choice-active-bg); }
 
 .visibility-note {
   display: flex;
