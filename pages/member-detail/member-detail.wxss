@@ -16,6 +16,11 @@
 .member-tag-1 .member-tag-dot { background: var(--yellow); }
 .member-tag-2 .member-tag-dot { background: var(--success); }
 .member-tag-3 .member-tag-dot { background: #72b7ff; }
+.member-tag-role .member-tag-dot { background: #72b7ff; }
+.member-tag-topic .member-tag-dot { background: #a98cff; }
+.member-tag-connect .member-tag-dot { background: #ffad66; }
+.member-tag-activity .member-tag-dot { background: var(--success); }
+.member-tag-other .member-tag-dot { background: var(--muted); }
 .member-signal, .bio-panel { padding: 22rpx; margin-top: 24rpx; border-radius: 22rpx; }
 .member-signal { background: var(--yellow); }
 .signal-label, .panel-label { display: block; color: var(--ink-soft); font-size: 18rpx; font-weight: 800; letter-spacing: 2rpx; }

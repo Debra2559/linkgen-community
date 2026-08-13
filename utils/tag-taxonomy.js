@@ -16,9 +16,14 @@ function getTagGroup(tag) {
   return TAG_GROUPS.find((group) => group.items.includes(tag));
 }
 
+function getTagTone(tag) {
+  const group = getTagGroup(normalizeTag(tag));
+  return group ? group.key : 'other';
+}
+
 function normalizeTag(tag) {
   const aliases = { 'AI 工具': 'AI 应用', '设计协作': '设计', '线下聚会': '线下活动', '搞钱': '项目合作' };
   return aliases[tag] || tag;
 }
 
-module.exports = { TAG_GROUPS, ALL_TAGS, getTagOptions, getTagGroup, normalizeTag };
+module.exports = { TAG_GROUPS, ALL_TAGS, getTagOptions, getTagGroup, getTagTone, normalizeTag };

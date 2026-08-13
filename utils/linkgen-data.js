@@ -5,7 +5,7 @@ const AGENT_CONFIG_KEY = 'linkgen_agent_config_v1';
 const LIBRARY_KEY = 'linkgen_library_v1';
 const { getAvatarPath } = require('./avatar-library');
 
-const initialProfile = { name: '', initials: '你', role: '', city: '', color: '#e77b61', avatarId: 'lin', avatar: getAvatarPath('lin'), tags: [], purpose: '', bio: '', setupComplete: false };
+const initialProfile = { memberId: 'local-self', name: '', initials: '你', role: '', city: '', color: '#e77b61', avatarId: 'lin', avatar: getAvatarPath('lin'), tags: [], purpose: '', bio: '', setupComplete: false };
 
 const initialAgentConfig = {
   enabled: true,
@@ -107,7 +107,7 @@ function normalizeProfile(value) {
     profile.role = parts.shift();
     profile.city = parts.join(' · ');
   }
-  return { ...profile, initials: profile.initials || (profile.name ? profile.name.slice(0, 1) : '你'), avatarId: profile.avatarId || 'lin', avatar: profile.avatar || getAvatarPath(profile.avatarId || 'lin'), tags: profile.tags || [], city: profile.city || '', setupComplete: profile.setupComplete === true };
+  return { ...profile, memberId: profile.memberId || profile.openid || 'local-self', initials: profile.initials || (profile.name ? profile.name.slice(0, 1) : '你'), avatarId: profile.avatarId || 'lin', avatar: profile.avatar || getAvatarPath(profile.avatarId || 'lin'), tags: profile.tags || [], city: profile.city || '', setupComplete: profile.setupComplete === true };
 }
 function getProfile() { return normalizeProfile(read(PROFILE_KEY, initialProfile)); }
 function saveProfile(value) { write(PROFILE_KEY, normalizeProfile(value)); }

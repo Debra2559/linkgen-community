@@ -11,6 +11,7 @@
       <view class="import-input-row"><input class="import-input" placeholder="粘贴链接" value="{{importUrl}}" bindinput="onImportUrl"/><button class="ai-button" bindtap="parseImport">{{importStatus === 'processing' ? '识别中' : '解析'}}</button></view>
       <view wx:if="{{importStatus === 'ready'}}" class="import-result"><view><text class="import-result-source">✓ {{importMeta.sourceLabel}}</text><text class="import-result-note">{{importMeta.modeLabel}} · {{importMeta.confidenceLabel}}</text></view><text wx:if="{{importMeta.missingFields && importMeta.missingFields.length}}" class="import-missing">待补：{{importMeta.missingFieldsText}}</text><text wx:else class="import-complete">字段齐全，请核对后提交</text></view>
       <view wx:if="{{importStatus === 'error'}}" class="import-error">解析失败：请确认链接公开可访问，或改为手工填写。</view>
+      <view wx:if="{{importStatus === 'unavailable'}}" class="import-error">已识别为{{importMeta.sourceLabel}}链接，但当前未连接云端解析服务。请手工填写，系统不会生成虚假草稿。</view>
     </view>
 
   <view class="section-block">

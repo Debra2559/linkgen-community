@@ -2,14 +2,14 @@ const { getProfile, getPosts, seedLocalData } = require('../../utils/linkgen-dat
 
 function getMyPosts(posts, profile) {
   if (!profile.name) return [];
-  return posts.filter((post) => post.author === profile.name);
+  return posts.filter((post) => post.authorId ? post.authorId === profile.memberId : post.author === profile.name);
 }
 
 function getMyReplies(posts, profile) {
   if (!profile.name) return [];
   return posts.reduce((items, post) => {
     (post.commentsList || []).forEach((comment, index) => {
-      if (comment.name === profile.name) {
+      if (comment.authorId ? comment.authorId === profile.memberId : comment.name === profile.name) {
         items.push({
           id: `${post.id}-reply-${index}`,
           postId: post.id,

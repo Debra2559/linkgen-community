@@ -111,7 +111,7 @@ Page({
 
   filterList() {
     const statusMap = { pending: '待审核', 'needs-info': '待补充', rejected: '未通过' };
-    const list = this.data.events.filter((item) => this.data.activeFilter === 'all' || (this.data.activeFilter === 'published' ? ['报名中', '即将开始', '名额紧张'].includes(item.status) : item.status === statusMap[this.data.activeFilter]));
+    const list = this.data.events.filter((item) => this.data.activeFilter === 'all' || (this.data.activeFilter === 'published' ? ['已发布', '报名中', '即将开始', '名额紧张'].includes(item.status) : item.status === statusMap[this.data.activeFilter]));
     this.setData({ list });
   },
 

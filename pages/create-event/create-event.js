@@ -72,11 +72,9 @@ Page({
       }
       return;
     }
-    setTimeout(() => {
-      const draft = buildLocalDraft(importUrl);
-      this.setData({ title: draft.title, description: draft.description, time: draft.time, location: draft.location, customLocation: '', expectedCount: draft.expectedCount, typeIndex: 0, isOffline: false, venueOptions: getVenueOptions(false, 'all'), selectedVenueId: '', importStatus: 'ready', importMeta: { sourceLabel: draft.sourceLabel, modeLabel: draft.modeLabel, confidenceLabel: draft.confidenceLabel, missingFields: ['time', 'location', 'coverImage'], missingFieldsText: 'time、location、coverImage' } });
-      wx.showToast({ title: `已识别${draft.sourceLabel}`, icon: 'success' });
-    }, 450);
+    const draft = buildLocalDraft(importUrl);
+    this.setData({ importStatus: 'unavailable', importMeta: { sourceLabel: draft.sourceLabel, modeLabel: '仅识别链接来源', confidenceLabel: '未解析正文' } });
+    wx.showToast({ title: '未连接解析服务，请手工填写', icon: 'none' });
   },
   submit() {
     const { title, description, time, location, expectedCount, types, typeIndex, isOfficial, isOffline, selectedVenueId, activeCategory } = this.data;
