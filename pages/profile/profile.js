@@ -6,7 +6,7 @@ Page({
   onShow() { this.refresh(); },
   refresh() {
     const profile = getProfile();
-    const posts = getPosts().filter((item) => item.author === profile.name);
+    const posts = getPosts().filter((item) => item.authorId ? item.authorId === profile.memberId : item.author === profile.name);
     const events = getEvents().filter((item) => item.organizer === profile.name || item.joined || item.calendarAdded);
     const likes = posts.reduce((sum, item) => sum + (item.likes || 0), 0);
     this.setData({ profile, stats: { posts: posts.length, events: events.length, likes } });

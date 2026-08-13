@@ -21,7 +21,7 @@
 | 内容 | 测试环境 | 正式环境 |
 |---|---|---|
 | 小程序 AppID | 负责人指定的测试/开发 AppID | 正式 AppID |
-| 数据库 | `linkgen-test-*` 集合 | 正式集合 |
+| 数据库 | 与云函数相同的集合名，但位于独立测试环境 | 正式集合 |
 | 云函数 | 测试部署版本 | 负责人审核后部署 |
 | 定时采集 | 默认关闭，只允许手动触发 | 负责人确认后开启 |
 | 通知 | 测试管理员/模拟通知 | 正式运营人员 |
@@ -104,6 +104,22 @@
 | `contentHash` | string | 去重指纹 |
 | `fetchedAt` / `reviewedAt` | date | 抓取及审核时间 |
 
+### 运营与 Agent 集合
+
+以下集合名必须与云函数代码一致；通过 CloudBase 环境隔离测试数据，不要给集合名增加环境前缀：
+
+| 集合 | 用途 |
+|---|---|
+| `admins` | 测试管理员 OpenID、角色、通知偏好 |
+| `audit_logs` | 审核、发布、来源和通知操作记录 |
+| `agent_sources` | 公开来源、授权状态、关键词和启停配置 |
+| `agent_settings` | Agent 总开关、频率和质量阈值；文档 ID 为 `default` |
+| `agent_runs` | 每次采集任务运行记录、互斥锁和错误 |
+| `source_items` | 来源文章/活动的去重原始摘要 |
+| `post_likes` | 帖子点赞关系，唯一键建议为 `postId + memberId` 的哈希 |
+
+资料库相关功能还会使用 `library_resources` 和 `library_saves`；如果本轮不联调资料库，可以暂不创建，但不要误删已有集合。
+
 ## 首批云函数联调清单
 
 - `login`：返回测试环境 OpenID 和管理员状态。
@@ -113,6 +129,7 @@
 - `approveActivityCandidate` / `rejectActivityCandidate`：仅测试管理员可用。
 - `manageActivityAgent`：读取候选、来源和任务状态；测试环境默认不启用定时器。
 - `activityAgent`：只写入 `activity_candidates`，不得直接发布。
+- `manageCommunityContent`：测试用户资料、我的动态、发帖、回复和点赞接口；服务端从 WXContext 获取 OpenID。
 
 ## 权限底线
 
@@ -121,6 +138,12 @@
 - 普通用户不能读取管理员集合、采集配置和未发布候选。
 - 测试环境数据必须可清空，禁止导入真实用户隐私数据。
 - 所有审核和发布动作记录操作者、时间和前后状态。
+- `posts` 建议索引：`status + createdAt`、`authorId + createdAt`。
+- `post_comments` 建议索引：`postId + createdAt`、`authorId + createdAt`。
+- `events` 建议索引：`reviewStatus + startAt`、`visibility + startAt`。
+- `activity_candidates` 建议索引：`reviewStatus + createdAt`、`contentHash`、`sourcePlatform + fetchedAt`。
+- `event_registrations` 建议索引：`eventId + status`、`_openid + status`。
+- `audit_logs` 建议索引：`createdAt`、`actor + createdAt`。
 
 ## 联调验收顺序
 

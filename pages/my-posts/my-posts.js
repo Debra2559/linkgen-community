@@ -1,4 +1,4 @@
-const { getProfile, getPosts, seedLocalData } = require('../../utils/linkgen-data');
+const { getProfile, getPosts, savePosts, seedLocalData } = require('../../utils/linkgen-data');
 
 function getMyPosts(posts, profile) {
   if (!profile.name) return [];
@@ -58,6 +58,21 @@ Page({
   switchTab(e) { this.setData({ activeTab: e.currentTarget.dataset.tab }, this.applyTab); },
   openPost(e) { wx.navigateTo({ url: `/pages/post-detail/post-detail?id=${e.currentTarget.dataset.id}` }); },
   openReply(e) { wx.navigateTo({ url: `/pages/post-detail/post-detail?id=${e.currentTarget.dataset.id}` }); },
+  deletePost(e) {
+    const id = e.currentTarget.dataset.id;
+    wx.showModal({ title: '删除这条讨论？', content: '删除后本地演示数据将无法恢复。', confirmText: '删除', confirmColor: '#e45f50', success: (res) => {
+      if (!res.confirm) return;
+      const posts = getPosts().filter((item) => item.id !== id);
+      const profile = getProfile();
+      const nextPosts = posts.map((post) => ({ ...post, commentsList: (post.commentsList || []).filter((comment) => {
+        const authoredByMe = comment.authorId ? comment.authorId === profile.memberId : comment.name === profile.name;
+        return !authoredByMe;
+      }) }));
+      savePosts(nextPosts);
+      this.refresh();
+      wx.showToast({ title: '已删除', icon: 'success' });
+    } });
+  },
   goCreatePost() { wx.navigateTo({ url: '/pages/create-post/create-post' }); },
   goEditProfile() { wx.navigateTo({ url: '/pages/edit-profile/edit-profile' }); },
   goProfile() { wx.switchTab({ url: '/pages/profile/profile' }); },

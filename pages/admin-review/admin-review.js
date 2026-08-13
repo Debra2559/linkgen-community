@@ -16,7 +16,7 @@ function formatCandidateTime(value) {
 
 function mapCandidate(item) {
   const startAt = item.startAt || '';
-  const statusMap = { pending: '待审核', approved: '已发布', rejected: '未通过' };
+  const statusMap = { pending: '待审核', needs_info: '待补充', approved: '已发布', rejected: '未通过' };
   const locationMode = item.locationMode || (/线上|直播|腾讯会议|Zoom/i.test(item.location || '') ? 'online' : 'offline');
   return {
     ...item,
@@ -36,7 +36,7 @@ function mapCandidate(item) {
     sourcePlatform: item.sourcePlatform || '',
     sourceName: item.sourceAccount || '',
     authorizationStatus: item.authorizationStatus || 'unknown',
-    notificationStatus: item.reviewStatus === 'pending' ? '等待管理员审批' : '已处理',
+    notificationStatus: item.reviewStatus === 'pending' ? '等待管理员审批' : item.reviewStatus === 'needs_info' ? '等待补充资料' : '已处理',
   };
 }
 
@@ -318,6 +318,19 @@ Page({
     saveEvents(getEvents().map((item) => item.id === id ? { ...item, status: '未通过' } : item));
     this.loadLocalData();
     wx.showToast({ title: '演示候选已驳回', icon: 'none' });
+  },
+
+  async markNeedsInfo(e) {
+    const id = e.currentTarget.dataset.id;
+    const reason = await new Promise((resolve) => wx.showModal({ title: '需要补充什么？', editable: true, placeholderText: '例如：缺少活动时间或公开报名入口', confirmText: '标记待补充', success: (res) => resolve(res.confirm ? (res.content || '请补充活动信息') : '') }));
+    if (!reason) return;
+    if (this.data.cloudMode) {
+      try { await call('updateActivityCandidate', { candidateId: id, action: 'needs-info', reason }); await this.loadCloudData(); wx.showToast({ title: '已标记待补充', icon: 'success' }); } catch (error) { wx.showToast({ title: error.message || '状态更新失败', icon: 'none' }); }
+      return;
+    }
+    saveEvents(getEvents().map((item) => item.id === id ? { ...item, status: '待补充', reviewStatus: 'needs_info', reviewReason: reason, updatedAt: new Date().toISOString() } : item));
+    this.loadLocalData();
+    wx.showToast({ title: '已标记待补充', icon: 'success' });
   },
 
   goCreate() { wx.navigateTo({ url: '/pages/create-event/create-event?official=1' }); },

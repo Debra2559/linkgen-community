@@ -31,6 +31,7 @@
 .mine-post-tags { margin-top: 14rpx; }
 .mine-post-footer { padding-top: 15rpx; margin-top: 16rpx; border-top: 1rpx solid var(--line); color: var(--muted); font-size: 19rpx; }
 .mine-post-footer text + text { margin-left: 24rpx; }
+.mine-delete-button { min-width: 0; padding: 0; margin: 0 0 0 auto; color: var(--muted); background: transparent; font-size: 18rpx; line-height: 1.4; }
 .reply-card { padding-bottom: 18rpx; }
 .reply-label { justify-content: space-between; color: var(--coral); font-size: 18rpx; font-weight: 800; }
 .reply-label text:last-child { color: var(--muted); font-weight: 400; }

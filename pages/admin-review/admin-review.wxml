@@ -37,9 +37,10 @@
     <text class="review-meta">来源：{{item.sourceName || item.organizer}} · 质量 {{item.qualityLabel || item.quality || '待评估'}}</text>
     <text class="review-meta">来源状态：{{item.authorizationStatus === 'authorized' ? '已授权' : item.authorizationStatus === 'owned' ? '自有来源' : item.authorizationStatus === 'public_link' ? '已确认公开链接' : '待确认授权'}}</text>
     <text wx:if="{{item.qualityReasonText}}" class="review-meta">判断依据：{{item.qualityReasonText}}</text>
+    <text wx:if="{{item.reviewReason}}" class="review-meta">补充说明：{{item.reviewReason}}</text>
     <view wx:if="{{item.sourceUrl}}" class="review-url">来源：{{item.sourceUrl}}</view>
     <view wx:if="{{item.registrationUrl && item.registrationUrl !== item.sourceUrl}}" class="review-url">报名入口：{{item.registrationUrl}}</view>
-    <view wx:if="{{item.status === '待审核'}}" class="review-actions"><button class="reject-button" bindtap="reject" data-id="{{item.id}}">驳回</button><button class="approve-button" bindtap="approve" data-id="{{item.id}}">通过并发布</button></view>
+    <view wx:if="{{item.status === '待审核'}}" class="review-actions"><button class="reject-button" bindtap="reject" data-id="{{item.id}}">驳回</button><button class="secondary-button" bindtap="markNeedsInfo" data-id="{{item.id}}">待补充</button><button class="approve-button" bindtap="approve" data-id="{{item.id}}">通过并发布</button></view>
   </view>
   <view wx:if="{{!list.length}}" class="empty">没有活动记录</view>
 </view>
