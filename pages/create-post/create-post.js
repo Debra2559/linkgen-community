@@ -20,7 +20,6 @@ Page({
     attachments: [],
     linkInput: '',
     linkPanelOpen: false,
-    selectedTagText: '',
   },
 
   onTitle(e) { this.setData({ title: e.detail.value }); },
@@ -32,7 +31,7 @@ Page({
     if (selectedTags.includes(tag)) selectedTags = selectedTags.filter((item) => item !== tag);
     else if (selectedTags.length < 3) selectedTags.push(tag);
     else return wx.showToast({ title: '最多选择 3 个标签', icon: 'none' });
-    this.setData({ selectedTags, selectedTagText: selectedTags.join('、') });
+    this.setData({ selectedTags });
   },
   addCustomTag() {
     if (this.data.selectedTags.length >= 3) return wx.showToast({ title: '最多选择 3 个标签', icon: 'none' });
@@ -42,7 +41,7 @@ Page({
       if (!label) return wx.showToast({ title: '请输入标签内容', icon: 'none' });
       if (this.data.selectedTags.includes(label)) return wx.showToast({ title: '这个标签已经选过了', icon: 'none' });
       const selectedTags = this.data.selectedTags.concat(label);
-      this.setData({ selectedTags, selectedTagText: selectedTags.join('、') });
+      this.setData({ selectedTags });
     } });
   },
 

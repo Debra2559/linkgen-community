@@ -18,6 +18,10 @@ page {
   --success: #68d391;
   --action-bg: #7f5af0;
   --action-text: #ffffff;
+  --choice-active-bg: #7f5af0;
+  --choice-active-border: #b59cff;
+  --choice-active-text: #ffffff;
+  --choice-active-ring: rgba(181, 156, 255, .28);
   --font-ui: 'Avenir Next', 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans CJK SC', sans-serif;
   --font-display: 'Avenir Next', 'SF Pro Rounded', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
   background: var(--bg);
@@ -45,6 +49,10 @@ page {
   --success: #42aa75;
   --action-bg: #161310;
   --action-text: #ffffff;
+  --choice-active-bg: #ff713b;
+  --choice-active-border: #e85d2f;
+  --choice-active-text: #ffffff;
+  --choice-active-ring: rgba(255, 113, 59, .28);
 }
 
 view, text, scroll-view, button, input, textarea, picker { box-sizing: border-box; }
@@ -139,15 +147,14 @@ button:active,
 .avatar-choice:active,
 .category-chip:active,
 .tag:active { opacity: .72; transform: scale(.98); }
-.choice.chosen { box-shadow: 0 0 0 3rpx rgba(155, 119, 255, .22), 0 5rpx 12rpx rgba(255, 113, 59, .16); }
+.choice.chosen { border-color: var(--choice-active-border) !important; background: var(--choice-active-bg) !important; color: var(--choice-active-text) !important; box-shadow: 0 0 0 3rpx var(--choice-active-ring), 0 8rpx 18rpx rgba(0, 0, 0, .24); }
+.choice.chosen .choice-mark,
+.choice.chosen .choice-check { color: var(--choice-active-text) !important; }
 .page:not(.theme-light) .choice.chosen {
-  border-color: var(--coral) !important;
-  background: var(--coral) !important;
-  color: #ffffff !important;
-  box-shadow: 0 0 0 3rpx rgba(155, 123, 255, .26), 0 8rpx 18rpx rgba(0, 0, 0, .24);
+  border-color: var(--choice-active-border) !important;
+  background: var(--choice-active-bg) !important;
+  color: var(--choice-active-text) !important;
 }
-.page:not(.theme-light) .choice.chosen .choice-mark,
-.page:not(.theme-light) .choice.chosen .choice-check { color: #ffffff !important; }
 .page:not(.theme-light) .topic-chip.selected,
 .page:not(.theme-light) .category-chip.selected,
 .page:not(.theme-light) .calendar-mode.active,

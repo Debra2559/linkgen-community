@@ -41,8 +41,7 @@
 
   <view class="section-block tag-block">
     <view class="block-heading"><view><text class="section-kicker">给讨论加个方向</text><text class="block-title">选择标签</text></view><text class="block-hint">{{selectedTags.length}} / 3</text></view>
-    <view class="choice-wrap"><view wx:for="{{tagOptions}}" wx:key="*this" class="choice {{selectedTags.indexOf(item) >= 0 ? 'chosen' : ''}}" data-tag="{{item}}" bindtap="toggleTag"><text class="choice-mark">#</text>{{item}}<text wx:if="{{selectedTags.indexOf(item) >= 0}}" class="choice-check">✓ 已选</text></view><button class="custom-tag-button" bindtap="addCustomTag">＋ 自定义标签</button></view>
-    <text wx:if="{{selectedTagText}}" class="selected-tag-summary">已选：{{selectedTagText}}</text>
+    <view class="choice-wrap"><view wx:for="{{tagOptions}}" wx:key="*this" class="choice {{selectedTags.indexOf(item) >= 0 ? 'chosen' : ''}}" data-tag="{{item}}" bindtap="toggleTag"><text class="choice-mark">#</text>{{item}}</view><button class="custom-tag-button" bindtap="addCustomTag">＋ 自定义标签</button></view>
   </view>
 
   <view class="visibility-note"><text class="note-dot">·</text><text>发布后，社群成员都可以查看、评论和收藏这条讨论</text></view>

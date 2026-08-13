@@ -5,7 +5,7 @@ const { getTagOptions } = require('../../utils/tag-taxonomy');
 const emptyProfile = { name: '', initials: '', role: '', city: '', bio: '', purpose: '', tags: [], color: '#e77b61' };
 
 Page({
-  data: { profile: emptyProfile, avatarOptions: [], tagChoices: [], selectedTagText: '' },
+  data: { profile: emptyProfile, avatarOptions: [], tagChoices: [] },
   onLoad() {
     const profile = Object.assign({}, emptyProfile, getProfile());
     this.setData({ profile, avatarOptions: getAvatarOptions() }, () => this.syncTagChoices());
@@ -53,7 +53,7 @@ Page({
     const tags = this.data.profile.tags || [];
     const tagOptions = getTagOptions();
     (tags || []).forEach((tag) => { if (!tagOptions.includes(tag)) tagOptions.push(tag); });
-    this.setData({ tagChoices: tagOptions.map((label) => ({ label, selected: tags.includes(label) })), selectedTagText: tags.join('、') });
+    this.setData({ tagChoices: tagOptions.map((label) => ({ label, selected: tags.includes(label) })) });
   },
   save() {
     const { profile } = this.data;
