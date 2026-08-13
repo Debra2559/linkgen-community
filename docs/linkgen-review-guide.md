@@ -4,10 +4,10 @@
 
 ## 先看什么
 
-1. `linkgen-product-proposal.md`：产品目标、用户权限和范围。
-2. `linkgen-technical-design.md`：CloudBase 推荐、数据表、权限和迁移。
-3. `linkgen-change-notes.md`：每个与原项目不同的地方。
-4. 本分支运行结果：体验任务筛选、发布、加入和状态推进。
+1. `OWNER-HANDOFF-20260813.md`：本次交接入口、完成项和负责人待办。
+2. `PRODUCT-TASKS-20260813.md`：10 项需求的逐项状态和未完成边界。
+3. `CLOUDBASE-TEST-ENV-REQUEST.md`：测试环境、数据表、权限和验收顺序。
+4. `git diff main...codex/dark-theme`：本分支相对主线的完整差异。
 
 ## 建议评审问题
 
@@ -20,21 +20,18 @@
 ## 本地验证
 
 ```powershell
+node scripts/validate-linkgen-release.js
 node tests/community-data.test.js
-node --check utils/community-data.js
-node --check pages/feed/feed.js
-node --check pages/create-post/create-post.js
-node --check pages/post-detail/post-detail.js
 ```
 
-然后用微信开发者工具导入项目，编译后按以下路径体验：发现 → 活动任务 → 任务详情 → 我想加入 → 发布入口 → 发布活动任务。
+然后用微信开发者工具导入项目，先验收：编辑名片标签 → 发起讨论标签 → 通讯录筛选 → 提交活动 → 我的动态 → 运营管理。
 
 ## Git 边界
 
-- 工作分支：`proposal/community-platform-plan`
-- 目标远程：个人 Fork `Xues-idiot/linkgen-community`
-- 不推送上游 `Debra2559/linkgen-community` 主线。
-- 推送和 Draft PR 都要在本地检查完成后单独确认。
+- 工作分支：`codex/dark-theme`
+- 目标远程：`Debra2559/linkgen-community`
+- 不推送或合并 `main`。
+- 当前分支已经推送，负责人可直接打开 Draft PR 审阅。
 
 ## 新增活动看板讨论
 
