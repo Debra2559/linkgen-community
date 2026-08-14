@@ -47,3 +47,6 @@
 .menu-sub { display: block; margin-top: 5rpx; color: var(--muted); font-size: 20rpx; }
 .menu-arrow { margin-left: auto; color: var(--muted); font-size: 38rpx; }
 .profile-footer { display: flex; justify-content: space-between; margin-top: 42rpx; color: #aeb8b3; font-size: 19rpx; }
+
+/* The profile card already exposes the edit action; do not duplicate it in the menu. */
+.menu-list > .menu-item:nth-child(3) { display: none; }
