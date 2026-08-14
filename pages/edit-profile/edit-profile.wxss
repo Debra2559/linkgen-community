@@ -273,6 +273,7 @@
   color: var(--ink-soft);
   background: rgba(255, 255, 255, 0.7);
   font-size: 22rpx;
+  transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, color 160ms ease;
 }
 
 .choice-mark {
@@ -284,6 +285,13 @@
   border-color: var(--coral);
   color: var(--coral);
   background: var(--coral-soft);
+  box-shadow: 0 0 0 2rpx var(--coral), 0 6rpx 16rpx rgba(255, 113, 59, 0.2);
+  font-weight: 700;
+}
+
+.choice.chosen .choice-mark {
+  color: var(--coral);
+  font-weight: 800;
 }
 
 .visibility-note {
