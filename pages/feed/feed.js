@@ -1,8 +1,9 @@
 const { getPosts, savePosts, seedLocalData, getProfile } = require('../../utils/linkgen-data');
+const { getThemeMode } = require('../../utils/theme');
 
 Page({
-  data: { profile: { avatar: '', initials: '你' }, posts: [], filteredPosts: [], search: '', activeTag: '全部', tags: ['全部', 'AI 工具', '产品思维', '独立开发', '个人成长'] },
-  onLoad() { seedLocalData(); this.refresh(); },
+  data: { themeMode: getThemeMode(), profile: { avatar: '', initials: '你' }, posts: [], filteredPosts: [], search: '', activeTag: '全部', tags: ['全部', 'AI 工具', '产品思维', '独立开发', '个人成长'] },
+  onLoad() { this.setData({ themeMode: getThemeMode() }); seedLocalData(); this.refresh(); },
   onShow() { this.refresh(); },
   onPullDownRefresh() { this.refresh(); wx.stopPullDownRefresh(); },
   refresh() { const posts = getPosts(); this.setData({ profile: getProfile(), posts }, this.filterPosts); },

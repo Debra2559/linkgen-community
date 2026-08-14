@@ -1,9 +1,15 @@
 const { getProfile, getPosts, getEvents, seedLocalData } = require('../../utils/linkgen-data');
+const { getThemeMode, setThemeMode, applyThemeChrome } = require('../../utils/theme');
 
 Page({
-  data: { profile: { tags: [] }, stats: { posts: 0, events: 0, likes: 0 } },
-  onLoad() { seedLocalData(); this.refresh(); },
-  onShow() { this.refresh(); },
+  data: { themeMode: getThemeMode(), profile: { tags: [] }, stats: { posts: 0, events: 0, likes: 0 } },
+  onLoad() { this.setData({ themeMode: getThemeMode() }); seedLocalData(); this.refresh(); },
+  onShow() { this.setData({ themeMode: getThemeMode() }); this.refresh(); },
+  toggleTheme() {
+    const themeMode = setThemeMode(this.data.themeMode === 'dark' ? 'light' : 'dark');
+    this.setData({ themeMode });
+    applyThemeChrome(themeMode);
+  },
   refresh() {
     const profile = getProfile();
     const posts = getPosts().filter((item) => item.author === profile.name);

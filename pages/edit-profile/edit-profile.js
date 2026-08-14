@@ -1,11 +1,12 @@
 const { getProfile, saveProfile } = require('../../utils/linkgen-data');
 const { getAvatarOptions, getAvatarPath } = require('../../utils/avatar-library');
+const { getThemeMode } = require('../../utils/theme');
 
 const emptyProfile = { name: '', initials: '', role: '', city: '', bio: '', purpose: '', tags: [], color: '#e77b61' };
 
 Page({
-  data: { profile: emptyProfile, avatarOptions: [], tagOptions: ['AI 产品', '设计协作', '独立开发', '内容创作', '找搭子', '线下活动', '开源'] },
-  onLoad() { this.setData({ profile: Object.assign({}, emptyProfile, getProfile()), avatarOptions: getAvatarOptions() }); },
+  data: { themeMode: getThemeMode(), profile: emptyProfile, avatarOptions: [], tagOptions: ['AI 产品', '设计协作', '独立开发', '内容创作', '找搭子', '线下活动', '开源'] },
+  onLoad() { this.setData({ themeMode: getThemeMode(), profile: Object.assign({}, emptyProfile, getProfile()), avatarOptions: getAvatarOptions() }); },
   onName(e) { this.setData({ 'profile.name': e.detail.value, 'profile.initials': e.detail.value.slice(0, 1) }); },
   onRole(e) { this.setData({ 'profile.role': e.detail.value }); },
   onCity(e) { this.setData({ 'profile.city': e.detail.value }); },

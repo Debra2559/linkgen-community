@@ -1,4 +1,12 @@
 .profile-page { padding-bottom: 120rpx; }
+.profile-theme-switch { position: absolute; top: 42rpx; right: 32rpx; z-index: 2; }
+.theme-switch { position: relative; display: block; width: 104rpx; height: 54rpx; padding: 0; overflow: hidden; border: 1rpx solid var(--line); border-radius: 999rpx; background: #fff; line-height: 54rpx; }
+.theme-dark .theme-switch { background: var(--surface-input); }
+.theme-icon { position: absolute; z-index: 1; top: 0; width: 50%; height: 52rpx; color: var(--muted); font-size: 23rpx; text-align: center; line-height: 52rpx; }
+.theme-moon { left: 0; }
+.theme-sun { right: 0; }
+.theme-switch-thumb { position: absolute; z-index: 2; top: 5rpx; left: 5rpx; width: 42rpx; height: 42rpx; border-radius: 50%; background: var(--coral); box-shadow: 0 4rpx 12rpx rgba(22, 19, 16, .18); transform: translateX(51rpx); transition: transform .22s ease; }
+.theme-switch.is-dark .theme-switch-thumb { transform: translateX(0); }
 .page-title { display: block; margin-top: 10rpx; }
 .eyebrow { color: var(--coral); font-size: 19rpx; font-weight: 800; letter-spacing: 3rpx; }
 .setup-banner { display: flex; align-items: center; min-height: 82rpx; padding: 14rpx 16rpx; margin-bottom: 14rpx; border: 1rpx solid rgba(255,113,59,.22); border-radius: 18rpx; background: var(--coral-soft); }

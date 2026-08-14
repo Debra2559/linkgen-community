@@ -1,4 +1,4 @@
-<view class="page events-page">
+<view class="page events-page {{themeMode === 'dark' ? 'theme-dark' : ''}}">
   <view class="topbar"><view><text class="eyebrow">LINKGEN CALENDAR</text><text class="section-title page-title">活动</text></view><button wx:if="{{activeView === 'mine'}}" class="topbar-action" bindtap="goCreate"><text class="create-plus">＋</text><text>发起活动</text><text class="create-arrow">↗</text></button></view>
 
   <view class="view-tabs"><view class="view-tab {{activeView === 'community' ? 'active' : ''}}" data-view="community" bindtap="switchView">社区活动</view><view class="view-tab {{activeView === 'featured' ? 'active' : ''}}" data-view="featured" bindtap="switchView">精彩活动</view><view class="view-tab {{activeView === 'mine' ? 'active' : ''}}" data-view="mine" bindtap="switchView">我的活动</view></view>

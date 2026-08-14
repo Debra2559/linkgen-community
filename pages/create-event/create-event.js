@@ -2,16 +2,17 @@ const { getEvents, saveEvents, getProfile } = require('../../utils/linkgen-data'
 const { venueCategories, getVenueOptions } = require('../../utils/linkgen-venues');
 const { detectSource, buildLocalDraft } = require('../../utils/linkgen-ingest');
 const { call, isCloudReady } = require('../../utils/cloud');
+const { getThemeMode } = require('../../utils/theme');
 
 const clampCount = (value) => Math.max(1, Math.min(9999, Number.parseInt(value, 10) || 1));
 
 Page({
   data: {
-    title: '', description: '', coverImage: '', time: '', location: '', customLocation: '', expectedCount: '30', importUrl: '', importStatus: 'idle', importMeta: { sourceLabel: '', modeLabel: '', confidenceLabel: '' },
+    themeMode: getThemeMode(), title: '', description: '', coverImage: '', time: '', location: '', customLocation: '', expectedCount: '30', importUrl: '', importStatus: 'idle', importMeta: { sourceLabel: '', modeLabel: '', confidenceLabel: '' },
     types: [{ id: 'online', label: '线上分享', icon: '↗', note: '屏幕前见' }, { id: 'offline', label: '线下聚会', icon: '⌂', note: '一起见面' }],
     typeIndex: 0, isOffline: false, venueCategories, activeCategory: 'all', venueOptions: getVenueOptions(false, 'all'), selectedVenueId: '', isOfficial: false,
   },
-  onLoad(options) { this.setData({ isOfficial: options && options.official === '1' }); },
+  onLoad(options) { this.setData({ themeMode: getThemeMode(), isOfficial: options && options.official === '1' }); },
   onTitle(e) { this.setData({ title: e.detail.value }); },
   onDescription(e) { this.setData({ description: e.detail.value }); },
   chooseCoverImage() {

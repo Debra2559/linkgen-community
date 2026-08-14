@@ -1,5 +1,6 @@
 const { getEvents, saveEvents, getAgentConfig, saveAgentConfig, seedLocalData } = require('../../utils/linkgen-data');
 const { call, isCloudReady } = require('../../utils/cloud');
+const { getThemeMode } = require('../../utils/theme');
 
 const defaultAgent = { enabled: true, status: '待运行', sources: [], keywords: 'AI / 产品 / 创作者', schedule: '每天 09:00', lastRun: '尚未巡查', notifyChannel: '管理员微信', qualityThreshold: '较高' };
 const sourceKindLabels = ['页面链接', 'RSS / Feed', '关键词搜索'];
@@ -42,7 +43,7 @@ function mapCandidate(item) {
 
 Page({
   data: {
-    events: [], list: [], pendingCount: 0, activeFilter: 'pending',
+    themeMode: getThemeMode(), events: [], list: [], pendingCount: 0, activeFilter: 'pending',
     filters: [{ key: 'pending', label: '待审核' }, { key: 'all', label: '全部活动' }],
     agent: defaultAgent, monitoredSources: [], sourceKindLabels, sourceAuthLabels,
     scanSummary: { scanned: 0, searches: 0, activity: 0, share: 0, highQuality: 0 },
@@ -51,6 +52,7 @@ Page({
   },
 
   onLoad() {
+    this.setData({ themeMode: getThemeMode() });
     seedLocalData();
     this.loadLocalData();
     if (isCloudReady()) this.loadCloudData();

@@ -1,4 +1,4 @@
-<view class="page member-detail-page" wx:if="{{member}}">
+<view class="page member-detail-page {{themeMode === 'dark' ? 'theme-dark' : ''}}" wx:if="{{member}}">
   <view class="member-cover" style="background: {{member.color}}"><view class="cover-grid"></view><view class="cover-mark">LINKGEN / MEMBER CARD</view><view class="avatar member-avatar"><image wx:if="{{member.avatar}}" class="avatar-image" src="{{member.avatar}}" mode="aspectFill"/><text wx:if="{{!member.avatar}}">{{member.initials}}</text></view></view>
   <view class="member-heading"><view><text class="member-detail-name">{{member.name}}</text><text class="member-detail-role">{{member.role}}<text wx:if="{{member.city}}"> · {{member.city}}</text></text></view><view wx:if="{{member.online}}" class="member-online"><view class="online-dot"></view>在线</view></view>
   <view class="member-detail-tags"><text wx:for="{{member.tags}}" wx:key="*this" class="tag">#{{item}}</text></view>

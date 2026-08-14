@@ -1,5 +1,6 @@
 const { getEvents, seedLocalData, getProfile } = require('../../utils/linkgen-data');
 const { call, isCloudReady } = require('../../utils/cloud');
+const { getThemeMode } = require('../../utils/theme');
 
 const CALENDAR_IDS_KEY = 'linkgen_calendar_event_ids';
 
@@ -34,13 +35,13 @@ function normalizeEvent(item) {
 
 Page({
   data: {
-    events: [], filteredEvents: [], timelineGroups: [], activeView: 'community', activeFilterKey: '', filterMenuOpen: false,
+    themeMode: getThemeMode(), events: [], filteredEvents: [], timelineGroups: [], activeView: 'community', activeFilterKey: '', filterMenuOpen: false,
     filterValues: { type: 'all', location: 'all', status: 'upcoming' },
     filterLabels: { type: '类型', location: '地点', status: '即将举行' }, filterOptions: [],
     timelineTitle: '社区活动', timelineRange: 'AUG / SEP', emptyTitle: '这里还没有社区活动', emptyCopy: '创建一场活动，和社区成员见面',
     calendarModes: [{ key: 'timeline', label: '时间轴' }, { key: 'day', label: '日' }, { key: 'week', label: '周' }, { key: 'month', label: '月' }], calendarMode: 'timeline', calendarCursor: '', calendarHeader: '', calendarCaption: '', calendarPeriodLabel: '', calendarDays: [], monthCells: [], weekShortNames, calendarListTitle: '', calendarEventCount: 0, calendarGroups: [], calendarEmptyTitle: '当天没有活动', calendarEmptyCopy: '换个日期看看，或回到时间轴浏览全部安排', cloudMode: false, cloudError: '', loading: false,
   },
-  onLoad() { seedLocalData(); this.refresh(); },
+  onLoad() { this.setData({ themeMode: getThemeMode() }); seedLocalData(); this.refresh(); },
   onShow() {
     const intent = wx.getStorageSync('linkgen_events_view_intent');
     if (intent) {
