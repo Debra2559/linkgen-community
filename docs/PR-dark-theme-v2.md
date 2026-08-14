@@ -46,6 +46,14 @@ operations review statuses. This specifically fixes the edit-profile preview
 case where `var(--ink)` became the dark-theme text color and accidentally made
 the card background white (white background plus white text).
 
+The tag-selection pass also adds page-level dark overrides for every selected
+chip family (`choice`, contact/feed topic chips, event categories and library
+categories). We keep these rules in the page WXSS as well as the shared theme
+scope because WeChat's page-style merge can otherwise let the original light
+`.selected`/`.chosen` rule win at runtime. In dark mode the selected state is
+therefore consistently purple with a purple border, white text and a soft
+focus ring; the light-mode owner styles are untouched.
+
 No light palette variable, default mode, page layout, or CloudBase behavior is
 changed by this follow-up.
 
