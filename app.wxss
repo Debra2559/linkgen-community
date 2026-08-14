@@ -186,6 +186,142 @@ button::after { border: 0; }
 .theme-dark .upload-button { background: var(--surface-raised); color: var(--muted); opacity: .7; }
 .theme-dark .profile-card { background: linear-gradient(135deg, #111a35, #172a4b); }
 
+/* Remaining legacy surfaces from the rejected all-at-once theme PR.
+ * These overrides are dark-mode-only: the owner-approved light palette is
+ * intentionally untouched. Keep this list explicit so a new light surface
+ * cannot silently become white-on-white in dark mode. */
+.theme-dark .profile-preview,
+.theme-dark .bio-info,
+.theme-dark .activity-intro,
+.theme-dark .admin-hero {
+  background: var(--surface-raised);
+  color: var(--ink);
+}
+
+.theme-dark .bio-info,
+.theme-dark .back-button,
+.theme-dark .upload-button,
+.theme-dark .import-input,
+.theme-dark .source-button,
+.theme-dark .secondary-mini,
+.theme-dark .detail-attachment,
+.theme-dark .info-list,
+.theme-dark .link-preview,
+.theme-dark .sheet-secondary,
+.theme-dark .organizer-bio,
+.theme-dark .agent-source-row,
+.theme-dark .attachment-card,
+.theme-dark .link-composer {
+  background: var(--surface-raised);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.theme-dark .profile-preview {
+  background: var(--surface-raised);
+  color: var(--ink);
+  box-shadow: 0 16rpx 34rpx rgba(0, 0, 0, .28);
+}
+
+.theme-dark .import-input,
+.theme-dark .link-input,
+.theme-dark .source-url-input,
+.theme-dark .comment-input-wrap {
+  background: var(--surface-input);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.theme-dark .source-block,
+.theme-dark .task-detail-panel,
+.theme-dark .custom-location,
+.theme-dark .cover-uploader,
+.theme-dark .review-preview {
+  background: var(--surface-raised);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.theme-dark .community-scope {
+  color: var(--coral);
+  background: var(--surface-raised);
+}
+
+.theme-dark .join-button.full,
+.theme-dark .task-advance button {
+  background: var(--surface-raised);
+  color: var(--muted);
+}
+
+.theme-dark .view-tabs,
+.theme-dark .calendar-mode-options,
+.theme-dark .month-cell,
+.theme-dark .month-cell.empty-cell {
+  background: var(--surface-input);
+  color: var(--ink-soft);
+}
+
+.theme-dark .month-cell.empty-cell {
+  background: rgba(19, 29, 54, .55);
+}
+
+.theme-dark .comment-bar {
+  background: rgba(5, 8, 22, .97);
+}
+
+.theme-dark .secondary-mini,
+.theme-dark .sheet-secondary,
+.theme-dark .back-button {
+  color: var(--ink-soft);
+}
+
+.theme-dark .type-symbol,
+.theme-dark .cover-upload-mark {
+  background: var(--surface-input);
+}
+
+.theme-dark .attachment-video {
+  background: var(--surface-raised);
+}
+
+.theme-dark .primary-mini,
+.theme-dark .sheet-primary,
+.theme-dark .save-source-button,
+.theme-dark .review-actions .approve-button {
+  background: var(--action-bg);
+  color: var(--action-text);
+}
+
+.theme-dark .agent-data-mode,
+.theme-dark .agent-data-mode.connected {
+  border-left-color: var(--yellow);
+  color: var(--ink-soft);
+  background: var(--surface-raised);
+}
+
+.theme-dark .agent-status {
+  color: #8fe0b2;
+  background: rgba(66, 170, 117, .16);
+}
+
+.theme-dark .review-status.waiting {
+  color: #ffd166;
+  background: rgba(255, 209, 102, .14);
+}
+
+.theme-dark .review-status.published {
+  color: #8fe0b2;
+  background: rgba(66, 170, 117, .16);
+}
+
+.theme-dark .source-auth-label,
+.theme-dark .post-status,
+.theme-dark .menu-yellow,
+.theme-dark .menu-admin {
+  color: var(--ink-soft);
+  background: var(--surface-raised);
+}
+
 .theme-dark .choice:active,
 .theme-dark .topic-chip:active,
 .theme-dark .category-chip:active,

@@ -36,4 +36,17 @@ node --check utils/theme.js
 git diff --check
 ```
 
+## Follow-up dark-surface audit
+
+The follow-up pass keeps the owner light theme unchanged and only adds
+`.theme-dark` overrides for surfaces that previously stayed light: profile
+preview cards, member-card information panels, event/source panels, import
+and link inputs, attachment cards, calendar cells, comment bars, and the
+operations review statuses. This specifically fixes the edit-profile preview
+case where `var(--ink)` became the dark-theme text color and accidentally made
+the card background white (white background plus white text).
+
+No light palette variable, default mode, page layout, or CloudBase behavior is
+changed by this follow-up.
+
 微信开发者工具仍需在测试 AppID 下手动验收页面切换和导航栏，验收通过后再由负责人决定是否合并。
