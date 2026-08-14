@@ -14,7 +14,7 @@ function applyThemeChrome(themeMode = getThemeMode()) {
   const dark = themeMode === 'dark';
   if (wx.setNavigationBarColor) {
     wx.setNavigationBarColor({
-      frontColor: dark ? '#f5f7ff' : '#ffffff',
+      frontColor: '#ffffff',
       backgroundColor: dark ? '#050816' : '#161310',
       animation: { duration: 120, timingFunc: 'easeIn' },
     });
