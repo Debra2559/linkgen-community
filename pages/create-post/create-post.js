@@ -4,6 +4,16 @@ function getHost(url) {
   return url.replace(/^https?:\/\//i, '').split('/')[0].split('?')[0] || url;
 }
 
+function normalizeLink(value) {
+  const clean = String(value || '').trim();
+  if (!clean) return '';
+  return /^https?:\/\//i.test(clean) ? clean : `https://${clean}`;
+}
+
+function isHttpLink(value) {
+  return /^https?:\/\/[^\s/]+\.[^\s/]+(?:[/?#]|$)/i.test(value);
+}
+
 function getMediaType(url) {
   const cleanUrl = url.split('?')[0].toLowerCase();
   if (/\.(png|jpe?g|gif|webp|bmp)$/.test(cleanUrl)) return 'image';
@@ -67,11 +77,15 @@ Page({
   onLinkInput(e) { this.setData({ linkInput: e.detail.value }); },
 
   pasteLink() {
-    if (!wx.getClipboardData) return wx.showToast({ title: '当前环境不支持读取剪贴板', icon: 'none' });
+    const showManualFallback = (title) => {
+      this.setData({ linkPanelOpen: true });
+      wx.showToast({ title, icon: 'none' });
+    };
+    if (!wx.getClipboardData) return showManualFallback('请在下方输入或粘贴链接');
     wx.getClipboardData({
       success: (res) => {
-        const value = (res.data || '').trim();
-        if (!/^https?:\/\//i.test(value)) return wx.showToast({ title: '剪贴板里没有可用链接', icon: 'none' });
+        const value = normalizeLink(res.data);
+        if (!isHttpLink(value)) return showManualFallback('剪贴板里没有可用链接，请在下方输入或粘贴链接');
         const mediaType = getMediaType(value);
         if (mediaType) {
           this.setData({ attachments: this.data.attachments.concat({ id: `${mediaType}-${Date.now()}`, type: mediaType, path: value, name: mediaType === 'image' ? '图片' : '视频' }) });
@@ -79,13 +93,13 @@ Page({
         }
         this.setData({ linkInput: value, linkPanelOpen: true });
       },
-      fail: () => wx.showToast({ title: '读取剪贴板失败', icon: 'none' }),
+      fail: () => showManualFallback('读取剪贴板失败，请在下方输入或粘贴链接'),
     });
   },
 
   saveLink() {
-    const url = this.data.linkInput.trim();
-    if (!/^https?:\/\//i.test(url)) return wx.showToast({ title: '请粘贴 http 或 https 链接', icon: 'none' });
+    const url = normalizeLink(this.data.linkInput);
+    if (!isHttpLink(url)) return wx.showToast({ title: '请粘贴有效的网页链接', icon: 'none' });
     const mediaType = getMediaType(url);
     if (mediaType) {
       this.setData({ attachments: this.data.attachments.concat({ id: `${mediaType}-${Date.now()}`, type: mediaType, path: url, name: mediaType === 'image' ? '图片' : '视频' }), linkInput: '', linkPanelOpen: false });
