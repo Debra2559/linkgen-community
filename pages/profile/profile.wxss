@@ -1,5 +1,6 @@
-.profile-page { position: relative; padding-bottom: 120rpx; }
-.profile-theme-switch { position: absolute; top: 42rpx; right: 32rpx; z-index: 2; }
+.profile-page { padding-bottom: 120rpx; }
+.profile-topbar { align-items: center; }
+.profile-theme-switch { position: relative; flex: 0 0 auto; margin-left: 24rpx; }
 .theme-switch { position: relative; display: block; width: 104rpx; height: 54rpx; padding: 0; overflow: hidden; border: 1rpx solid var(--line); border-radius: 999rpx; background: #fff; line-height: 54rpx; }
 .theme-dark .theme-switch { background: var(--surface-input); }
 .theme-icon { position: absolute; z-index: 1; top: 0; width: 50%; height: 52rpx; color: var(--muted); font-size: 23rpx; text-align: center; line-height: 52rpx; }
