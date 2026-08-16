@@ -1,5 +1,6 @@
 const { getEvents, saveEvents, getProfile, getMembers } = require('../../utils/linkgen-data');
 const { call, isCloudReady } = require('../../utils/cloud');
+const { getThemeMode } = require('../../utils/theme');
 
 const CALENDAR_IDS_KEY = 'linkgen_calendar_event_ids';
 
@@ -35,7 +36,7 @@ function normalizeDetailEvent(event) {
 }
 
 Page({
-  data: { event: null, linkPanel: '', organizerPanel: false, cloudMode: false, cloudError: '', loading: false },
+  data: { themeMode: getThemeMode(), event: null, linkPanel: '', organizerPanel: false, cloudMode: false, cloudError: '', loading: false },
   onLoad(options) { this.id = options.id; this.refresh(); },
   async refresh() {
     if (isCloudReady()) {

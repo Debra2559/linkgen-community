@@ -1,4 +1,5 @@
 const { getPosts, savePosts, getProfile } = require('../../utils/linkgen-data');
+const { getThemeMode } = require('../../utils/theme');
 
 function getHost(url) {
   return url.replace(/^https?:\/\//i, '').split('/')[0].split('?')[0] || url;
@@ -13,6 +14,7 @@ function getMediaType(url) {
 
 Page({
   data: {
+    themeMode: getThemeMode(),
     title: '',
     content: '',
     selectedTags: [],

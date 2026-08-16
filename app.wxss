@@ -50,3 +50,279 @@ button::after { border: 0; }
 .small-avatar { width: 58rpx; height: 58rpx; border-radius: 18rpx; font-size: 21rpx; }
 .divider { height: 1rpx; background: var(--line); }
 .safe-bottom { height: 32rpx; }
+
+/* Dark mode is opt-in. The light palette above remains the owner-approved default. */
+.theme-dark {
+  --ink: #f5f7ff;
+  --ink-soft: #c8d0e6;
+  --coral: #9b7bff;
+  --coral-soft: rgba(155, 123, 255, .16);
+  --mint: #173248;
+  --yellow: #58d8ff;
+  --sky: #10253d;
+  --bg: #050816;
+  --card: #0d1428;
+  --text: #f5f7ff;
+  --muted: #8d9ab8;
+  --line: #202b46;
+  --shadow: 0 14rpx 36rpx rgba(0, 0, 0, .28);
+  --surface-raised: #131d36;
+  --surface-input: #0a1122;
+  --action-bg: #7f5af0;
+  --action-text: #ffffff;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.theme-dark .card,
+.theme-dark .menu-list,
+.theme-dark .search-box,
+.theme-dark .topic-chip,
+.theme-dark .category-chip,
+.theme-dark .secondary-button,
+.theme-dark .icon-button,
+.theme-dark .detail-attachment,
+.theme-dark .info-list,
+.theme-dark .link-preview,
+.theme-dark .sheet-secondary,
+.theme-dark .source-button,
+.theme-dark .bio-panel,
+.theme-dark .organizer-bio,
+.theme-dark .profile-preview-card,
+.theme-dark .preview-card,
+.theme-dark .review-card,
+.theme-dark .agent-source-row,
+.theme-dark .activity-tabs,
+.theme-dark .activity-tab.active,
+.theme-dark .month-cell,
+.theme-dark .field-input,
+.theme-dark .field-textarea,
+.theme-dark .field-picker,
+.theme-dark .line-input,
+.theme-dark .line-textarea,
+.theme-dark .detail-input,
+.theme-dark .custom-input,
+.theme-dark .count-stepper,
+.theme-dark .type-symbol,
+.theme-dark .cover-upload-mark,
+.theme-dark .save-button {
+  background: var(--surface-raised);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.theme-dark .page,
+.theme-dark .search-box,
+.theme-dark .field-input,
+.theme-dark .field-textarea,
+.theme-dark .field-picker,
+.theme-dark .line-input,
+.theme-dark .line-textarea,
+.theme-dark .detail-input,
+.theme-dark .custom-input {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.theme-dark .search-box,
+.theme-dark .field-input,
+.theme-dark .field-textarea,
+.theme-dark .field-picker,
+.theme-dark .line-input,
+.theme-dark .line-textarea,
+.theme-dark .detail-input,
+.theme-dark .custom-input,
+.theme-dark .count-stepper,
+.theme-dark .type-option,
+.theme-dark .venue-option,
+.theme-dark .category-chip,
+.theme-dark .topic-chip,
+.theme-dark .choice,
+.theme-dark .admin-tab {
+  background: var(--surface-input);
+  border-color: var(--line);
+  color: var(--ink-soft);
+}
+
+.theme-dark .tag,
+.theme-dark .mini-tag,
+.theme-dark .resource-tag,
+.theme-dark .post-tags .tag {
+  background: var(--surface-raised);
+  color: var(--ink-soft);
+}
+
+.theme-dark .primary-button,
+.theme-dark .submit-button,
+.theme-dark .continue-edit-button,
+.theme-dark .send-button,
+.theme-dark .sheet-primary,
+.theme-dark .ai-button,
+.theme-dark .agent-run-button,
+.theme-dark .open-button {
+  background: var(--action-bg);
+  color: var(--action-text);
+}
+
+.theme-dark .type-option.selected,
+.theme-dark .venue-option.selected,
+.theme-dark .choice.chosen,
+.theme-dark .topic-chip.selected,
+.theme-dark .category-chip.selected,
+.theme-dark .calendar-mode.active,
+.theme-dark .view-tab.active,
+.theme-dark .admin-tab.active {
+  border-color: var(--coral);
+  background: var(--coral);
+  color: #ffffff;
+  box-shadow: 0 0 0 3rpx rgba(181, 156, 255, .22);
+}
+
+.theme-dark .month-cell.empty-cell { background: rgba(19, 29, 54, .55); }
+.theme-dark .comment-bar { background: rgba(5, 8, 22, .97); }
+.theme-dark .send-button[disabled],
+.theme-dark button[disabled],
+.theme-dark .upload-button { background: var(--surface-raised); color: var(--muted); opacity: .7; }
+.theme-dark .profile-card { background: linear-gradient(135deg, #111a35, #172a4b); }
+
+/* Remaining legacy surfaces from the rejected all-at-once theme PR.
+ * These overrides are dark-mode-only: the owner-approved light palette is
+ * intentionally untouched. Keep this list explicit so a new light surface
+ * cannot silently become white-on-white in dark mode. */
+.theme-dark .profile-preview,
+.theme-dark .bio-info,
+.theme-dark .activity-intro,
+.theme-dark .admin-hero {
+  background: var(--surface-raised);
+  color: var(--ink);
+}
+
+.theme-dark .bio-info,
+.theme-dark .back-button,
+.theme-dark .upload-button,
+.theme-dark .import-input,
+.theme-dark .source-button,
+.theme-dark .secondary-mini,
+.theme-dark .detail-attachment,
+.theme-dark .info-list,
+.theme-dark .link-preview,
+.theme-dark .sheet-secondary,
+.theme-dark .organizer-bio,
+.theme-dark .agent-source-row,
+.theme-dark .attachment-card,
+.theme-dark .link-composer {
+  background: var(--surface-raised);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.theme-dark .profile-preview {
+  background: var(--surface-raised);
+  color: var(--ink);
+  box-shadow: 0 16rpx 34rpx rgba(0, 0, 0, .28);
+}
+
+.theme-dark .import-input,
+.theme-dark .link-input,
+.theme-dark .source-url-input,
+.theme-dark .comment-input-wrap {
+  background: var(--surface-input);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.theme-dark .source-block,
+.theme-dark .task-detail-panel,
+.theme-dark .custom-location,
+.theme-dark .cover-uploader,
+.theme-dark .review-preview {
+  background: var(--surface-raised);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.theme-dark .community-scope {
+  color: var(--coral);
+  background: var(--surface-raised);
+}
+
+.theme-dark .join-button.full,
+.theme-dark .task-advance button {
+  background: var(--surface-raised);
+  color: var(--muted);
+}
+
+.theme-dark .view-tabs,
+.theme-dark .calendar-mode-options,
+.theme-dark .month-cell,
+.theme-dark .month-cell.empty-cell {
+  background: var(--surface-input);
+  color: var(--ink-soft);
+}
+
+.theme-dark .month-cell.empty-cell {
+  background: rgba(19, 29, 54, .55);
+}
+
+.theme-dark .comment-bar {
+  background: rgba(5, 8, 22, .97);
+}
+
+.theme-dark .secondary-mini,
+.theme-dark .sheet-secondary,
+.theme-dark .back-button {
+  color: var(--ink-soft);
+}
+
+.theme-dark .type-symbol,
+.theme-dark .cover-upload-mark {
+  background: var(--surface-input);
+}
+
+.theme-dark .attachment-video {
+  background: var(--surface-raised);
+}
+
+.theme-dark .primary-mini,
+.theme-dark .sheet-primary,
+.theme-dark .save-source-button,
+.theme-dark .review-actions .approve-button {
+  background: var(--action-bg);
+  color: var(--action-text);
+}
+
+.theme-dark .agent-data-mode,
+.theme-dark .agent-data-mode.connected {
+  border-left-color: var(--yellow);
+  color: var(--ink-soft);
+  background: var(--surface-raised);
+}
+
+.theme-dark .agent-status {
+  color: #8fe0b2;
+  background: rgba(66, 170, 117, .16);
+}
+
+.theme-dark .review-status.waiting {
+  color: #ffd166;
+  background: rgba(255, 209, 102, .14);
+}
+
+.theme-dark .review-status.published {
+  color: #8fe0b2;
+  background: rgba(66, 170, 117, .16);
+}
+
+.theme-dark .source-auth-label,
+.theme-dark .post-status,
+.theme-dark .menu-yellow,
+.theme-dark .menu-admin {
+  color: var(--ink-soft);
+  background: var(--surface-raised);
+}
+
+.theme-dark .choice:active,
+.theme-dark .topic-chip:active,
+.theme-dark .category-chip:active,
+.theme-dark .theme-switch:active { opacity: .76; transform: scale(.98); }

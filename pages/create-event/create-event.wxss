@@ -51,6 +51,7 @@
 .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14rpx; margin-top: 18rpx; }
 .type-option { position: relative; display: flex; align-items: center; min-height: 114rpx; padding: 18rpx; border: 1rpx solid var(--line); border-radius: 20rpx; background: var(--card); }
 .type-option.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 8rpx 18rpx rgba(255, 113, 59, .1); }
+.theme-dark .type-option.selected { border-color: var(--coral); background: var(--coral); color: #fff; box-shadow: 0 0 0 3rpx rgba(181, 156, 255, .22), 0 8rpx 18rpx rgba(155, 123, 255, .22); }
 .type-symbol { display: flex; align-items: center; justify-content: center; width: 48rpx; height: 48rpx; margin-right: 12rpx; border-radius: 15rpx; color: var(--coral); background: #fff; font-size: 28rpx; }
 .type-name, .type-note { display: block; }
 .type-name { color: var(--ink); font-size: 24rpx; font-weight: 800; }
@@ -71,9 +72,11 @@
 .category-scroll { width: calc(100% + 64rpx); padding: 18rpx 32rpx 8rpx; margin-left: -32rpx; white-space: nowrap; }
 .category-chip { display: inline-flex; align-items: center; padding: 11rpx 16rpx; margin-right: 9rpx; border: 1rpx solid var(--line); border-radius: 999rpx; color: var(--muted); background: #fff; font-size: 20rpx; }
 .category-chip.selected { border-color: var(--ink); color: #fff; background: var(--ink); }
+.theme-dark .category-chip.selected { border-color: var(--coral); color: #fff; background: var(--coral); box-shadow: 0 0 0 3rpx rgba(181, 156, 255, .22), 0 8rpx 18rpx rgba(155, 123, 255, .22); }
 .venue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12rpx; margin-top: 16rpx; }
 .venue-option { min-height: 172rpx; padding: 16rpx; border: 1rpx solid var(--line); border-radius: 19rpx; background: var(--card); }
 .venue-option.selected { border-color: var(--coral); background: var(--coral-soft); }
+.theme-dark .venue-option.selected { border-color: var(--coral); color: #fff; background: var(--coral); box-shadow: 0 0 0 3rpx rgba(181, 156, 255, .22), 0 8rpx 18rpx rgba(155, 123, 255, .22); }
 .custom-venue-option { border-style: dashed; background: rgba(255,255,255,.58); }
 .custom-venue-option.selected { border-style: solid; }
 .custom-venue-plus { color: var(--coral); font-size: 30rpx; line-height: 1; }

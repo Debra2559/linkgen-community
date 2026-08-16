@@ -1,4 +1,4 @@
-<view class="page admin-page">
+<view class="page admin-page {{themeMode === 'dark' ? 'theme-dark' : ''}}">
   <view class="topbar">
     <view><text class="eyebrow">LINKGEN OPERATIONS</text><text class="section-title page-title">运营管理</text></view>
   </view>

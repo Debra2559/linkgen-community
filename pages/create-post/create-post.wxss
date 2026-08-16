@@ -407,6 +407,14 @@
   background: var(--coral-soft);
 }
 
+/* Dark mode keeps the selected state explicit after page-level WXSS is merged. */
+.theme-dark .choice.chosen {
+  border-color: var(--coral);
+  color: #fff;
+  background: var(--coral);
+  box-shadow: 0 0 0 3rpx rgba(181, 156, 255, .22), 0 8rpx 18rpx rgba(155, 123, 255, .22);
+}
+
 .visibility-note {
   display: flex;
   align-items: flex-start;

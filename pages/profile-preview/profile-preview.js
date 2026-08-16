@@ -1,4 +1,5 @@
 const { getProfile } = require('../../utils/linkgen-data');
+const { getThemeMode } = require('../../utils/theme');
 
 const PREVIEW_KEY = 'linkgen_profile_preview_v1';
 
@@ -18,7 +19,7 @@ function normalizePreview(profile) {
 }
 
 Page({
-  data: { profile: normalizePreview({}), isDraft: false },
+  data: { themeMode: getThemeMode(), profile: normalizePreview({}), isDraft: false },
   onLoad(options) {
     const isDraft = options.draft === '1';
     const profile = isDraft ? wx.getStorageSync(PREVIEW_KEY) || getProfile() : getProfile();

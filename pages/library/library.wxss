@@ -17,6 +17,7 @@
 .category-scroll { width: calc(100% + 64rpx); padding: 16rpx 32rpx 6rpx; margin-left: -32rpx; white-space: nowrap; }
 .category-chip { display: inline-block; padding: 11rpx 17rpx; margin-right: 9rpx; border: 1rpx solid var(--line); border-radius: 999rpx; color: var(--muted); background: #fff; font-size: 20rpx; }
 .category-chip.selected { border-color: var(--ink); color: #fff; background: var(--ink); }
+.theme-dark .category-chip.selected { border-color: var(--coral); color: #fff; background: var(--coral); box-shadow: 0 0 0 3rpx rgba(181, 156, 255, .22), 0 8rpx 18rpx rgba(155, 123, 255, .22); }
 .section-head { margin-top: 24rpx; }
 .section-head .section-title { display: block; }
 .section-head .section-caption { display: block; margin-top: 4rpx; }

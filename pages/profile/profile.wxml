@@ -1,5 +1,5 @@
-<view class="page profile-page">
-  <view class="topbar"><view><text class="eyebrow">YOUR LINKGEN</text><text class="section-title page-title">我的</text></view></view>
+<view class="page profile-page {{themeMode === 'dark' ? 'theme-dark' : ''}}">
+  <view class="topbar profile-topbar"><view><text class="eyebrow">YOUR LINKGEN</text><text class="section-title page-title">我的</text></view><view class="theme-switch profile-theme-switch {{themeMode === 'dark' ? 'is-dark' : ''}}" role="button" aria-label="切换明暗主题" bindtap="toggleTheme"><text class="theme-icon theme-moon">☾</text><text class="theme-icon theme-sun">☀</text><view class="theme-switch-thumb"></view></view></view>
 
   <view wx:if="{{!profile.setupComplete}}" class="setup-banner"><view class="setup-mark">01</view><view class="setup-copy"><text class="setup-title">先做一张属于你的名片</text><text class="setup-subtitle">补充身份、城市和加入目的，让更多人认识你。</text></view><button class="setup-button" bindtap="goEdit">开始设置 ↗</button></view>
 

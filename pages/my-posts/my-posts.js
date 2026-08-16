@@ -1,4 +1,5 @@
 const { getProfile, getPosts, seedLocalData } = require('../../utils/linkgen-data');
+const { getThemeMode } = require('../../utils/theme');
 
 function getMyPosts(posts, profile) {
   if (!profile.name) return [];
@@ -25,6 +26,7 @@ function getMyReplies(posts, profile) {
 
 Page({
   data: {
+    themeMode: getThemeMode(),
     profile: { name: '', avatar: '', initials: '你' },
     activeTab: 'posts',
     tabs: [{ key: 'posts', label: '我发起的', count: 0 }, { key: 'replies', label: '我的回复', count: 0 }],
@@ -35,7 +37,7 @@ Page({
     stats: { posts: 0, replies: 0, likes: 0 },
   },
 
-  onLoad() { seedLocalData(); this.refresh(); },
+  onLoad() { this.setData({ themeMode: getThemeMode() }); seedLocalData(); this.refresh(); },
   onShow() { this.refresh(); },
   onPullDownRefresh() { this.refresh(); wx.stopPullDownRefresh(); },
 

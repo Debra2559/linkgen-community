@@ -1,4 +1,4 @@
-<view class="page event-detail-page" wx:if="{{event}}">
+<view class="page event-detail-page {{themeMode === 'dark' ? 'theme-dark' : ''}}" wx:if="{{event}}">
   <view class="event-detail-cover" style="background: {{event.color}}">
     <image wx:if="{{event.coverImage}}" class="detail-cover-image" src="{{event.coverImage}}" mode="aspectFill" />
     <view wx:if="{{event.coverImage}}" class="detail-cover-shade"></view>

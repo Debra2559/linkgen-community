@@ -1,4 +1,4 @@
-<view class="page profile-preview-page">
+<view class="page profile-preview-page {{themeMode === 'dark' ? 'theme-dark' : ''}}">
   <view class="preview-nav">
     <button class="back-button" bindtap="goBack">‹</button>
     <view class="preview-nav-title"><text class="eyebrow">YOUR DIGITAL CARD</text><text class="page-title">{{isDraft ? '预览未保存名片' : '我的数字名片'}}</text></view>
