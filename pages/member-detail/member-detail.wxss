@@ -10,7 +10,11 @@
 .member-detail-role { display: block; margin-top: 5rpx; color: var(--muted); font-size: 23rpx; }
 .member-online { display: flex; align-items: center; padding-top: 12rpx; color: #419c6b; font-size: 19rpx; }
 .online-dot { width: 11rpx; height: 11rpx; margin-right: 7rpx; border-radius: 50%; background: #43b87a; }
-.member-detail-tags { margin-top: 18rpx; }
+.member-detail-tags { display: flex; flex-wrap: wrap; margin-top: 18rpx; }
+.member-detail-tag { display: inline-flex; align-items: center; padding: 7rpx 14rpx; margin: 0 10rpx 10rpx 0; border: 1rpx solid transparent; border-radius: 999rpx; color: var(--ink-soft); background: var(--sky); font-size: 21rpx; font-weight: 700; }
+.member-detail-tag:nth-child(3n+1) { color: var(--coral); background: var(--coral-soft); border-color: rgba(255,113,59,.22); }
+.member-detail-tag:nth-child(3n+2) { color: var(--ink-soft); background: var(--mint); border-color: rgba(91,80,70,.16); }
+.member-detail-tag:nth-child(3n+3) { color: var(--ink); background: rgba(255,217,92,.28); border-color: rgba(22,19,16,.12); }
 .member-signal, .bio-panel { padding: 22rpx; margin-top: 24rpx; border-radius: 22rpx; }
 .member-signal { background: var(--yellow); }
 .signal-label, .panel-label { display: block; color: var(--ink-soft); font-size: 18rpx; font-weight: 800; letter-spacing: 2rpx; }
